@@ -1,5 +1,3 @@
----
-
 # 🇨🇳 ChinaVis 2025 - 中国可视化竞赛项目
 
 ## 项目成员
@@ -51,5 +49,3 @@ python app.py
 ## 📄 License
 
 MIT License
-
----
