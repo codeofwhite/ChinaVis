@@ -1,4 +1,9 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+// src/main.js (Vue 3 + Vite)
 
-createApp(App).mount('#app')
+import { createApp } from "vue"; // <-- 注意这里是命名导入 'createApp'
+import App from "./App.vue";
+import router from "./router"; // 确保路径正确
+
+const app = createApp(App); // <-- 使用 createApp 函数创建应用实例
+app.use(router); // 注册 Vue Router
+app.mount("#app");
