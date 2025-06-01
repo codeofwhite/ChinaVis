@@ -139,7 +139,7 @@ export default {
   width: 100%;
   height: 100vh;
   display: flex;
-  background: linear-gradient(to bottom,#f5f2e9 0%, #e8d8c3 100%);
+  background: linear-gradient(to bottom, #f5f2e9 0%, #e8d8c3 100%);
   overflow: hidden;
 }
 
@@ -232,7 +232,7 @@ export default {
   .home-container {
     flex-direction: column;
   }
-  
+
   .info-panel {
     width: 100%;
     height: auto;

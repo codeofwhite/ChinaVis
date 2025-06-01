@@ -39,7 +39,9 @@
             />
           </div>
           <p class="card-description">
-            从兴建到重生的时光之旅，探索{{ landmark.name }}的建筑更迭与功能演变。
+            从兴建到重生的时光之旅，探索{{
+              landmark.name
+            }}的建筑更迭与功能演变。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -357,7 +359,11 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(139, 69, 19, 0.1), rgba(101, 67, 33, 0.4));
+  background: linear-gradient(
+    to bottom,
+    rgba(139, 69, 19, 0.1),
+    rgba(101, 67, 33, 0.4)
+  );
   z-index: 1;
 }
 
@@ -435,11 +441,11 @@ export default {
     width: 45%;
     margin-bottom: 30px;
   }
-  
+
   .landmark-header {
     height: 65vh;
   }
-  
+
   .landmark-info h1 {
     font-size: 2.8em;
   }
@@ -469,7 +475,7 @@ export default {
     width: 90%;
     margin-bottom: 25px;
   }
-  
+
   .core-metrics {
     gap: 15px;
   }
@@ -479,17 +485,17 @@ export default {
   .landmark-info h1 {
     font-size: 1.8em;
   }
-  
+
   .back-button {
     top: 20px;
     left: 20px;
     padding: 10px 15px;
   }
-  
+
   .exploration-card {
     width: 100%;
   }
-  
+
   .card-title {
     font-size: 1.4em;
   }

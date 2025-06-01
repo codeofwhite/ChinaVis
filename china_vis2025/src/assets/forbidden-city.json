@@ -1,0 +1,34 @@
+{
+  "id": "forbidden-city",
+  "name": "故宫",
+  "description": "明清两代的皇家宫殿",
+  "timeline": [
+    {
+      "year": 1406,
+      "event": "开始建造",
+      "description": "明成祖朱棣下令建造紫禁城，历时14年完成"
+    },
+    {
+      "year": 1420,
+      "event": "建成",
+      "description": "紫禁城基本建成，明成祖朱棣正式迁都北京"
+    },
+    {
+      "year": 1644,
+      "event": "清朝入主",
+      "description": "李自成攻入北京，明朝灭亡，后清朝入主紫禁城"
+    },
+    {
+      "year": 1912,
+      "event": "末代皇帝退位",
+      "description": "溥仪退位，故宫结束作为皇宫的历史"
+    },
+    {
+      "year": 1925,
+      "event": "故宫博物院成立",
+      "description": "正式对公众开放，成为中国最重要的博物馆之一"
+    }
+  ],
+  "relatedFigures": ["朱棣", "溥仪", "李自成", "慈禧太后"],
+  "relatedEvents": ["明朝建立", "清朝建立", "辛亥革命", "五四运动"]
+}
