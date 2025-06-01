@@ -1,5 +1,9 @@
-# Vue 3 + Vite
+TreeMap 是群里那个属性图
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+LandmarkNetwork 是网络图子组件
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+CesiumViewer 是 3D
+
+TimeLine 是 Network 的那个纵向的时间轴
+
+test/RebuildTimeLineTest 是横向的时间轴（修砌和破坏）
