@@ -34,7 +34,7 @@
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=LifeCycle+Preview"
+              src="china_vis2025\src\assets\长陵.jpg"
               alt="生命年轮预览"
             />
           </div>
@@ -51,7 +51,7 @@
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=Influence+Preview"
+              src="china_vis2025\src\assets\明十三陵神道_大宫门.jpg"
               alt="影响力预览"
             />
           </div>
@@ -70,7 +70,7 @@
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=Legends+Preview"
+              src="china_vis2025\src\assets\碑亭.jpg"
               alt="传奇故事预览"
             />
           </div>
@@ -92,6 +92,8 @@
 </template>
 
 <script>
+import MingTombsImage from '../../assets/Ming_Tombs.jpg'
+
 export default {
   name: "MingTombsPortal",
   props: {
@@ -125,7 +127,7 @@ export default {
           name: "明十三陵", // (Name established on PDF pg 2)
           // Summary based on "明十三陵是明朝13位皇帝的陵寝群" (PDF pg 2) and "2003年7月3日十三陵与清东陵、西陵一同被联合国教科文组织列为世界文化遗产" (PDF pg 3)
           summary: "明朝十三位帝王的宏伟长眠之地，世界文化遗产，展现中国古代皇家陵寝建筑艺术与历史文化。",
-          image: "china_vis2025\src\assets\Ming_Tombs_1875-1908.jpg", // Generic placeholder as no specific overview image for Ming Tombs is in the PDF.
+          image: MingTombsImage,
           metrics: [
             // "始于永乐七年(1409年),终止于崇祯帝入陵(1644年)" (PDF pg 2)
             { icon: "📅", value: "1409-1644年", label: "修建年代" },
@@ -162,7 +164,7 @@ export default {
 .landmark-header {
   position: relative;
   width: 100%;
-  height: 70vh;
+  height: 80vh; /* 增加高度以better展示画卷 */
   overflow: hidden;
   display: flex;
   align-items: flex-end;
@@ -180,21 +182,31 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 0;
+  background-color: #f5f2e9; /* 添加古典底色 */
 }
 
 .landmark-main-media {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.6) sepia(0.3) hue-rotate(-10deg) contrast(0.9);
+  filter: brightness(0.95) sepia(0.2) saturate(0.9); /* 调整滤镜效果以突出古画效果 */
+  transform: scale(1.02); /* 略微放大以覆盖边缘 */
+  transition: transform 10s ease; /* 添加缓慢的动画效果 */
+}
+
+.landmark-header:hover .landmark-main-media {
+  transform: scale(1.05); /* 悬停时轻微放大效果 */
 }
 
 .landmark-info {
   position: relative;
   z-index: 1;
   padding: 0 20px;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
   margin-bottom: 40px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  width: 100%;
+  padding-top: 100px; /* 增加渐变区域 */
 }
 
 .landmark-info h1 {
@@ -448,7 +460,7 @@ export default {
 
 @media (max-width: 768px) {
   .landmark-header {
-    height: 60vh;
+    height: 70vh;
   }
 
   .landmark-info h1 {

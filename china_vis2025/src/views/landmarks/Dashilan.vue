@@ -34,7 +34,7 @@
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=LifeCycle+Preview"
+              src="china_vis2025\src\assets\olddashilan.jpg"
               alt="生命年轮预览"
             />
           </div>
@@ -51,7 +51,7 @@
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=Influence+Preview"
+              src="china_vis2025\src\assets\TongRenTang.jpg"
               alt="影响力预览"
             />
           </div>
@@ -70,7 +70,7 @@
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=Legends+Preview"
+              src="china_vis2025\src\assets\dashilan_story.jpg"
               alt="传奇故事预览"
             />
           </div>
@@ -92,6 +92,8 @@
 </template>
 
 <script>
+import DashilarImage from "@/assets/dashilan_bg.jpg"; // Updated image path
+
 export default {
   name: "DashilarPortal",
   props: {
@@ -121,20 +123,13 @@ export default {
     },
     loadLandmarkData() {
       if (this.landmarkId === "dashilar") {
-        this.landmark = {
-          name: "大栅栏", // [cite: 1] (General name, established contextually)
-          // Summary combining information from PDF pg 1, 2: "大栅栏自明中叶即为繁华商业区"[cite: 1], "大栅栏长期作为北京重要的商业街区与交通枢纽。"[cite: 2], "大栅栏与京味文化、民国故事紧密相连,是老北京市井传说和都市记忆的重要载体"
+        this.landmark = {          name: "大栅栏",
           summary: "北京著名的百年商业老街，京味文化与市井生活的鲜活画卷，承载着丰富的历史记忆与民国风情。",
-          // Image source: The image on page 1 of "大栅栏与明十三陵：文化地标综合研究.pdf" [cite: 1] (Indicated by "ChatGPT " next to image)
-          image: "/placeholder-dashilar-entrance.jpg", // Replace with actual path to the image from PDF pg 1.
+          image: DashilarImage,
           metrics: [
-            // "大栅栏源于明代。明永乐年间(15世纪初)" [cite: 1] (PDF pg 1)
             { icon: "📅", value: "明代初 (15世纪初)", label: "始建于" },
-            // "街道长275米、宽不足10米" [cite: 1] (PDF pg 1)
             { icon: "📏", value: "长275米", label: "街道长度" },
-            // "2015年4月3日,大栅栏历史文化街区被住房和城乡建设部和国家文物局公布为第一批“中国历史文化街区” 17" (PDF pg 2) - Source 17 is "大栅栏历史文化街区 https://cgn.ac.cn/638.news.detail.dhtml?news_id=1670"
             { icon: "🏅", value: "中国历史文化街区", label: "称号" },
-            // "大栅栏商业街日均客流量在15-16万人次,节假日超过20万人次12" (PDF pg 2) - Source 12 is "大栅栏- 维基百科,自由的百科全书"
             { icon: "🚶", value: "日均15万+", label: "日均客流" },
           ],
         };
