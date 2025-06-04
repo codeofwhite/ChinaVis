@@ -6,7 +6,10 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import router from "./router"; // 确保路径正确
 
-const app = createApp(App); // <-- 使用 createApp 函数创建应用实例
-app.use(router); // 注册 Vue Router
-app.use(ElementPlus)
+const app = createApp(App);
+
+// 先使用 Element Plus 和路由
+app.use(ElementPlus);
+app.use(router);
+
 app.mount("#app");

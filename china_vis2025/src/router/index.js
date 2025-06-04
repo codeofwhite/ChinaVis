@@ -6,9 +6,9 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: HomeView
   },
-    {
+  {
     path: "/landmark/forbiddenCity",
     name: "ForbiddenCity",
     component: () => import("../views/landmarks/ForbiddenCity.vue"),
@@ -54,6 +54,12 @@ const routes = [
     component: LandmarkPortal,
     props: true,
   },
+  {
+    path: "/landmark/:landmarkId/:direction",
+    name: "LandmarkLifecyclePage",
+    component: () => import("../components/LandmarkLifecycle.vue"),
+    props: true
+  }
 ];
 
 const router = createRouter({
