@@ -14,9 +14,26 @@ const routes = [
     component: () => import("../views/landmarks/ForbiddenCity.vue"),
   },
   {
-    path: "/landmark/templeOfHeaven",
+    path: "/landmark/temple-of-heaven",
     name: "TempleOfHeaven",
-    component: () => import("../views/landmarks/TempleOfHeaven.vue"),
+    component: () => import("@/views/landmarks/TempleOfHeaven.vue"),
+    children: [
+      {
+        path: "life-cycle", 
+        name: "LifeCycle", 
+        component: () => import("@/components/temple-of-heaven/LifeCycle.vue")
+      },
+      {
+        path: "influence", 
+        name: "Influence", 
+        component: () => import("@/components/temple-of-heaven/Influence.vue")
+      },
+      {
+        path: "legends", 
+        name: "Legends", 
+        component: () => import("@/components/temple-of-heaven/Legends.vue")
+      }
+    ]
   },
   {
     path: "/landmark/greatWall",

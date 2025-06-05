@@ -27,8 +27,8 @@
       </div>
     </header>
 
-    <section class="exploration-cards-section">
-      <div class="exploration-card" @click="explore('lifeCycle')">
+    <section class="exploration-cards-section" v-if="!activeChildRoute">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">六百年祭天路</h2>
           <div class="card-preview-media">
@@ -41,11 +41,11 @@
           <p class="card-description">
             从永乐帝敕建到世界文化遗产的时光之旅，探索天坛建筑群的演变与修缮历程，见证中国祭天文化的传承与发展。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('lifeCycle')">立即探索 →</button>
         </div>
       </div>
 
-      <div class="exploration-card" @click="explore('influence')">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">天人合一之境</h2>
           <div class="card-preview-media">
@@ -58,11 +58,11 @@
           <p class="card-description">
             解析天坛建筑中蕴含的宇宙观与哲学思想，评估其作为世界文化遗产对全球建筑艺术、文化研究和旅游产业的深远影响。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('influence')">立即探索 →</button>
         </div>
       </div>
 
-      <div class="exploration-card" @click="explore('legends')">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">天坛秘闻录</h2>
           <div class="card-preview-media">
@@ -75,10 +75,13 @@
           <p class="card-description">
             聆听天坛六百年的皇家秘事，从嘉靖帝雷击事件到光绪帝祈雨传奇，感受这座圣坛背后的历史风云与动人篇章。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('legends')">立即探索 →</button>
         </div>
       </div>
     </section>
+
+    <!-- 子组件渲染区 -->
+    <router-view v-else :landmark="landmark"></router-view>
 
     <footer class="portal-footer">
       <p>发现更多：<a href="#">推荐探索路线</a> | <a href="#">更多发现</a></p>
@@ -94,13 +97,19 @@ export default {
     landmarkId: {
       type: String,
       required: true,
-      default: "templeofheaven", // Defaulting for standalone use, parent should provide actual ID
+      default: "templeofheaven",
     },
   },
   data() {
     return {
       landmark: {}, 
     };
+  },
+  computed: {
+    // 新增：检测子路由是否激活[6,7](@ref)
+    activeChildRoute() {
+      return this.$route.matched.length > 1;
+    }
   },
   created() {
     this.loadLandmarkData();
@@ -109,18 +118,17 @@ export default {
     goBack() {
       this.$router.push("/"); 
     },
+
     explore(direction) {
-      this.$router.push({
-        name: "LandmarkDetail",
-        params: { id: this.landmarkId, direction: direction },
-      });
+      const routeName = direction.charAt(0).toUpperCase() + direction.slice(1);
+      this.$router.push({ name: routeName });
     },
     loadLandmarkData() {
-      if (this.landmarkId === "templeofheaven") {
+      if (this.landmarkId === "temple-of-heaven") {
         this.landmark = {
           name: "天坛",
           summary: "中国古代帝王祭天祈谷的场所，明清两代皇家祭祀中心，世界文化遗产，中国传统建筑艺术的杰出代表。",
-          image: 'https://cdn.pixabay.com/photo/2017/04/08/15/16/the-temple-of-heaven-2213516_1280.jpg', // 使用相对路径
+          image: 'https://cdn.pixabay.com/photo/2017/04/08/15/16/the-temple-of-heaven-2213516_1280.jpg',
           metrics: [
             { icon: "📅", value: "明永乐十八年 (1420年)", label: "始建于" },
             { icon: "📏", value: "总面积273万平方米", label: "占地面积" },
