@@ -30,16 +30,16 @@
     <section class="exploration-cards-section">
       <div class="exploration-card" @click="explore('lifeCycle')">
         <div class="card-content">
-          <h2 class="card-title">生命年轮</h2>
+          <h2 class="card-title">皇陵沿革</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=LifeCycle+Preview"
-              alt="生命年轮预览"
+              :src="changlingImage"
+              alt="皇陵沿革预览"
             />
           </div>
           <p class="card-description">
-            从兴建到重生的时光之旅，探索{{ landmark.name }}的建筑更迭与功能演变。
+            追溯自永乐七年始建长陵，至崇祯帝入葬，明朝十三座帝王陵寝的兴建历程。审视其在清代的维护，历经近现代的考古发掘、磨难与保护，直至成为世界文化遗产的完整历史演变。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -47,18 +47,16 @@
 
       <div class="exploration-card" @click="explore('influence')">
         <div class="card-content">
-          <h2 class="card-title">影响力光环</h2>
+          <h2 class="card-title">世遗之尊</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=Influence+Preview"
-              alt="影响力预览"
+              :src="shendaoDagongmenImage"
+              alt="世遗之尊预览"
             />
           </div>
           <p class="card-description">
-            解析{{
-              landmark.name
-            }}如何融入当代生活，评估其在全球范围内的文化影响力与认知度。
+            探究明十三陵作为中华文明瑰宝的显赫地位，及其被联合国教科文组织列为世界文化遗产的核心价值。评估其宏伟的皇家规制、独特的风水格局和丰富的历史遗存对当代文化、旅游及学术研究产生的深远影响。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -66,18 +64,16 @@
 
       <div class="exploration-card" @click="explore('legends')">
         <div class="card-content">
-          <h2 class="card-title">传奇故事</h2>
+          <h2 class="card-title">陵寝秘语</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=Legends+Preview"
-              alt="传奇故事预览"
+              :src="beitingImage"
+              alt="陵寝秘语预览"
             />
           </div>
           <p class="card-description">
-            聆听{{
-              landmark.name
-            }}背后那些引人入胜的帝王轶事、民间传说与文人墨客的动人篇章。
+            揭开沉睡帝陵的神秘面纱，聆听万历帝定陵发掘的幕后故事与考古传奇，探寻民间流传的“陵中宝藏”传说。感受帝王将相的功过是非，以及这座皇家陵园在历史长河中低语的未尽之言。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -92,18 +88,29 @@
 </template>
 
 <script>
+import MingTombsBackgroundImage from '../../assets/Ming_Tombs.jpg';
+// 导入探索卡片图片
+import changlingImage from "../../assets/长陵.jpg"; // 确保文件名和路径正确
+import shendaoDagongmenImage from "../../assets/明十三陵神道_大宫门.jpg"; // 确保文件名和路径正确
+import beitingImage from "../../assets/碑亭.jpg"; // 确保文件名和路径正确
+
+
 export default {
   name: "MingTombsPortal",
   props: {
     landmarkId: {
       type: String,
       required: true,
-      default: "mingTombs", // Defaulting for standalone use, parent should provide actual ID
+      default: "mingTombs",
     },
   },
   data() {
     return {
       landmark: {},
+      // 将导入的图片赋值给data属性
+      changlingImage: changlingImage,
+      shendaoDagongmenImage: shendaoDagongmenImage,
+      beitingImage: beitingImage,
     };
   },
   created() {
@@ -114,38 +121,40 @@ export default {
       this.$router.push("/");
     },
     explore(direction) {
-      this.$router.push({
-        name: "LandmarkDetail",
-        params: { id: this.landmarkId, direction: direction },
-      });
+      // 导航到对应的三级页面，例如 LandmarkLifecyclePage
+      if (direction === 'lifeCycle' || direction === 'influence' || direction === 'legends') {
+         this.$router.push({
+          name: 'LandmarkLifecyclePage', // 假设三级详情页都用这个路由名，通过direction区分内容
+          params: { landmarkId: this.landmarkId, direction: direction },
+        });
+      } else {
+        this.$router.push({
+          name: "LandmarkDetail", // 或者您原有的三级页面路由名
+          params: { id: this.landmarkId, direction: direction },
+        });
+      }
     },
     loadLandmarkData() {
       if (this.landmarkId === "mingTombs") {
         this.landmark = {
-          name: "明十三陵", // (Name established on PDF pg 2)
-          // Summary based on "明十三陵是明朝13位皇帝的陵寝群" (PDF pg 2) and "2003年7月3日十三陵与清东陵、西陵一同被联合国教科文组织列为世界文化遗产" (PDF pg 3)
+          name: "明十三陵",
           summary: "明朝十三位帝王的宏伟长眠之地，世界文化遗产，展现中国古代皇家陵寝建筑艺术与历史文化。",
-          image: "china_vis2025\src\assets\Ming_Tombs_1875-1908.jpg", // Generic placeholder as no specific overview image for Ming Tombs is in the PDF.
+          image: MingTombsBackgroundImage,
           metrics: [
-            // "始于永乐七年(1409年),终止于崇祯帝入陵(1644年)" (PDF pg 2)
             { icon: "📅", value: "1409-1644年", label: "修建年代" },
-            // "共葬13帝" (PDF pg 3)
             { icon: "👑", value: "13位", label: "明朝皇帝" },
-            // "2003年7月3日十三陵与清东陵、西陵一同被联合国教科文组织列为世界文化遗产2621" (PDF pg 3)
             { icon: "🌍", value: "世界文化遗产", label: "" },
-            // "陵区占地约40多平方公里" (PDF pg 2)
             { icon: "🏞️", value: "约40平方公里", label: "占地面积" },
           ],
         };
       }
-      // Placeholder for other landmarks if any
-      // else if (this.landmarkId === "forbiddenCity") { ... }
     },
   },
 };
 </script>
 
 <style scoped>
+/* 样式保持不变，此处省略以减少篇幅 */
 /* 整体容器 - 黄昏色调 */
 .landmark-portal-container {
   font-family: "Noto Serif SC", serif;
@@ -162,7 +171,7 @@ export default {
 .landmark-header {
   position: relative;
   width: 100%;
-  height: 70vh;
+  height: 80vh; /* 增加高度以better展示画卷 */
   overflow: hidden;
   display: flex;
   align-items: flex-end;
@@ -180,21 +189,31 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 0;
+  background-color: #f5f2e9; /* 添加古典底色 */
 }
 
 .landmark-main-media {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.6) sepia(0.3) hue-rotate(-10deg) contrast(0.9);
+  filter: brightness(0.95) sepia(0.2) saturate(0.9); /* 调整滤镜效果以突出古画效果 */
+  transform: scale(1.02); /* 略微放大以覆盖边缘 */
+  transition: transform 10s ease; /* 添加缓慢的动画效果 */
+}
+
+.landmark-header:hover .landmark-main-media {
+  transform: scale(1.05); /* 悬停时轻微放大效果 */
 }
 
 .landmark-info {
   position: relative;
   z-index: 1;
   padding: 0 20px;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
   margin-bottom: 40px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  width: 100%;
+  padding-top: 100px; /* 增加渐变区域 */
 }
 
 .landmark-info h1 {
@@ -436,11 +455,11 @@ export default {
     width: 45%;
     margin-bottom: 30px;
   }
-  
+
   .landmark-header {
     height: 65vh;
   }
-  
+
   .landmark-info h1 {
     font-size: 2.8em;
   }
@@ -448,7 +467,7 @@ export default {
 
 @media (max-width: 768px) {
   .landmark-header {
-    height: 60vh;
+    height: 70vh;
   }
 
   .landmark-info h1 {
@@ -470,7 +489,7 @@ export default {
     width: 90%;
     margin-bottom: 25px;
   }
-  
+
   .core-metrics {
     gap: 15px;
   }
@@ -480,17 +499,17 @@ export default {
   .landmark-info h1 {
     font-size: 1.8em;
   }
-  
+
   .back-button {
     top: 20px;
     left: 20px;
     padding: 10px 15px;
   }
-  
+
   .exploration-card {
     width: 100%;
   }
-  
+
   .card-title {
     font-size: 1.4em;
   }
