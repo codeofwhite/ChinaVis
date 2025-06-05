@@ -119,18 +119,27 @@ export default {
     goBack() {
       this.$router.push("/");
     },
-    explore(direction) {
-      // 导航到对应的三级页面，例如 LandmarkLifecyclePage
-      if (direction === 'lifeCycle' || direction === 'influence' || direction === 'legends') {
+   explore(direction) {
+      console.log(`${this.name} exploring direction:`, direction, 'with landmarkId:', this.landmarkId);
+
+      if (direction === 'lifeCycle') { // 第一个卡片 (“街巷记忆” / “皇陵沿革”)
         this.$router.push({
-          name: 'LandmarkLifecyclePage', // 假设三级详情页都用这个路由名，通过direction区分内容
+          name: 'LandmarkLifecyclePage', // 指向时间轴页面
+          params: { landmarkId: this.landmarkId, direction: direction }, // direction 传递，虽然新版LifeCyclePage不强依赖它
+        });
+      } else if (direction === 'influence') { // 第二个卡片 (“商韵流传” / “世遗之尊”)
+        this.$router.push({
+          name: 'LandmarkRadarDisplayPage', // 指向您为雷达图创建的页面
+          params: { landmarkId: this.landmarkId }, // 雷达图页面可能只需要 landmarkId
+        });
+      } else if (direction === 'legends') { // 第三个卡片 (“坊间拾趣” / “陵寝秘语”)
+        // 假设您会创建一个 LandmarkLegendsPage.vue 来展示传奇故事
+        this.$router.push({
+          name: 'LandmarkLegendsPage', // 您需要创建这个路由和对应的组件
           params: { landmarkId: this.landmarkId, direction: direction },
         });
       } else {
-        this.$router.push({
-          name: "LandmarkDetail", // 或者您原有的三级页面路由名
-          params: { id: this.landmarkId, direction: direction },
-        });
+        console.warn("Unknown exploration direction:", direction);
       }
     },
     loadLandmarkData() {
