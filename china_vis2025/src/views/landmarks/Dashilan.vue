@@ -30,16 +30,16 @@
     <section class="exploration-cards-section">
       <div class="exploration-card" @click="explore('lifeCycle')">
         <div class="card-content">
-          <h2 class="card-title">生命年轮</h2>
+          <h2 class="card-title">街巷记忆</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=LifeCycle+Preview"
-              alt="生命年轮预览"
+              :src="oldDashilanImage"
+              alt="街巷记忆预览"
             />
           </div>
           <p class="card-description">
-            从兴建到重生的时光之旅，探索{{ landmark.name }}的建筑更迭与功能演变。
+            从明代廊房的初兴，到清末民初的商铺林立与几经兴废，再到当代的保护性修缮与风貌重现。一同探寻大栅栏这条百年老街在时光流转中的建筑格局、市井风貌与功能角色的演变轨迹。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -47,18 +47,16 @@
 
       <div class="exploration-card" @click="explore('influence')">
         <div class="card-content">
-          <h2 class="card-title">影响力光环</h2>
+          <h2 class="card-title">商韵流传</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=Influence+Preview"
-              alt="影响力预览"
+              :src="tongRenTangImage"
+              alt="商韵流传预览"
             />
           </div>
           <p class="card-description">
-            解析{{
-              landmark.name
-            }}如何融入当代生活，评估其在全球范围内的文化影响力与认知度。
+            解读大栅栏作为京城重要商贸枢纽的历史地位，品味老字号的百年商誉与京味商业文化。评估其在当代如何延续商业活力，吸引八方来客，并在城市发展中焕发新的光彩。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -66,18 +64,16 @@
 
       <div class="exploration-card" @click="explore('legends')">
         <div class="card-content">
-          <h2 class="card-title">传奇故事</h2>
+          <h2 class="card-title">坊间拾趣</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
             <img
-              src="https://via.placeholder.com/150x100?text=Legends+Preview"
-              alt="传奇故事预览"
+              :src="dashilanStoryImage"
+              alt="坊间拾趣预览"
             />
           </div>
           <p class="card-description">
-            聆听{{
-              landmark.name
-            }}背后那些引人入胜的帝王轶事、民间传说与文人墨客的动人篇章。
+            漫步大栅栏，聆听那些流传于街头巷尾的奇闻轶事、梨园往事与民俗风情。从义和团的烽火到“大观楼”的首映光影，从“大石烂儿”的读音传说到元宵灯会的市井喧嚣，拾取那些生动鲜活的地标故事。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -92,18 +88,28 @@
 </template>
 
 <script>
+import DashilarBackgroundImage from "../../assets/dashilan_bg.jpg";
+// 导入探索卡片图片
+import oldDashilanImage from "../../assets/olddashilan.jpg";
+import tongRenTangImage from "../../assets/TongRenTang.jpg";
+import dashilanStoryImage from "../../assets/dashilan_story.jpg"; // 假设路径正确
+
 export default {
   name: "DashilarPortal",
   props: {
     landmarkId: {
       type: String,
       required: true,
-      default: "dashilar", // Defaulting for standalone use, parent should provide actual ID
+      default: "dashilar",
     },
   },
   data() {
     return {
-      landmark: {}, 
+      landmark: {},
+      // 将导入的图片赋值给data属性，以便模板使用
+      oldDashilanImage: oldDashilanImage,
+      tongRenTangImage: tongRenTangImage,
+      dashilanStoryImage: dashilanStoryImage,
     };
   },
   created() {
@@ -111,30 +117,32 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.push("/"); 
+      this.$router.push("/");
     },
     explore(direction) {
-      this.$router.push({
-        name: "LandmarkDetail",
-        params: { id: this.landmarkId, direction: direction },
-      });
+      // 导航到对应的三级页面，例如 LandmarkLifecyclePage
+      if (direction === 'lifeCycle' || direction === 'influence' || direction === 'legends') {
+        this.$router.push({
+          name: 'LandmarkLifecyclePage', // 假设三级详情页都用这个路由名，通过direction区分内容
+          params: { landmarkId: this.landmarkId, direction: direction },
+        });
+      } else {
+        this.$router.push({
+          name: "LandmarkDetail", // 或者您原有的三级页面路由名
+          params: { id: this.landmarkId, direction: direction },
+        });
+      }
     },
     loadLandmarkData() {
       if (this.landmarkId === "dashilar") {
         this.landmark = {
-          name: "大栅栏", // [cite: 1] (General name, established contextually)
-          // Summary combining information from PDF pg 1, 2: "大栅栏自明中叶即为繁华商业区"[cite: 1], "大栅栏长期作为北京重要的商业街区与交通枢纽。"[cite: 2], "大栅栏与京味文化、民国故事紧密相连,是老北京市井传说和都市记忆的重要载体"
+          name: "大栅栏",
           summary: "北京著名的百年商业老街，京味文化与市井生活的鲜活画卷，承载着丰富的历史记忆与民国风情。",
-          // Image source: The image on page 1 of "大栅栏与明十三陵：文化地标综合研究.pdf" [cite: 1] (Indicated by "ChatGPT " next to image)
-          image: "/placeholder-dashilar-entrance.jpg", // Replace with actual path to the image from PDF pg 1.
+          image: DashilarBackgroundImage,
           metrics: [
-            // "大栅栏源于明代。明永乐年间(15世纪初)" [cite: 1] (PDF pg 1)
             { icon: "📅", value: "明代初 (15世纪初)", label: "始建于" },
-            // "街道长275米、宽不足10米" [cite: 1] (PDF pg 1)
             { icon: "📏", value: "长275米", label: "街道长度" },
-            // "2015年4月3日,大栅栏历史文化街区被住房和城乡建设部和国家文物局公布为第一批“中国历史文化街区” 17" (PDF pg 2) - Source 17 is "大栅栏历史文化街区 https://cgn.ac.cn/638.news.detail.dhtml?news_id=1670"
             { icon: "🏅", value: "中国历史文化街区", label: "称号" },
-            // "大栅栏商业街日均客流量在15-16万人次,节假日超过20万人次12" (PDF pg 2) - Source 12 is "大栅栏- 维基百科,自由的百科全书"
             { icon: "🚶", value: "日均15万+", label: "日均客流" },
           ],
         };
@@ -145,6 +153,7 @@ export default {
 </script>
 
 <style scoped>
+/* 样式保持不变，此处省略以减少篇幅 */
 /* 整体容器 - 黄昏色调 */
 .landmark-portal-container {
   font-family: "Noto Serif SC", serif;
@@ -435,11 +444,11 @@ export default {
     width: 45%;
     margin-bottom: 30px;
   }
-  
+
   .landmark-header {
     height: 65vh;
   }
-  
+
   .landmark-info h1 {
     font-size: 2.8em;
   }
@@ -469,7 +478,7 @@ export default {
     width: 90%;
     margin-bottom: 25px;
   }
-  
+
   .core-metrics {
     gap: 15px;
   }
@@ -479,17 +488,17 @@ export default {
   .landmark-info h1 {
     font-size: 1.8em;
   }
-  
+
   .back-button {
     top: 20px;
     left: 20px;
     padding: 10px 15px;
   }
-  
+
   .exploration-card {
     width: 100%;
   }
-  
+
   .card-title {
     font-size: 1.4em;
   }
