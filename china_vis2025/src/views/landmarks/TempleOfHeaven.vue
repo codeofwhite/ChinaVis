@@ -124,7 +124,7 @@ export default {
       this.$router.push({ name: routeName });
     },
     loadLandmarkData() {
-      if (this.landmarkId === "temple-of-heaven") {
+      if (this.landmarkId === "templeofheaven") {
         this.landmark = {
           name: "天坛",
           summary: "中国古代帝王祭天祈谷的场所，明清两代皇家祭祀中心，世界文化遗产，中国传统建筑艺术的杰出代表。",
