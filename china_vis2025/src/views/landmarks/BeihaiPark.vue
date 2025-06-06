@@ -116,9 +116,23 @@ export default {
       this.$router.push("/");
     },
     explore(direction) {
-      // 可根据需要跳转到不同的三级页面
-      // this.$router.push({ name: "LandmarkDetail", params: { id: this.landmarkId, direction } });
-      alert(`探索：${direction}`);
+      // 跳转到不同的三级页面
+      if (direction === 'lifeCycle') {
+        this.$router.push({
+          name: "BeihaiParkLifeCycle",
+          params: { landmarkId: this.landmarkId || 'beihaiPark' }
+        });
+      } else if (direction === 'influence') {
+        this.$router.push({
+          name: "BeihaiParkInfluence",
+          params: { landmarkId: this.landmarkId || 'beihaiPark' }
+        });
+      } else if (direction === 'legends') {
+        this.$router.push({
+          name: "BeihaiParkLegends",
+          params: { landmarkId: this.landmarkId || 'beihaiPark' }
+        });
+      }
     },
   },
 };
