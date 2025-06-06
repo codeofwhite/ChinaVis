@@ -41,7 +41,7 @@
           <p class="card-description">
             从永乐帝敕建到世界文化遗产的时光之旅，探索天坛建筑群的演变与修缮历程，见证中国祭天文化的传承与发展。
           </p>
-          <button class="explore-button" @click.stop="explore('lifeCycle')">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('heaven-LifeCycle')">立即探索 →</button>
         </div>
       </div>
 
@@ -58,7 +58,7 @@
           <p class="card-description">
             解析天坛建筑中蕴含的宇宙观与哲学思想，评估其作为世界文化遗产对全球建筑艺术、文化研究和旅游产业的深远影响。
           </p>
-          <button class="explore-button" @click.stop="explore('influence')">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('heaven-Influence')">立即探索 →</button>
         </div>
       </div>
 
@@ -75,7 +75,7 @@
           <p class="card-description">
             聆听天坛六百年的皇家秘事，从嘉靖帝雷击事件到光绪帝祈雨传奇，感受这座圣坛背后的历史风云与动人篇章。
           </p>
-          <button class="explore-button" @click.stop="explore('legends')">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('heaven-Legends')">立即探索 →</button>
         </div>
       </div>
     </section>
@@ -119,12 +119,11 @@ export default {
       this.$router.push("/"); 
     },
 
-    explore(direction) {
-      const routeName = direction.charAt(0).toUpperCase() + direction.slice(1);
+    explore(routeName) {
       this.$router.push({ name: routeName });
     },
     loadLandmarkData() {
-      if (this.landmarkId === "temple-of-heaven") {
+      if (this.landmarkId === "templeofheaven") {
         this.landmark = {
           name: "天坛",
           summary: "中国古代帝王祭天祈谷的场所，明清两代皇家祭祀中心，世界文化遗产，中国传统建筑艺术的杰出代表。",
