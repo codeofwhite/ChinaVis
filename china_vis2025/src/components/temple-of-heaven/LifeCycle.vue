@@ -5,8 +5,8 @@
     
     <!-- 页面标题 -->
     <div class="lifecycle-header">
-      <h1>天坛六百年祭天路</h1>
-      <p>从永乐帝敕建到世界文化遗产的时光之旅</p>
+      <h1>天坛建筑群演变与修缮历程</h1>
+      <p>从永乐敕建到世界文化遗产的六百年建筑变迁</p>
     </div>
     
     <!-- 时间轴导航 -->
@@ -59,18 +59,30 @@
                 <div class="metric-label">{{ metric.label }}</div>
               </div>
             </div>
+            
+            <!-- 新增建筑特点部分 -->
+            <div class="architectural-features" v-if="activeData.features">
+              <h3>建筑特点</h3>
+              <ul>
+                <li v-for="(feature, idx) in activeData.features" :key="idx">{{ feature }}</li>
+              </ul>
+            </div>
           </div>
         </div>
         
         <!-- 建筑规模变化图表 -->
         <div class="chart-section">
-          <h3>天坛建筑群规模变化</h3>
+          <h3>天坛建筑群规模演变</h3>
           <div ref="chart" class="chart-container"></div>
+        </div>
+        
+        <!-- 新增建筑类型分布图表 -->
+        <div class="chart-section">
+          <h3>建筑类型分布变化</h3>
+          <div ref="typeChart" class="chart-container"></div>
         </div>
       </div>
     </div>
-    
-    
   </div>
 </template>
 
@@ -84,78 +96,108 @@ const router = useRouter();
 // 返回门户主页
 const goBack = () => router.push('/landmark/temple-of-heaven');
 
-// 时间轴数据
+// 时间轴数据 - 重点强化建筑演变内容
 const timelineData = ref([
   {
     year: "1420",
     title: "永乐敕建",
     period: "明永乐十八年",
-    description: "明成祖朱棣下诏建造天地坛，作为皇帝祭天、祈谷的场所，初建时天地合祀，名天地坛。",
+    description: '明成祖朱棣下诏建造天地坛，作为皇帝祭天、祈谷的场所。初建时采用天地合祀格局，主要建筑包括大祀殿、大祀门、斋宫等，奠定了天坛建筑群的基本格局。建筑群严格遵循"天圆地方"的宇宙观设计，主体建筑呈圆形，围墙为方形。',
     image: "https://picsum.photos/600/400?temple=1",
     metrics: [
       { value: "273公顷", label: "占地面积" },
-      { value: "20处", label: "主要建筑" },
-      { value: "4大区域", label: "坛域布局" }
+      { value: "20座", label: "主要建筑" },
+      { value: "4大区域", label: "建筑分区" }
+    ],
+    features: [
+      "大祀殿为矩形重檐建筑",
+      "采用蓝绿为主色调的琉璃瓦",
+      "严格的中轴对称布局"
     ]
   },
   {
     year: "1530",
     title: "天地分祀",
     period: "明嘉靖九年",
-    description: "嘉靖皇帝实行天地分祀制度，在天地坛南郊另建圜丘坛专门祭天，原天地坛改称天坛，专行祈谷之礼。",
+    description: "嘉靖皇帝改革礼制，实行天地分祀制度。在天地坛南郊新建圜丘坛专用于祭天，原天地坛改建为祈谷坛（后称祈年殿）。此次改造新增了圜丘、皇穹宇等建筑，改变了天坛的整体格局。建筑工艺上大量使用汉白玉石材，形成了三重圆坛的独特结构。",
     image: "https://picsum.photos/600/400?temple=2",
     metrics: [
-      { value: "圜丘坛", label: "新建祭坛" },
-      { value: "3层结构", label: "祭坛形制" },
-      { value: "9重天", label: "设计理念" }
+      { value: "圜丘坛", label: "新增建筑" },
+      { value: "3层结构", label: "圜丘形制" },
+      { value: "360块", label: "栏板数量" }
+    ],
+    features: [
+      "圜丘三层九重坛台结构",
+      "皇穹宇圆形单檐建筑",
+      "汉白玉栏板雕刻云龙纹"
     ]
   },
   {
     year: "1751",
     title: "乾隆大修",
     period: "清乾隆十六年",
-    description: "乾隆皇帝对天坛进行了大规模改建和扩建，将祈年殿三重檐改为蓝琉璃瓦，重建皇穹宇，形成今日规模。",
+    description: "乾隆皇帝对天坛进行了史上最大规模的改建和扩建。将祈年殿三重檐全部更换为象征天空的蓝色琉璃瓦，重建皇穹宇为单檐圆攒尖顶，扩建圜丘坛。同时改建了斋宫、神乐署等配套建筑，形成了今日所见的天坛基本格局。此次修缮采用了最高规格的建筑材料和技术。",
     image: "https://picsum.photos/600/400?temple=3",
     metrics: [
       { value: "12年", label: "工期" },
       { value: "9.5万两", label: "耗银" },
-      { value: "30余处", label: "修缮建筑" }
+      { value: "30处", label: "修缮建筑" }
+    ],
+    features: [
+      "祈年殿蓝色琉璃瓦顶",
+      "皇穹宇单檐圆攒尖顶",
+      "楠木梁柱结构体系"
     ]
   },
   {
     year: "1889",
     title: "祈年殿重建",
     period: "清光绪十五年",
-    description: "祈年殿遭雷击焚毁，光绪皇帝下令按原样重建，历时七年完成，成为古代木构建筑的杰出代表。",
+    description: "祈年殿遭雷击焚毁，光绪皇帝下令按原样重建。此次重建严格遵循乾隆时期的建筑规制，采用珍贵的楠木作为主要结构材料，历时七年完成。重建过程中采用了传统榫卯结构技术，没有使用一颗钉子，成为中国古代木构建筑的巅峰之作。建筑细节上恢复了乾隆时期的彩绘图案。",
     image: "https://picsum.photos/600/400?temple=4",
     metrics: [
       { value: "38米", label: "高度" },
       { value: "28根", label: "楠木柱" },
-      { value: "3重檐", label: "屋顶结构" }
+      { value: "7年", label: "工期" }
+    ],
+    features: [
+      "三重檐圆攒尖顶",
+      "28根楠木柱象征星宿",
+      "榫卯结构无钉建造"
     ]
   },
   {
     year: "1918",
     title: "辟为公园",
     period: "民国七年",
-    description: "天坛正式辟为公园向公众开放，结束了近500年皇家祭坛的历史，成为北京重要的文化旅游景点。",
+    description: "天坛结束近500年的皇家禁地历史，正式作为公园向公众开放。民国政府对部分建筑进行了保护性修缮，修复了因战乱损坏的围墙和部分殿宇。同时增加了服务性建筑，如售票处、休息亭等，使建筑群适应公共游览需求。这一转变开启了天坛从皇家祭祀场所到公共文化空间的演变。",
     image: "https://picsum.photos/600/400?temple=5",
     metrics: [
-      { value: "2银元", label: "门票价格" },
       { value: "20万+", label: "年游客量" },
-      { value: "10处开放区", label: "开放区域" }
+      { value: "10处", label: "开放区域" },
+      { value: "5处", label: "新增设施" }
+    ],
+    features: [
+      "保持原有建筑格局",
+      "新增公共游览设施",
+      "部分建筑功能转换"
     ]
   },
   {
     year: "1998",
     title: "世界遗产",
     period: "现代",
-    description: "天坛被联合国教科文组织列入《世界遗产名录》，成为全人类共同的文化遗产，被誉为中国古代建筑艺术的瑰宝。",
+    description: '天坛被联合国教科文组织列入《世界遗产名录》。中国政府启动了大规模的保护性修缮工程，采用传统工艺和材料对祈年殿、皇穹宇、圜丘等主要建筑进行了全面修缮。同时建立了科学的建筑监测系统，对木结构、彩绘等进行数字化保护。修缮严格遵循"修旧如旧"原则，恢复了部分历史建筑原貌。',
     image: "https://picsum.photos/600/400?temple=6",
     metrics: [
       { value: "273公顷", label: "保护面积" },
-      { value: "800万+", label: "年游客量" },
-      { value: "20+", label: "保护公约" }
+      { value: "50+次", label: "专业修缮" },
+      { value: "800万+", label: "年游客量" }
+    ],
+    features: [
+      "传统工艺与现代技术结合",
+      "数字化建筑监测系统",
+      "遗产完整性保护"
     ]
   }
 ]);
@@ -169,9 +211,11 @@ const setActiveIndex = (index) => {
 // 当前活动数据
 const activeData = computed(() => timelineData.value[activeIndex.value]);
 
-// ECharts图表相关
+// ECharts图表实例
 const chart = ref(null);
+const typeChart = ref(null);
 let chartInstance = null;
+let typeChartInstance = null;
 
 // 建筑规模变化数据
 const chartData = ref({
@@ -179,7 +223,18 @@ const chartData = ref({
   sizes: [85, 92, 95, 100, 87, 100] // 百分比数据
 });
 
-// 初始化图表
+// 建筑类型分布数据
+const typeData = ref({
+  years: timelineData.value.map(item => item.year),
+  types: [
+    {name: '祭祀建筑', data: [75, 65, 60, 60, 50, 55]},
+    {name: '附属建筑', data: [15, 20, 25, 25, 25, 25]},
+    {name: '服务设施', data: [0, 5, 5, 5, 15, 10]},
+    {name: '园林景观', data: [10, 10, 10, 10, 10, 10]}
+  ]
+});
+
+// 初始化规模变化图表
 const initChart = () => {
   if (chart.value) {
     chartInstance = echarts.init(chart.value);
@@ -252,18 +307,84 @@ const initChart = () => {
     };
     
     chartInstance.setOption(option);
-    
-    // 窗口大小改变时重绘图表
-    window.addEventListener('resize', () => {
-      chartInstance.resize();
-    });
   }
 };
 
-// 监听活动索引变化，高亮图表对应点
+// 初始化建筑类型分布图表
+const initTypeChart = () => {
+  if (typeChart.value) {
+    typeChartInstance = echarts.init(typeChart.value);
+    
+    const option = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      legend: {
+        data: typeData.value.types.map(item => item.name),
+        textStyle: {
+          color: '#5a4a42'
+        },
+        bottom: 0
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '15%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        data: typeData.value.years,
+        axisLine: {
+          lineStyle: {
+            color: '#8b4513'
+          }
+        },
+        axisLabel: {
+          color: '#5a4a42'
+        }
+      },
+      yAxis: {
+        type: 'value',
+        axisLine: {
+          lineStyle: {
+            color: '#8b4513'
+          }
+        },
+        axisLabel: {
+          formatter: '{value}%',
+          color: '#5a4a42'
+        },
+        splitLine: {
+          lineStyle: {
+            color: 'rgba(139, 69, 19, 0.1)'
+          }
+        }
+      },
+      series: typeData.value.types.map((type, index) => ({
+        name: type.name,
+        type: 'bar',
+        stack: 'total',
+        emphasis: {
+          focus: 'series'
+        },
+        data: type.data,
+        itemStyle: {
+          color: ['#d4a76a', '#8b4513', '#9c7c5c', '#5a4a42'][index]
+        }
+      }))
+    };
+    
+    typeChartInstance.setOption(option);
+  }
+};
+
+// 监听活动索引变化
 watch(activeIndex, (newIndex) => {
   if (chartInstance) {
-    // 高亮图表对应点
     chartInstance.dispatchAction({
       type: 'downplay',
       seriesIndex: 0
@@ -281,14 +402,75 @@ watch(activeIndex, (newIndex) => {
       dataIndex: newIndex
     });
   }
+  
+  if (typeChartInstance) {
+    typeChartInstance.dispatchAction({
+      type: 'highlight',
+      seriesIndex: newIndex
+    });
+  }
 });
+
+// 响应窗口大小变化
+const handleResize = () => {
+  if (chartInstance) chartInstance.resize();
+  if (typeChartInstance) typeChartInstance.resize();
+};
 
 onMounted(() => {
   initChart();
+  initTypeChart();
+  window.addEventListener('resize', handleResize);
 });
 </script>
 
 <style scoped>
+/* 新增样式 */
+.history-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.history-card:hover .history-media img {
+  transform: scale(1.05);
+}
+
+.architectural-features {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(139, 69, 19, 0.2);
+}
+
+.architectural-features h3 {
+  font-size: 1.2rem;
+  color: #8b4513;
+  margin-bottom: 12px;
+}
+
+.architectural-features ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.architectural-features li {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  color: #5a4a42;
+}
+
+.architectural-features li:before {
+  content: "•";
+  color: #d4a76a;
+  font-size: 1.5rem;
+  position: absolute;
+  left: 0;
+  top: -3px;
+}
+
+/* 原有样式保持不变 */
 .lifecycle-container {
   font-family: "Noto Serif SC", serif;
   color: #333;
@@ -506,17 +688,6 @@ onMounted(() => {
   position: relative;
 }
 
-.history-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s ease;
-}
-
-.history-card:hover .history-media img {
-  transform: scale(1.05);
-}
-
 .history-info {
   padding: 30px;
 }
@@ -636,6 +807,10 @@ onMounted(() => {
     height: 250px;
   }
 
+  .chart-section {
+    padding: 20px;
+  }
+
 }
 
 @media (max-width: 480px) {
@@ -654,5 +829,12 @@ onMounted(() => {
     gap: 15px;
   }
   
+  .history-info {
+    padding: 20px;
+  }
+  
+  .chart-container {
+    height: 250px;
+  }
 }
 </style>
