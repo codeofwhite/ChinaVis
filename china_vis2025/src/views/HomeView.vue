@@ -80,11 +80,10 @@ export default {
           position: [116.57, 40.431],
           routeName: "GreatWall",
         },
-        {
-          id: "mingTombs",
+        {          id: "mingTombs",
           name: "明十三陵",
           position: [116.234, 40.251],
-          routeName: "MingTombs",
+          routeName: "MingTombsPortal",
         },
         {
           id: "beihaiPark",
@@ -104,11 +103,10 @@ export default {
           position: [116.271, 39.999],
           routeName: "SummerPalace",
         },
-        {
-          id: "dashilan",
+        {          id: "dashilan",
           name: "大栅栏",
           position: [116.399, 39.899],
-          routeName: "Dashilan",
+          routeName: "DashilarPortal",
         },
       ],
       colorScaleConfig: {
