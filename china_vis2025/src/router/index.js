@@ -14,9 +14,26 @@ const routes = [
     component: () => import("../views/landmarks/ForbiddenCity.vue"),
   },
   {
-    path: "/landmark/templeOfHeaven",
+    path: "/landmark/temple-of-heaven",
     name: "TempleOfHeaven",
-    component: () => import("../views/landmarks/TempleOfHeaven.vue"),
+    component: () => import("@/views/landmarks/TempleOfHeaven.vue"),
+    children: [
+      {
+        path: "life-cycle", 
+        name: "LifeCycle", 
+        component: () => import("@/components/temple-of-heaven/LifeCycle.vue")
+      },
+      {
+        path: "influence", 
+        name: "Influence", 
+        component: () => import("@/components/temple-of-heaven/Influence.vue")
+      },
+      {
+        path: "legends", 
+        name: "Legends", 
+        component: () => import("@/components/temple-of-heaven/Legends.vue")
+      }
+    ]
   },
   {
     path: "/landmark/greatWall",
@@ -77,7 +94,13 @@ const routes = [
     name: "LandmarkLifecyclePage",
     component: () => import("../views/landmarks/LandmarkLifecycle.vue"),
     props: true
-  }
+  },
+  {
+  path: "/landmark/:landmarkId/lifeCycle",
+  name: "BeihaiParkLifeCycle",
+  component: () => import("../views/landmarks/details/BeihaiParkLifeCycle.vue"),
+  props: true
+}
 ];
 
 const router = createRouter({

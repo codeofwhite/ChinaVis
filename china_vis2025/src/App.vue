@@ -8,19 +8,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import TimeLine from "./components/TimeLine.vue";
-import LandmarkNetwork from "./components/LandmarkNetwork.vue";
-import forbiddenCityData from "./assets/forbidden-city.json";
-
-const forbiddenCity = ref(forbiddenCityData);
-const dialogVisible = ref(false);
-const selectedEvent = ref(null);
-
-const openModal = (event) => {
-  selectedEvent.value = event;
-  dialogVisible.value = true;
-};
+// 由于使用路由管理视图，这里不需要其他导入
 </script>
 
 <style scoped>
