@@ -20,17 +20,17 @@ const routes = [
     children: [
       {
         path: "life-cycle", 
-        name: "LifeCycle", 
+        name: "heaven-LifeCycle", 
         component: () => import("@/components/temple-of-heaven/LifeCycle.vue")
       },
       {
         path: "influence", 
-        name: "Influence", 
+        name: "heaven-Influence", 
         component: () => import("@/components/temple-of-heaven/Influence.vue")
       },
       {
         path: "legends", 
-        name: "Legends", 
+        name: "heaven-Legends", 
         component: () => import("@/components/temple-of-heaven/Legends.vue")
       }
     ]
@@ -60,6 +60,23 @@ const routes = [
     path: "/landmark/fayuanTemple",
     name: "FayuanTemple",
     component: () => import("../views/landmarks/FayuanTemple.vue"),
+    children: [
+      {
+        path: "life-cycle", 
+        name: "fayuan-LifeCycle", 
+        component: () => import("@/components/fayuan-temple/LifeCycle.vue")
+      },
+      {
+        path: "influence", 
+        name: "fayuan-Influence", 
+        component: () => import("@/components/fayuan-temple/Influence.vue")
+      },
+      {
+        path: "legends", 
+        name: "fayuan-Legends", 
+        component: () => import("@/components/fayuan-temple/Legends.vue"),
+      }
+    ]
   },
   {
     path: "/landmark/summerPalace",
