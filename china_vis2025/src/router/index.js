@@ -111,7 +111,13 @@ const routes = [
     name: "LandmarkLifecyclePage",
     component: () => import("../views/landmarks/LandmarkLifecycle.vue"),
     props: true
-  }
+  },
+  {
+  path: "/landmark/:landmarkId/lifeCycle",
+  name: "BeihaiParkLifeCycle",
+  component: () => import("../views/landmarks/details/BeihaiParkLifeCycle.vue"),
+  props: true
+}
 ];
 
 const router = createRouter({
