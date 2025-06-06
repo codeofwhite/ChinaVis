@@ -29,6 +29,12 @@ const routes = [
     component: () => import("../views/landmarks/MingTombs.vue"),
   },
   {
+    path: "/landmark/mingTombs/detail",
+    name: "MingTombsDetail",
+    component: () => import("../views/landmarks/LandmarkDetailView.vue"),
+    props: true
+  },
+  {
     path: "/landmark/beihaiPark",
     name: "BeihaiPark",
     component: () => import("../views/landmarks/BeihaiPark.vue"),
@@ -47,6 +53,12 @@ const routes = [
     path: "/landmark/dashilar",
     name: "DashilarPortal", // 修改路由名称以匹配 goBack 方法中的引用
     component: () => import("../views/landmarks/Dashilan.vue"),
+  },
+  {
+    path: "/landmark/dashilan/detail",
+    name: "DashilanDetail",
+    component: () => import("../views/landmarks/LandmarkDetailView.vue"),
+    props: true
   },
   {
     path: "/landmark/:landmarkId",
