@@ -1,3 +1,4 @@
+<!-- 时间轴历史关联点开后的网络图 -->
 <template>
   <div ref="container" class="network-container">
     <div class="network-title">{{ landmark.name }} · 历史关联</div>

@@ -1,3 +1,4 @@
+<!-- 地标遭到破坏和重建的图 -->
 <template>
   <div class="visualization-container">
     <div class="header">

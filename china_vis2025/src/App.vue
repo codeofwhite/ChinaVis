@@ -19,6 +19,9 @@
       />
     </el-dialog>
   </div>
+  <LawScreen></LawScreen>
+  <CulturalTree />
+  <PhoenixVisualization />
 </template>
 
 <script setup>
@@ -26,6 +29,9 @@ import { ref } from "vue";
 import TimeLine from "./components/TimeLine.vue";
 import LandmarkNetwork from "./components/LandmarkNetwork.vue";
 import forbiddenCityData from "./assets/forbidden-city.json";
+import LawScreen from "./components/LawScreen.vue"
+import CulturalTree from './components/CulturalTree.vue'
+import PhoenixVisualization from './components/PhoenixVisualization.vue'
 
 const forbiddenCity = ref(forbiddenCityData);
 const dialogVisible = ref(false);

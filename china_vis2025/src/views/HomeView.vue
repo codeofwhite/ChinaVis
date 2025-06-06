@@ -1,3 +1,4 @@
+<!-- 主页面 -->
 <template>
   <div class="home-container">
     <!-- 简介面板 -->
