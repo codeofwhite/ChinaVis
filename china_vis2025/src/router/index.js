@@ -6,9 +6,9 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: HomeView
   },
-    {
+  {
     path: "/landmark/forbiddenCity",
     name: "ForbiddenCity",
     component: () => import("../views/landmarks/ForbiddenCity.vue"),
@@ -25,8 +25,14 @@ const routes = [
   },
   {
     path: "/landmark/mingTombs",
-    name: "MingTombs",
+    name: "MingTombsPortal", // 修改路由名称以匹配 goBack 方法中的引用
     component: () => import("../views/landmarks/MingTombs.vue"),
+  },
+  {
+    path: "/landmark/mingTombs/detail",
+    name: "MingTombsDetail",
+    component: () => import("../views/landmarks/LandmarkDetailView.vue"),
+    props: true
   },
   {
     path: "/landmark/beihaiPark",
@@ -44,9 +50,15 @@ const routes = [
     component: () => import("../views/landmarks/SummerPalace.vue"),
   },
   {
-    path: "/landmark/dashilan",
-    name: "Dashilan",
+    path: "/landmark/dashilar",
+    name: "DashilarPortal", // 修改路由名称以匹配 goBack 方法中的引用
     component: () => import("../views/landmarks/Dashilan.vue"),
+  },
+  {
+    path: "/landmark/dashilan/detail",
+    name: "DashilanDetail",
+    component: () => import("../views/landmarks/LandmarkDetailView.vue"),
+    props: true
   },
   {
     path: "/landmark/:landmarkId",
@@ -54,6 +66,18 @@ const routes = [
     component: LandmarkPortal,
     props: true,
   },
+  {
+    path: "/landmark/:landmarkId/influence",
+    name: "LandmarkRadarDisplayPage",
+    component: () => import("../views/landmarks/LandmarkRadarDisplayPage.vue"),
+    props: true
+  },
+  {
+    path: "/landmark/:landmarkId/:direction",
+    name: "LandmarkLifecyclePage",
+    component: () => import("../views/landmarks/LandmarkLifecycle.vue"),
+    props: true
+  }
 ];
 
 const router = createRouter({
