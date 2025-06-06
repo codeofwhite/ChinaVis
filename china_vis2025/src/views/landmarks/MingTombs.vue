@@ -73,7 +73,7 @@
             />
           </div>
           <p class="card-description">
-            揭开沉睡帝陵的神秘面纱，聆听万历帝定陵发掘的幕后故事与考古传奇，探寻民间流传的“陵中宝藏”传说。感受帝王将相的功过是非，以及这座皇家陵园在历史长河中低语的未尽之言。
+            揭开沉睡帝陵的神秘面纱，聆听万历帝定陵发掘的幕后故事与考古传奇，探寻民间流传的"陵中宝藏"传说。感受帝王将相的功过是非，以及这座皇家陵园在历史长河中低语的未尽之言。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -107,7 +107,7 @@ export default {
   data() {
     return {
       landmark: {},
-      // 将导入的图片赋值给data属性
+      // 导入的图片放在 data 中供模板使用
       changlingImage: changlingImage,
       shendaoDagongmenImage: shendaoDagongmenImage,
       beitingImage: beitingImage,
@@ -121,17 +121,23 @@ export default {
       this.$router.push("/");
     },
     explore(direction) {
-      // 导航到对应的三级页面，例如 LandmarkLifecyclePage
-      if (direction === 'lifeCycle' || direction === 'influence' || direction === 'legends') {
-         this.$router.push({
-          name: 'LandmarkLifecyclePage', // 假设三级详情页都用这个路由名，通过direction区分内容
+      if (direction === 'lifeCycle') {
+        this.$router.push({
+          name: 'LandmarkLifecyclePage',
           params: { landmarkId: this.landmarkId, direction: direction },
         });
-      } else {
+      } else if (direction === 'influence') {
         this.$router.push({
-          name: "LandmarkDetail", // 或者您原有的三级页面路由名
-          params: { id: this.landmarkId, direction: direction },
+          name: 'LandmarkRadarDisplayPage',
+          params: { landmarkId: this.landmarkId },
         });
+      } else if (direction === 'legends') {
+        this.$router.push({
+          name: 'MingTombsDetail',
+          params: { id: this.landmarkId },
+        });
+      } else {
+        console.warn("Unknown exploration direction:", direction);
       }
     },
     loadLandmarkData() {

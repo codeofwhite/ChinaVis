@@ -73,7 +73,7 @@
             />
           </div>
           <p class="card-description">
-            漫步大栅栏，聆听那些流传于街头巷尾的奇闻轶事、梨园往事与民俗风情。从义和团的烽火到“大观楼”的首映光影，从“大石烂儿”的读音传说到元宵灯会的市井喧嚣，拾取那些生动鲜活的地标故事。
+            漫步大栅栏，聆听那些流传于街头巷尾的奇闻轶事、梨园往事与民俗风情。从义和团的烽火到"大观楼"的首映光影，从"大石烂儿"的读音传说到元宵灯会的市井喧嚣，拾取那些生动鲜活的地标故事。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -89,10 +89,9 @@
 
 <script>
 import DashilarBackgroundImage from "../../assets/dashilan_bg.jpg";
-// 导入探索卡片图片
 import oldDashilanImage from "../../assets/olddashilan.jpg";
 import tongRenTangImage from "../../assets/TongRenTang.jpg";
-import dashilanStoryImage from "../../assets/dashilan_story.jpg"; // 假设路径正确
+import dashilanStoryImage from "../../assets/dashilan_story.jpg";
 
 export default {
   name: "DashilarPortal",
@@ -106,7 +105,6 @@ export default {
   data() {
     return {
       landmark: {},
-      // 将导入的图片赋值给data属性，以便模板使用
       oldDashilanImage: oldDashilanImage,
       tongRenTangImage: tongRenTangImage,
       dashilanStoryImage: dashilanStoryImage,
@@ -120,17 +118,23 @@ export default {
       this.$router.push("/");
     },
     explore(direction) {
-      // 导航到对应的三级页面，例如 LandmarkLifecyclePage
-      if (direction === 'lifeCycle' || direction === 'influence' || direction === 'legends') {
+      if (direction === 'lifeCycle') {
         this.$router.push({
-          name: 'LandmarkLifecyclePage', // 假设三级详情页都用这个路由名，通过direction区分内容
+          name: 'LandmarkLifecyclePage',
           params: { landmarkId: this.landmarkId, direction: direction },
         });
-      } else {
+      } else if (direction === 'influence') {
         this.$router.push({
-          name: "LandmarkDetail", // 或者您原有的三级页面路由名
-          params: { id: this.landmarkId, direction: direction },
+          name: 'LandmarkRadarDisplayPage',
+          params: { landmarkId: this.landmarkId },
         });
+      } else if (direction === 'legends') {
+        this.$router.push({
+          name: 'DashilanDetail',
+          params: { id: this.landmarkId },
+        });
+      } else {
+        console.warn("Unknown exploration direction:", direction);
       }
     },
     loadLandmarkData() {
