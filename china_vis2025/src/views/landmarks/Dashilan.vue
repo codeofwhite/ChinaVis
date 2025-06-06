@@ -73,7 +73,7 @@
             />
           </div>
           <p class="card-description">
-            漫步大栅栏，聆听那些流传于街头巷尾的奇闻轶事、梨园往事与民俗风情。从义和团的烽火到“大观楼”的首映光影，从“大石烂儿”的读音传说到元宵灯会的市井喧嚣，拾取那些生动鲜活的地标故事。
+            漫步大栅栏，聆听那些流传于街头巷尾的奇闻轶事、梨园往事与民俗风情。从义和团的烽火到"大观楼"的首映光影，从"大石烂儿"的读音传说到元宵灯会的市井喧嚣，拾取那些生动鲜活的地标故事。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -89,10 +89,9 @@
 
 <script>
 import DashilarBackgroundImage from "../../assets/dashilan_bg.jpg";
-// 导入探索卡片图片
 import oldDashilanImage from "../../assets/olddashilan.jpg";
 import tongRenTangImage from "../../assets/TongRenTang.jpg";
-import dashilanStoryImage from "../../assets/dashilan_story.jpg"; // 假设路径正确
+import dashilanStoryImage from "../../assets/dashilan_story.jpg";
 
 export default {
   name: "DashilarPortal",
@@ -106,7 +105,6 @@ export default {
   data() {
     return {
       landmark: {},
-      // 将导入的图片赋值给data属性，以便模板使用
       oldDashilanImage: oldDashilanImage,
       tongRenTangImage: tongRenTangImage,
       dashilanStoryImage: dashilanStoryImage,
@@ -119,24 +117,21 @@ export default {
     goBack() {
       this.$router.push("/");
     },
-   explore(direction) {
-      console.log(`${this.name} exploring direction:`, direction, 'with landmarkId:', this.landmarkId);
-
-      if (direction === 'lifeCycle') { // 第一个卡片 (“街巷记忆” / “皇陵沿革”)
+    explore(direction) {
+      if (direction === 'lifeCycle') {
         this.$router.push({
-          name: 'LandmarkLifecyclePage', // 指向时间轴页面
-          params: { landmarkId: this.landmarkId, direction: direction }, // direction 传递，虽然新版LifeCyclePage不强依赖它
-        });
-      } else if (direction === 'influence') { // 第二个卡片 (“商韵流传” / “世遗之尊”)
-        this.$router.push({
-          name: 'LandmarkRadarDisplayPage', // 指向您为雷达图创建的页面
-          params: { landmarkId: this.landmarkId }, // 雷达图页面可能只需要 landmarkId
-        });
-      } else if (direction === 'legends') { // 第三个卡片 (“坊间拾趣” / “陵寝秘语”)
-        // 假设您会创建一个 LandmarkLegendsPage.vue 来展示传奇故事
-        this.$router.push({
-          name: 'LandmarkLegendsPage', // 您需要创建这个路由和对应的组件
+          name: 'LandmarkLifecyclePage',
           params: { landmarkId: this.landmarkId, direction: direction },
+        });
+      } else if (direction === 'influence') {
+        this.$router.push({
+          name: 'LandmarkRadarDisplayPage',
+          params: { landmarkId: this.landmarkId },
+        });
+      } else if (direction === 'legends') {
+        this.$router.push({
+          name: 'DashilanDetail',
+          params: { id: this.landmarkId },
         });
       } else {
         console.warn("Unknown exploration direction:", direction);

@@ -73,7 +73,7 @@
             />
           </div>
           <p class="card-description">
-            揭开沉睡帝陵的神秘面纱，聆听万历帝定陵发掘的幕后故事与考古传奇，探寻民间流传的“陵中宝藏”传说。感受帝王将相的功过是非，以及这座皇家陵园在历史长河中低语的未尽之言。
+            揭开沉睡帝陵的神秘面纱，聆听万历帝定陵发掘的幕后故事与考古传奇，探寻民间流传的"陵中宝藏"传说。感受帝王将相的功过是非，以及这座皇家陵园在历史长河中低语的未尽之言。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -107,7 +107,7 @@ export default {
   data() {
     return {
       landmark: {},
-      // 将导入的图片赋值给data属性
+      // 导入的图片放在 data 中供模板使用
       changlingImage: changlingImage,
       shendaoDagongmenImage: shendaoDagongmenImage,
       beitingImage: beitingImage,
@@ -121,23 +121,20 @@ export default {
       this.$router.push("/");
     },
     explore(direction) {
-      console.log(`${this.name} exploring direction:`, direction, 'with landmarkId:', this.landmarkId);
-
-      if (direction === 'lifeCycle') { // 第一个卡片 (“街巷记忆” / “皇陵沿革”)
+      if (direction === 'lifeCycle') {
         this.$router.push({
-          name: 'LandmarkLifecyclePage', // 指向时间轴页面
-          params: { landmarkId: this.landmarkId, direction: direction }, // direction 传递，虽然新版LifeCyclePage不强依赖它
-        });
-      } else if (direction === 'influence') { // 第二个卡片 (“商韵流传” / “世遗之尊”)
-        this.$router.push({
-          name: 'LandmarkRadarDisplayPage', // 指向您为雷达图创建的页面
-          params: { landmarkId: this.landmarkId }, // 雷达图页面可能只需要 landmarkId
-        });
-      } else if (direction === 'legends') { // 第三个卡片 (“坊间拾趣” / “陵寝秘语”)
-        // 假设您会创建一个 LandmarkLegendsPage.vue 来展示传奇故事
-        this.$router.push({
-          name: 'LandmarkLegendsPage', // 您需要创建这个路由和对应的组件
+          name: 'LandmarkLifecyclePage',
           params: { landmarkId: this.landmarkId, direction: direction },
+        });
+      } else if (direction === 'influence') {
+        this.$router.push({
+          name: 'LandmarkRadarDisplayPage',
+          params: { landmarkId: this.landmarkId },
+        });
+      } else if (direction === 'legends') {
+        this.$router.push({
+          name: 'MingTombsDetail',
+          params: { id: this.landmarkId },
         });
       } else {
         console.warn("Unknown exploration direction:", direction);
