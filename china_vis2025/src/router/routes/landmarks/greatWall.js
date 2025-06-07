@@ -5,7 +5,7 @@ export default [
     component: () => import("@/views/landmarks/GreatWall.vue"),
     meta: {
       title: "故宫",
-      icon: "icon-great-wall"
-    }
-  }
+      icon: "icon-great-wall",
+    },
+  },
 ];
