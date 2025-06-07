@@ -1,12 +1,12 @@
 <template>
   <div class="lifecycle-container">
     <!-- 返回按钮 -->
-    <button @click="goBack" class="back-button">← 返回天坛门户</button>
+    <button @click="goBack" class="back-button">← 返回法源寺门户</button>
     
     <!-- 页面标题 -->
     <div class="lifecycle-header">
-      <h1>天坛建筑群演变与修缮历程</h1>
-      <p>从永乐敕建到世界文化遗产的六百年建筑变迁</p>
+      <h1>法源寺千年兴衰史</h1>
+      <p>从唐太宗敕建到现代佛教文化中心的沧桑变迁</p>
     </div>
     
     <!-- 时间轴导航 -->
@@ -60,7 +60,7 @@
               </div>
             </div>
             
-            <!-- 新增建筑特点部分 -->
+            <!-- 建筑特点部分 -->
             <div class="architectural-features" v-if="activeData.features">
               <h3>建筑特点</h3>
               <ul>
@@ -72,14 +72,14 @@
         
         <!-- 建筑规模变化图表 -->
         <div class="chart-section">
-          <h3>天坛建筑群规模演变</h3>
+          <h3>法源寺建筑规模演变</h3>
           <div ref="chart" class="chart-container"></div>
         </div>
         
-        <!-- 新增建筑类型分布图表 -->
+        <!-- 建筑功能演变图表 -->
         <div class="chart-section">
-          <h3>建筑类型分布变化</h3>
-          <div ref="typeChart" class="chart-container"></div>
+          <h3>寺院功能性质演变</h3>
+          <div ref="functionChart" class="chart-container"></div>
         </div>
       </div>
     </div>
@@ -94,110 +94,144 @@ import * as echarts from 'echarts';
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push('/landmarks/temple-of-heaven');
+const goBack = () => router.push('/landmark/fayuantemple');
 
-// 时间轴数据 - 重点强化建筑演变内容
+// 时间轴数据 - 法源寺特有的历史节点
 const timelineData = ref([
   {
-    year: "1420",
-    title: "永乐敕建",
-    period: "明永乐十八年",
-    description: '明成祖朱棣下诏建造天地坛，作为皇帝祭天、祈谷的场所。初建时采用天地合祀格局，主要建筑包括大祀殿、大祀门、斋宫等，奠定了天坛建筑群的基本格局。建筑群严格遵循"天圆地方"的宇宙观设计，主体建筑呈圆形，围墙为方形。',
-    image: "https://picsum.photos/600/400?temple=1",
+    year: "645",
+    title: "唐代始建",
+    period: "唐贞观十九年",
+    description: '唐太宗李世民为悼念东征阵亡将士下诏建寺，初名悯忠寺。工程浩大，历时51年才建成。建筑群采用典型唐代寺院布局，中轴线对称，建有山门、钟鼓楼、悯忠阁、大雄宝殿等核心建筑。建筑材料以木结构为主，屋顶覆盖青瓦，体现盛唐建筑的雄浑风格。',
+    image: "https://img2.baidu.com/it/u=173075004,1001130261&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
     metrics: [
-      { value: "273公顷", label: "占地面积" },
-      { value: "20座", label: "主要建筑" },
-      { value: "4大区域", label: "建筑分区" }
+      { value: "51年", label: "建造工期" },
+      { value: "7进院落", label: "建筑布局" },
+      { value: "30+座", label: "主要殿堂" }
     ],
     features: [
-      "大祀殿为矩形重檐建筑",
-      "采用蓝绿为主色调的琉璃瓦",
-      "严格的中轴对称布局"
+      "典型唐代寺院中轴对称布局",
+      "木构架承重体系",
+      "青瓦歇山顶建筑群"
     ]
   },
   {
-    year: "1530",
-    title: "天地分祀",
-    period: "明嘉靖九年",
-    description: "嘉靖皇帝改革礼制，实行天地分祀制度。在天地坛南郊新建圜丘坛专用于祭天，原天地坛改建为祈谷坛（后称祈年殿）。此次改造新增了圜丘、皇穹宇等建筑，改变了天坛的整体格局。建筑工艺上大量使用汉白玉石材，形成了三重圆坛的独特结构。",
-    image: "https://picsum.photos/600/400?temple=2",
+    year: "882",
+    title: "唐代焚毁",
+    period: "唐中和二年",
+    description: "悯忠寺遭火灾焚毁，主体建筑悯忠阁及东西双塔化为灰烬。此时正值唐末战乱，朝廷无力重修，寺院荒废近百年。史料记载'悯忠高阁，去天一握'的壮丽景象就此消失，仅存地基遗址。这是法源寺历史上第一次重大损毁。",
+    image: "https://img0.baidu.com/it/u=2429986127,1302041570&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
     metrics: [
-      { value: "圜丘坛", label: "新增建筑" },
-      { value: "3层结构", label: "圜丘形制" },
-      { value: "360块", label: "栏板数量" }
+      { value: "100%", label: "主殿损毁" },
+      { value: "70年", label: "荒废时间" },
+      { value: "2座", label: "焚毁佛塔" }
     ],
     features: [
-      "圜丘三层九重坛台结构",
-      "皇穹宇圆形单檐建筑",
-      "汉白玉栏板雕刻云龙纹"
+      "主体建筑全毁",
+      "仅存地基遗址",
+      "荒废近百年"
     ]
   },
   {
-    year: "1751",
-    title: "乾隆大修",
-    period: "清乾隆十六年",
-    description: "乾隆皇帝对天坛进行了史上最大规模的改建和扩建。将祈年殿三重檐全部更换为象征天空的蓝色琉璃瓦，重建皇穹宇为单檐圆攒尖顶，扩建圜丘坛。同时改建了斋宫、神乐署等配套建筑，形成了今日所见的天坛基本格局。此次修缮采用了最高规格的建筑材料和技术。",
-    image: "https://picsum.photos/600/400?temple=3",
+    year: "1057",
+    title: "辽代地震",
+    period: "辽清宁三年",
+    description: "幽州大地震导致寺院全毁，这是法源寺历史上第二次重大损毁。辽代皇室虽崇信佛教，但因战事频繁，仅对部分建筑进行了简单修复。寺内现存最古老的建筑遗存——辽代石经幢就是震后重建时安放的。",
+    image: "https://img2.baidu.com/it/u=4153467665,1521801940&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
     metrics: [
-      { value: "12年", label: "工期" },
-      { value: "9.5万两", label: "耗银" },
-      { value: "30处", label: "修缮建筑" }
+      { value: "8.0级", label: "地震强度" },
+      { value: "100%", label: "建筑损毁" },
+      { value: "20年", label: "修复时间" }
     ],
     features: [
-      "祈年殿蓝色琉璃瓦顶",
-      "皇穹宇单檐圆攒尖顶",
-      "楠木梁柱结构体系"
+      "现存辽代石经幢",
+      "部分建筑基础保留",
+      "规模大幅缩减"
     ]
   },
   {
-    year: "1889",
-    title: "祈年殿重建",
-    period: "清光绪十五年",
-    description: "祈年殿遭雷击焚毁，光绪皇帝下令按原样重建。此次重建严格遵循乾隆时期的建筑规制，采用珍贵的楠木作为主要结构材料，历时七年完成。重建过程中采用了传统榫卯结构技术，没有使用一颗钉子，成为中国古代木构建筑的巅峰之作。建筑细节上恢复了乾隆时期的彩绘图案。",
-    image: "https://picsum.photos/600/400?temple=4",
+    year: "1447",
+    title: "明代重修",
+    period: "明正统二年",
+    description: "明英宗敕令重修寺院，并赐额'崇福寺'。此次重建奠定了现存建筑群的基础格局。大雄宝殿、悯忠阁等主要建筑均按明代官式营造法式重建，采用楠木柱梁，屋顶改为黄色琉璃瓦。现存的明代风格斗拱和梁架结构大多源自此次重建。",
+    image: "https://img0.baidu.com/it/u=1199122887,2021459&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
     metrics: [
-      { value: "38米", label: "高度" },
-      { value: "28根", label: "楠木柱" },
-      { value: "7年", label: "工期" }
+      { value: "30年", label: "工期" },
+      { value: "48根", label: "楠木柱" },
+      { value: "5进院落", label: "新布局" }
     ],
     features: [
-      "三重檐圆攒尖顶",
-      "28根楠木柱象征星宿",
-      "榫卯结构无钉建造"
+      "黄色琉璃瓦顶",
+      "明代官式斗拱",
+      "楠木梁柱结构"
     ]
   },
   {
-    year: "1918",
-    title: "辟为公园",
-    period: "民国七年",
-    description: "天坛结束近500年的皇家禁地历史，正式作为公园向公众开放。民国政府对部分建筑进行了保护性修缮，修复了因战乱损坏的围墙和部分殿宇。同时增加了服务性建筑，如售票处、休息亭等，使建筑群适应公共游览需求。这一转变开启了天坛从皇家祭祀场所到公共文化空间的演变。",
-    image: "https://picsum.photos/600/400?temple=5",
+    year: "1733",
+    title: "雍正赐名",
+    period: "清雍正十一年",
+    description: "雍正皇帝敕令全面重修，赐名'法源寺'并沿用至今。重建工程严格按照清代营造则例，大修各殿宇，增建藏经阁、戒坛等重要建筑。寺内现存主体建筑大多定型于此次重修，形成了七进六院的宏大格局。同时铸造了大量佛教文物，现存寺内重要法器大多源于此时期。",
+    image: "https://img1.baidu.com/it/u=330730148,3984278631&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
     metrics: [
-      { value: "20万+", label: "年游客量" },
-      { value: "10处", label: "开放区域" },
-      { value: "5处", label: "新增设施" }
+      { value: "法源寺", label: "赐名" },
+      { value: "7进6院", label: "建筑格局" },
+      { value: "300+件", label: "新增法器" }
     ],
     features: [
-      "保持原有建筑格局",
-      "新增公共游览设施",
-      "部分建筑功能转换"
+      "清代官式彩绘",
+      "满汉双语匾额",
+      "戒坛与藏经阁"
     ]
   },
   {
-    year: "1998",
-    title: "世界遗产",
+    year: "1900",
+    title: "庚子劫难",
+    period: "清光绪二十六年",
+    description: "八国联军占领北京期间，法源寺遭严重破坏。寺内文物被掠夺，建筑被损毁，佛像法器被劫掠一空。据记载，侵略军将寺院作为马厩和军营，导致多处建筑受损。这是近代史上法源寺最严重的劫难。",
+    image: "https://img1.baidu.com/it/u=2479781627,3435865456&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+    metrics: [
+      { value: "60%", label: "建筑损毁" },
+      { value: "200+件", label: "文物损失" },
+      { value: "8年", label: "修复时间" }
+    ],
+    features: [
+      "建筑作为马厩使用",
+      "大量文物被掠夺",
+      "佛像金箔被刮除"
+    ]
+  },
+  {
+    year: "1956",
+    title: "佛学院成立",
+    period: "新中国时期",
+    description: "法源寺成为中国佛学院所在地，开启佛教教育新篇章。政府拨款进行保护性修缮，修复了战争损毁的建筑部分。寺院功能从纯粹宗教场所转变为佛教教育中心，培养了大批佛教人才。1963年曾在此举办亚洲宗教会议。",
+    image: "https://img0.baidu.com/it/u=1931515007,3894831794&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+    metrics: [
+      { value: "中国佛学院", label: "新功能" },
+      { value: "200+位", label: "培养学僧" },
+      { value: "40+次", label: "国际会议" }
+    ],
+    features: [
+      "佛教教育中心",
+      "保护性修缮",
+      "国际交流平台"
+    ]
+  },
+  {
+    year: "2001",
+    title: "国保单位",
     period: "现代",
-    description: '天坛被联合国教科文组织列入《世界遗产名录》。中国政府启动了大规模的保护性修缮工程，采用传统工艺和材料对祈年殿、皇穹宇、圜丘等主要建筑进行了全面修缮。同时建立了科学的建筑监测系统，对木结构、彩绘等进行数字化保护。修缮严格遵循"修旧如旧"原则，恢复了部分历史建筑原貌。',
-    image: "https://picsum.photos/600/400?temple=6",
+    description: "法源寺被列为全国重点文物保护单位，启动全面修缮工程。采用传统工艺修复了所有殿宇，重建了部分历史建筑。同时成立中国佛教图书文物馆，珍藏历代佛教文物。现今法源寺集宗教活动、文化展示、旅游观光于一体，成为北京重要的文化地标。",
+    image: "https://img0.baidu.com/it/u=318203156,3842292057&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
     metrics: [
-      { value: "273公顷", label: "保护面积" },
-      { value: "50+次", label: "专业修缮" },
-      { value: "800万+", label: "年游客量" }
+      { value: "全国重点", label: "文物保护" },
+      { value: "8万+件", label: "馆藏文物" },
+      { value: "30万+", label: "年访客量" }
     ],
     features: [
-      "传统工艺与现代技术结合",
-      "数字化建筑监测系统",
-      "遗产完整性保护"
+      "传统工艺修复",
+      "佛教文物馆藏",
+      "多元文化空间"
     ]
   }
 ]);
@@ -213,24 +247,24 @@ const activeData = computed(() => timelineData.value[activeIndex.value]);
 
 // ECharts图表实例
 const chart = ref(null);
-const typeChart = ref(null);
+const functionChart = ref(null);
 let chartInstance = null;
-let typeChartInstance = null;
+let functionChartInstance = null;
 
-// 建筑规模变化数据
+// 建筑规模变化数据 - 法源寺特有的规模变化
 const chartData = ref({
   years: timelineData.value.map(item => item.year),
-  sizes: [85, 92, 95, 100, 87, 100] // 百分比数据
+  sizes: [100, 0, 20, 70, 100, 40, 80, 95] // 百分比数据
 });
 
-// 建筑类型分布数据
-const typeData = ref({
+// 建筑功能演变数据
+const functionData = ref({
   years: timelineData.value.map(item => item.year),
-  types: [
-    {name: '祭祀建筑', data: [75, 65, 60, 60, 50, 55]},
-    {name: '附属建筑', data: [15, 20, 25, 25, 25, 25]},
-    {name: '服务设施', data: [0, 5, 5, 5, 15, 10]},
-    {name: '园林景观', data: [10, 10, 10, 10, 10, 10]}
+  functions: [
+    {name: '皇家祭祀', data: [100, 0, 50, 60, 70, 30, 0, 0]},
+    {name: '宗教活动', data: [0, 0, 30, 30, 20, 20, 60, 40]},
+    {name: '佛教教育', data: [0, 0, 0, 0, 0, 0, 30, 30]},
+    {name: '文物收藏', data: [0, 0, 20, 10, 10, 10, 10, 30]}
   ]
 });
 
@@ -242,7 +276,7 @@ const initChart = () => {
     const option = {
       tooltip: {
         trigger: 'axis',
-        formatter: '{b0}年<br/>规模：{c0}%'
+        formatter: '{b0}<br/>规模：{c0}%'
       },
       grid: {
         left: '3%',
@@ -264,8 +298,8 @@ const initChart = () => {
       },
       yAxis: {
         type: 'value',
-        min: 80,
-        max: 105,
+        min: 0,
+        max: 100,
         axisLine: {
           lineStyle: {
             color: '#8b4513'
@@ -301,7 +335,19 @@ const initChart = () => {
               { offset: 1, color: 'rgba(212, 167, 106, 0.05)' }
             ])
           },
-          data: chartData.value.sizes
+          data: chartData.value.sizes,
+          markPoint: {
+            data: [
+              {name: '火灾', value: '焚毁', xAxis: 1, yAxis: 0},
+              {name: '地震', value: '全毁', xAxis: 2, yAxis: 20},
+              {name: '庚子劫难', value: '严重损毁', xAxis: 5, yAxis: 40}
+            ],
+            symbol: 'pin',
+            symbolSize: 50,
+            label: {
+              formatter: '{c}'
+            }
+          }
         }
       ]
     };
@@ -310,20 +356,27 @@ const initChart = () => {
   }
 };
 
-// 初始化建筑类型分布图表
-const initTypeChart = () => {
-  if (typeChart.value) {
-    typeChartInstance = echarts.init(typeChart.value);
+// 初始化功能演变图表
+const initFunctionChart = () => {
+  if (functionChart.value) {
+    functionChartInstance = echarts.init(functionChart.value);
     
     const option = {
       tooltip: {
         trigger: 'axis',
         axisPointer: {
           type: 'shadow'
+        },
+        formatter: function(params) {
+          let result = params[0].name + '<br/>';
+          params.forEach(item => {
+            result += `${item.marker} ${item.seriesName}: ${item.value}%<br/>`;
+          });
+          return result;
         }
       },
       legend: {
-        data: typeData.value.types.map(item => item.name),
+        data: functionData.value.functions.map(item => item.name),
         textStyle: {
           color: '#5a4a42'
         },
@@ -337,7 +390,7 @@ const initTypeChart = () => {
       },
       xAxis: {
         type: 'category',
-        data: typeData.value.years,
+        data: functionData.value.years,
         axisLine: {
           lineStyle: {
             color: '#8b4513'
@@ -349,6 +402,7 @@ const initTypeChart = () => {
       },
       yAxis: {
         type: 'value',
+        max: 100,
         axisLine: {
           lineStyle: {
             color: '#8b4513'
@@ -364,21 +418,22 @@ const initTypeChart = () => {
           }
         }
       },
-      series: typeData.value.types.map((type, index) => ({
-        name: type.name,
+      series: functionData.value.functions.map((func, index) => ({
+        name: func.name,
         type: 'bar',
         stack: 'total',
+        barWidth: '60%',
         emphasis: {
           focus: 'series'
         },
-        data: type.data,
+        data: func.data,
         itemStyle: {
-          color: ['#d4a76a', '#8b4513', '#9c7c5c', '#5a4a42'][index]
+          color: ['#8b4513', '#d4a76a', '#9c7c5c', '#5a4a42'][index]
         }
       }))
     };
     
-    typeChartInstance.setOption(option);
+    functionChartInstance.setOption(option);
   }
 };
 
@@ -403,8 +458,8 @@ watch(activeIndex, (newIndex) => {
     });
   }
   
-  if (typeChartInstance) {
-    typeChartInstance.dispatchAction({
+  if (functionChartInstance) {
+    functionChartInstance.dispatchAction({
       type: 'highlight',
       seriesIndex: newIndex
     });
@@ -414,60 +469,43 @@ watch(activeIndex, (newIndex) => {
 // 响应窗口大小变化
 const handleResize = () => {
   if (chartInstance) chartInstance.resize();
-  if (typeChartInstance) typeChartInstance.resize();
+  if (functionChartInstance) functionChartInstance.resize();
 };
 
 onMounted(() => {
   initChart();
-  initTypeChart();
+  initFunctionChart();
   window.addEventListener('resize', handleResize);
 });
 </script>
 
 <style scoped>
-/* 新增样式 */
-.history-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s ease;
+/* 法源寺专属样式优化 */
+.lifecycle-header h1 {
+  color: #5d4037; /* 更深的棕色 */
 }
 
-.history-card:hover .history-media img {
-  transform: scale(1.05);
+.history-info h2 {
+  color: #5d4037;
 }
 
-.architectural-features {
-  margin-top: 25px;
-  padding-top: 20px;
-  border-top: 1px dashed rgba(139, 69, 19, 0.2);
+.history-info h2:after,
+.lifecycle-header h1:after,
+.chart-section h3:after {
+  background: linear-gradient(90deg, #a1887f 0%, #5d4037 100%);
+}
+
+.timeline-point.active .timeline-marker,
+.timeline-item.active .timeline-dot {
+  background-color: #5d4037;
+}
+
+.timeline-point.active .timeline-year {
+  color: #5d4037;
 }
 
 .architectural-features h3 {
-  font-size: 1.2rem;
-  color: #8b4513;
-  margin-bottom: 12px;
-}
-
-.architectural-features ul {
-  list-style-type: none;
-  padding-left: 20px;
-}
-
-.architectural-features li {
-  position: relative;
-  margin-bottom: 10px;
-  padding-left: 20px;
-  color: #5a4a42;
-}
-
-.architectural-features li:before {
-  content: "•";
-  color: #d4a76a;
-  font-size: 1.5rem;
-  position: absolute;
-  left: 0;
-  top: -3px;
+  color: #5d4037;
 }
 
 /* 原有样式保持不变 */

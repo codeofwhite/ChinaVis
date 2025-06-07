@@ -1,9 +1,13 @@
 <template>
   <div class="influence-page-container">
     <header class="page-header">
-      <button @click="goBack" class="back-button">← 返回 {{ landmarkDisplayName }}</button>
+      <button @click="goBack" class="back-button">
+        ← 返回 {{ landmarkDisplayName }}
+      </button>
       <h1>{{ landmarkDisplayName }} - {{ sectionTitle }}</h1>
-      <p class="intro-text">通过多维度评估，展现 {{ landmarkDisplayName }} 的综合影响力与文化价值。</p>
+      <p class="intro-text">
+        通过多维度评估，展现 {{ landmarkDisplayName }} 的综合影响力与文化价值。
+      </p>
     </header>
 
     <main class="content-section">
@@ -32,16 +36,17 @@
 </template>
 
 <script>
-import RadarChart from '../../components/RadarChart.vue';
-import { radarChartData } from '../../components/data/radarChartData.js';
+import RadarChart from "../../../components/dashilan/RadarChart.vue";
+import { radarChartData } from "../../../components/data/radarChartData.js";
 
 export default {
-  name: 'LandmarkRadarDisplayPage',
+  name: "LandmarkRadarDisplayPage",
   components: {
     RadarChart,
   },
   props: {
-    landmarkId: { // 从路由获取
+    landmarkId: {
+      // 从路由获取
       type: String,
       required: true,
     },
@@ -49,11 +54,13 @@ export default {
   },
   data() {
     return {
-      landmarkDisplayName: '',
-      sectionTitle: '', // 例如 "价值与共鸣" 或 "世遗之尊"
-      chartReady: false,      radarChartId: 'landmarkRadar',
+      landmarkDisplayName: "",
+      sectionTitle: "", // 例如 "价值与共鸣" 或 "世遗之尊"
+      chartReady: false,
+      radarChartId: "landmarkRadar",
       allRadarData: { ...radarChartData },
-      radarChartOptions: { // 可以覆盖 RadarChart 组件中的默认 options
+      radarChartOptions: {
+        // 可以覆盖 RadarChart 组件中的默认 options
         responsive: true,
         maintainAspectRatio: false,
         scales: {
@@ -61,21 +68,29 @@ export default {
             suggestedMin: 0,
             suggestedMax: 5,
             ticks: { stepSize: 1, font: { family: "'Noto Serif SC', serif" } },
-            pointLabels: { font: { size: 13, family: "'Noto Serif SC', serif" }, color: '#4a3b32' },
-            grid: { color: 'rgba(139, 69, 19, 0.2)'} // 使用主题色系的网格线
-          }
+            pointLabels: {
+              font: { size: 13, family: "'Noto Serif SC', serif" },
+              color: "#4a3b32",
+            },
+            grid: { color: "rgba(139, 69, 19, 0.2)" }, // 使用主题色系的网格线
+          },
         },
         plugins: {
-          legend: { labels: { font: { family: "'Noto Serif SC', serif" }, color: '#4a3b32' } }
-        }
-      }
+          legend: {
+            labels: {
+              font: { family: "'Noto Serif SC', serif" },
+              color: "#4a3b32",
+            },
+          },
+        },
+      },
     };
   },
   computed: {
     currentRadarData() {
       const data = {
         labels: this.allRadarData.labels,
-        datasets: []
+        datasets: [],
       };
       // 如果只想显示当前 landmarkId 的数据
       // if (this.allRadarData.datasets[this.landmarkId]) {
@@ -87,36 +102,37 @@ export default {
       data.datasets.push(this.allRadarData.datasets.mingTombs);
 
       return data;
-    }
+    },
   },
   created() {
     this.loadPageData();
   },
   methods: {
     loadPageData() {
-      if (this.landmarkId === 'dashilar') {
-        this.landmarkDisplayName = '大栅栏';
-        this.sectionTitle = '商韵流传'; // 使用您更新后的标题
-      } else if (this.landmarkId === 'mingTombs') {
-        this.landmarkDisplayName = '明十三陵';
-        this.sectionTitle = '世遗之尊'; // 使用您更新后的标题
+      if (this.landmarkId === "dashilar") {
+        this.landmarkDisplayName = "大栅栏";
+        this.sectionTitle = "商韵流传"; // 使用您更新后的标题
+      } else if (this.landmarkId === "mingTombs") {
+        this.landmarkDisplayName = "明十三陵";
+        this.sectionTitle = "世遗之尊"; // 使用您更新后的标题
       } else {
-        this.landmarkDisplayName = '未知地标';
-        this.sectionTitle = '影响力评估';
+        this.landmarkDisplayName = "未知地标";
+        this.sectionTitle = "影响力评估";
       }
       document.title = `${this.landmarkDisplayName} - ${this.sectionTitle}`;
       this.chartReady = true; // 假设数据已准备好
     },
     goBack() {
       // 返回到对应的二级门户页面
-      let portalRouteName = this.landmarkId === 'dashilar' ? 'DashilarPortal' : 'MingTombsPortal';
+      let portalRouteName =
+        this.landmarkId === "dashilar" ? "dashilar" : "ming-tombs";
       if (this.$router.hasRoute(portalRouteName)) {
         this.$router.push({ name: portalRouteName });
       } else {
-        this.$router.push('/'); // 回到首页作为备选
+        this.$router.push("/"); // 回到首页作为备选
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -176,7 +192,7 @@ export default {
   margin-top: 30px;
   max-width: 600px;
   padding: 20px;
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 8px;
   color: #4a3b32;
   font-size: 0.95em;

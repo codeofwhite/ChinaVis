@@ -33,10 +33,7 @@
           <h2 class="card-title">皇陵沿革</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
-            <img
-              :src="changlingImage"
-              alt="皇陵沿革预览"
-            />
+            <img :src="changlingImage" alt="皇陵沿革预览" />
           </div>
           <p class="card-description">
             追溯自永乐七年始建长陵，至崇祯帝入葬，明朝十三座帝王陵寝的兴建历程。审视其在清代的维护，历经近现代的考古发掘、磨难与保护，直至成为世界文化遗产的完整历史演变。
@@ -50,10 +47,7 @@
           <h2 class="card-title">世遗之尊</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
-            <img
-              :src="shendaoDagongmenImage"
-              alt="世遗之尊预览"
-            />
+            <img :src="shendaoDagongmenImage" alt="世遗之尊预览" />
           </div>
           <p class="card-description">
             探究明十三陵作为中华文明瑰宝的显赫地位，及其被联合国教科文组织列为世界文化遗产的核心价值。评估其宏伟的皇家规制、独特的风水格局和丰富的历史遗存对当代文化、旅游及学术研究产生的深远影响。
@@ -67,10 +61,7 @@
           <h2 class="card-title">陵寝秘语</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
-            <img
-              :src="beitingImage"
-              alt="陵寝秘语预览"
-            />
+            <img :src="beitingImage" alt="陵寝秘语预览" />
           </div>
           <p class="card-description">
             揭开沉睡帝陵的神秘面纱，聆听万历帝定陵发掘的幕后故事与考古传奇，探寻民间流传的"陵中宝藏"传说。感受帝王将相的功过是非，以及这座皇家陵园在历史长河中低语的未尽之言。
@@ -88,12 +79,11 @@
 </template>
 
 <script>
-import MingTombsBackgroundImage from '../../assets/Ming_Tombs.jpg';
+import MingTombsBackgroundImage from "../../assets/ming-tombs/Ming_Tombs.jpg";
 // 导入探索卡片图片
-import changlingImage from "../../assets/长陵.jpg"; // 确保文件名和路径正确
-import shendaoDagongmenImage from "../../assets/明十三陵神道_大宫门.jpg"; // 确保文件名和路径正确
-import beitingImage from "../../assets/碑亭.jpg"; // 确保文件名和路径正确
-
+import changlingImage from "../../assets/ming-tombs/长陵.jpg"; // 确保文件名和路径正确
+import shendaoDagongmenImage from "../../assets/ming-tombs/明十三陵神道_大宫门.jpg"; // 确保文件名和路径正确
+import beitingImage from "../../assets/ming-tombs/碑亭.jpg"; // 确保文件名和路径正确
 
 export default {
   name: "MingTombsPortal",
@@ -121,20 +111,21 @@ export default {
       this.$router.push("/");
     },
     explore(direction) {
-      if (direction === 'lifeCycle') {
+      const params = { landmarkId: this.landmarkId };
+      if (direction === "lifeCycle") {
         this.$router.push({
-          name: 'LandmarkLifecyclePage',
-          params: { landmarkId: this.landmarkId, direction: direction },
+          name: "landmark-lifecycle",
+          params: { ...params, direction: direction },
         });
-      } else if (direction === 'influence') {
+      } else if (direction === "influence") {
         this.$router.push({
-          name: 'LandmarkRadarDisplayPage',
-          params: { landmarkId: this.landmarkId },
+          name: "landmark-radar",
+          params,
         });
-      } else if (direction === 'legends') {
+      } else if (direction === "legends") {
         this.$router.push({
-          name: 'MingTombsDetail',
-          params: { id: this.landmarkId },
+          name: "landmark-detail",
+          params,
         });
       } else {
         console.warn("Unknown exploration direction:", direction);
@@ -144,7 +135,8 @@ export default {
       if (this.landmarkId === "mingTombs") {
         this.landmark = {
           name: "明十三陵",
-          summary: "明朝十三位帝王的宏伟长眠之地，世界文化遗产，展现中国古代皇家陵寝建筑艺术与历史文化。",
+          summary:
+            "明朝十三位帝王的宏伟长眠之地，世界文化遗产，展现中国古代皇家陵寝建筑艺术与历史文化。",
           image: MingTombsBackgroundImage,
           metrics: [
             { icon: "📅", value: "1409-1644年", label: "修建年代" },
@@ -383,7 +375,11 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(139, 69, 19, 0.1), rgba(101, 67, 33, 0.4));
+  background: linear-gradient(
+    to bottom,
+    rgba(139, 69, 19, 0.1),
+    rgba(101, 67, 33, 0.4)
+  );
   z-index: 1;
 }
 

@@ -2,10 +2,13 @@
   <div class="app-container">
     <router-view></router-view>
   </div>
+  <LawScreen></LawScreen>
+  <CulturalTree />
+  <PhoenixVisualization />
 </template>
 
 <script setup>
-
+// 由于使用路由管理视图，这里不需要其他导入
 </script>
 
 <style scoped>

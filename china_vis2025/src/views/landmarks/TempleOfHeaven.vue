@@ -41,7 +41,9 @@
           <p class="card-description">
             从永乐帝敕建到世界文化遗产的时光之旅，探索天坛建筑群的演变与修缮历程，见证中国祭天文化的传承与发展。
           </p>
-          <button class="explore-button" @click.stop="explore('lifeCycle')">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('LifeCycle')">
+            立即探索 →
+          </button>
         </div>
       </div>
 
@@ -58,7 +60,9 @@
           <p class="card-description">
             解析天坛建筑中蕴含的宇宙观与哲学思想，评估其作为世界文化遗产对全球建筑艺术、文化研究和旅游产业的深远影响。
           </p>
-          <button class="explore-button" @click.stop="explore('influence')">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('Influence')">
+            立即探索 →
+          </button>
         </div>
       </div>
 
@@ -75,7 +79,9 @@
           <p class="card-description">
             聆听天坛六百年的皇家秘事，从嘉靖帝雷击事件到光绪帝祈雨传奇，感受这座圣坛背后的历史风云与动人篇章。
           </p>
-          <button class="explore-button" @click.stop="explore('legends')">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('Legends')">
+            立即探索 →
+          </button>
         </div>
       </div>
     </section>
@@ -102,33 +108,34 @@ export default {
   },
   data() {
     return {
-      landmark: {}, 
+      landmark: {},
     };
   },
   computed: {
     // 新增：检测子路由是否激活[6,7](@ref)
     activeChildRoute() {
       return this.$route.matched.length > 1;
-    }
+    },
   },
   created() {
     this.loadLandmarkData();
   },
   methods: {
     goBack() {
-      this.$router.push("/"); 
+      this.$router.push("/");
     },
 
-    explore(direction) {
-      const routeName = direction.charAt(0).toUpperCase() + direction.slice(1);
+    explore(routeName) {
       this.$router.push({ name: routeName });
     },
     loadLandmarkData() {
       if (this.landmarkId === "templeofheaven") {
         this.landmark = {
           name: "天坛",
-          summary: "中国古代帝王祭天祈谷的场所，明清两代皇家祭祀中心，世界文化遗产，中国传统建筑艺术的杰出代表。",
-          image: 'https://cdn.pixabay.com/photo/2017/04/08/15/16/the-temple-of-heaven-2213516_1280.jpg',
+          summary:
+            "中国古代帝王祭天祈谷的场所，明清两代皇家祭祀中心，世界文化遗产，中国传统建筑艺术的杰出代表。",
+          image:
+            "https://cdn.pixabay.com/photo/2017/04/08/15/16/the-temple-of-heaven-2213516_1280.jpg",
           metrics: [
             { icon: "📅", value: "明永乐十八年 (1420年)", label: "始建于" },
             { icon: "📏", value: "总面积273万平方米", label: "占地面积" },
@@ -355,7 +362,11 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(139, 69, 19, 0.1), rgba(101, 67, 33, 0.4));
+  background: linear-gradient(
+    to bottom,
+    rgba(139, 69, 19, 0.1),
+    rgba(101, 67, 33, 0.4)
+  );
   z-index: 1;
 }
 
@@ -433,11 +444,11 @@ export default {
     width: 45%;
     margin-bottom: 30px;
   }
-  
+
   .landmark-header {
     height: 65vh;
   }
-  
+
   .landmark-info h1 {
     font-size: 2.8em;
   }
@@ -467,7 +478,7 @@ export default {
     width: 90%;
     margin-bottom: 25px;
   }
-  
+
   .core-metrics {
     gap: 15px;
   }
@@ -477,17 +488,17 @@ export default {
   .landmark-info h1 {
     font-size: 1.8em;
   }
-  
+
   .back-button {
     top: 20px;
     left: 20px;
     padding: 10px 15px;
   }
-  
+
   .exploration-card {
     width: 100%;
   }
-  
+
   .card-title {
     font-size: 1.4em;
   }

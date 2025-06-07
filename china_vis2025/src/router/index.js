@@ -55,26 +55,6 @@ const routes = [
     path: "/landmark/beihaiPark",
     name: "BeihaiPark",
     component: () => import("../views/landmarks/BeihaiPark.vue"),
-    children: [
-      {
-        path: "life-cycle",
-        name: "BeihaiParkLifeCycle",
-        component: () => import("@/components/BeihaiPark/LifeCycle.vue"),
-        props: true
-      },
-      {
-        path: "influence",
-        name: "BeihaiParkInfluence",
-        component: () => import("@/components/BeihaiPark/Influence.vue"),
-        props: true
-      },
-      {
-        path: "legends",
-        name: "BeihaiParkLegends",
-        component: () => import("@/components/BeihaiPark/Legends.vue"),
-        props: true
-      }
-    ]
   },
   {
     path: "/landmark/fayuanTemple",
@@ -114,13 +94,35 @@ const routes = [
     name: "LandmarkLifecyclePage",
     component: () => import("../views/landmarks/LandmarkLifecycle.vue"),
     props: true
-  }
+  },
+  {
+  path: "/landmark/:landmarkId/lifeCycle",
+  name: "BeihaiParkLifeCycle",
+  component: () => import("../views/landmarks/details/BeihaiParkLifeCycle.vue"),
+  props: true
+}
 ];
 
 const router = createRouter({
-  // Vue Router 4.x 使用 createWebHistory 而不是 mode: 'history'
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  routes: [
+    ...homeRoutes,
+    ...landmarkRoutes,
+    ...dynamicRoutes,
+    ...notFoundRoute
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    return savedPosition || { top: 0 };
+  }
+});
+
+// 全局路由守卫
+router.beforeEach((to, from, next) => {
+  // 设置页面标题
+  if (to.meta.title) {
+    document.title = `${to.meta.title} | 景区导览系统`;
+  }
+  next();
 });
 
 export default router;
