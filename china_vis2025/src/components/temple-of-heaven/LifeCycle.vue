@@ -94,7 +94,7 @@ import * as echarts from 'echarts';
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push('/landmark/temple-of-heaven');
+const goBack = () => router.push('/landmarks/temple-of-heaven');
 
 // 时间轴数据 - 重点强化建筑演变内容
 const timelineData = ref([

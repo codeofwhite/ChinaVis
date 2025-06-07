@@ -8,5 +8,5 @@ import router from "./router"; // 确保路径正确
 
 const app = createApp(App); // <-- 使用 createApp 函数创建应用实例
 app.use(router); // 注册 Vue Router
-app.use(ElementPlus)
+app.use(ElementPlus);
 app.mount("#app");

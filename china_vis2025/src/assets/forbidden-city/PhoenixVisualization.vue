@@ -49,7 +49,7 @@
 <script>
 import { ref, onMounted, computed } from 'vue'
 import phoenixImage from '../assets/phoenix.png'
-import mediaData from './data/media-coverage.json'
+import mediaData from '../data/media-coverage.json'
 import ThemeLegend from './ThemeLegend.vue'
 
 export default {

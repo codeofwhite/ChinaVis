@@ -79,7 +79,7 @@ import * as echarts from 'echarts';
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push('/landmark/temple-of-heaven');
+const goBack = () => router.push('/landmarks/temple-of-heaven');
 
 // 传奇事件数据
 const legendsData = ref([

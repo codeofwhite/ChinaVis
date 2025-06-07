@@ -1,32 +1,35 @@
 <template>
   <div class="detail-view-container">
     <div class="graph-container">
-        <button @click="goBack" class="back-button">← 返回</button>
-        <NetworkGraph
-            v-if="graphData.nodes.length"
-            :nodes="graphData.nodes"
-            :links="graphData.links"
-            :categories="categories"
-            @node-click="handleNodeClick"
-        />
-        <div v-else class="loading">正在加载数据...</div>
+      <button @click="goBack" class="back-button">← 返回</button>
+      <NetworkGraph
+        v-if="graphData.nodes.length"
+        :nodes="graphData.nodes"
+        :links="graphData.links"
+        :categories="categories"
+        @node-click="handleNodeClick"
+      />
+      <div v-else class="loading">正在加载数据...</div>
     </div>
     <div class="panel-container">
-        <NarrativePanel :node="selectedNode" />
+      <NarrativePanel :node="selectedNode" />
     </div>
   </div>
 </template>
 
 <script>
-import NetworkGraph from '../../components/NetworkGraph.vue';
-import NarrativePanel from './NarrativePanel.vue';
-import { landmarkGraphData, categories } from '../../components/data/landmarkData.js';
+import NetworkGraph from "../../../components/dashilan/NetworkGraph.vue";
+import NarrativePanel from "./NarrativePanel.vue";
+import {
+  landmarkGraphData,
+  categories,
+} from "../../../components/data/landmarkData.js";
 
 export default {
-  name: 'LandmarkDetailView',
+  name: "LandmarkDetailView",
   components: {
     NetworkGraph,
-    NarrativePanel
+    NarrativePanel,
   },
   data() {
     return {
@@ -38,7 +41,7 @@ export default {
   },
   created() {
     // 从路由参数获取地标ID
-    this.landmarkId = this.$route.params.id;
+    this.landmarkId = this.$route.params.landmarkId;
     this.loadData();
   },
   methods: {
@@ -46,7 +49,9 @@ export default {
       if (landmarkGraphData[this.landmarkId]) {
         this.graphData = landmarkGraphData[this.landmarkId];
         // 默认选中核心地标节点
-        this.selectedNode = this.graphData.nodes.find(n => n.category === '核心地标');
+        this.selectedNode = this.graphData.nodes.find(
+          (n) => n.category === "核心地标"
+        );
       } else {
         console.error(`No data found for landmarkId: ${this.landmarkId}`);
       }
@@ -56,15 +61,15 @@ export default {
     },
     goBack() {
       // 根据当前地标ID返回到对应的门户页面
-      if (this.landmarkId === 'dashilar') {
-        this.$router.push({ name: 'DashilarPortal' });
-      } else if (this.landmarkId === 'mingTombs') {
-        this.$router.push({ name: 'MingTombsPortal' });
+      if (this.landmarkId === "dashilar") {
+        this.$router.push({ name: "dashilar" });
+      } else if (this.landmarkId === "mingTombs") {
+        this.$router.push({ name: "ming-tombs" });
       } else {
-        this.$router.push('/');
+        this.$router.push("/");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

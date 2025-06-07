@@ -1,7 +1,12 @@
 <template>
   <div class="narrative-panel">
     <div v-if="node" class="content">
-      <img v-if="node.image" :src="getImageUrl(node.image)" :alt="node.name" class="node-image">
+      <img
+        v-if="node.image"
+        :src="getImageUrl(node.image)"
+        :alt="node.name"
+        class="node-image"
+      />
       <h2>{{ node.name }}</h2>
       <span class="category-tag">{{ node.category }}</span>
       <p class="description">{{ node.description }}</p>
@@ -14,21 +19,21 @@
 
 <script>
 export default {
-  name: 'NarrativePanel',
+  name: "NarrativePanel",
   props: {
     node: { type: Object, default: null },
   },
   methods: {
     getImageUrl(imagePath) {
-        try {
-            // 假设图片都存放在 @/assets/ 目录下
-            return require(`@/assets/${imagePath}`);
-        } catch(e) {
-            console.warn(`Image not found: ${imagePath}`);
-            return ''; // 或者返回一个默认的占位图
-        }
-    }
-  }
+      try {
+        // 假设图片都存放在 @/assets/ 目录下
+        return require(`@/assets/${imagePath}`);
+      } catch (e) {
+        console.warn(`Image not found: ${imagePath}`);
+        return ""; // 或者返回一个默认的占位图
+      }
+    },
+  },
 };
 </script>
 

@@ -67,47 +67,49 @@ export default {
           id: "forbiddenCity",
           name: "故宫",
           position: [116.397, 39.918],
-          routeName: "ForbiddenCity",
+          routeName: "forbidden-city", // 修改为新的路由名称
         },
         {
           id: "templeOfHeaven",
           name: "天坛",
           position: [116.41, 39.882],
-          routeName: "TempleOfHeaven",
+          routeName: "temple-of-heaven", // 修改为新的路由名称
         },
         {
           id: "greatWall",
           name: "长城",
           position: [116.57, 40.431],
-          routeName: "GreatWall",
+          routeName: "great-wall", // 修改为新的路由名称
         },
-        {          id: "mingTombs",
+        {
+          id: "mingTombs",
           name: "明十三陵",
           position: [116.234, 40.251],
-          routeName: "MingTombsPortal",
+          routeName: "ming-tombs", // 修改为新的路由名称
         },
         {
           id: "beihaiPark",
           name: "北海公园",
           position: [116.391, 39.928],
-          routeName: "BeihaiPark",
+          routeName: "beihai-park", // 修改为新的路由名称
         },
         {
           id: "fayuanTemple",
           name: "法源寺",
           position: [116.368, 39.884],
-          routeName: "FayuanTemple",
+          routeName: "fayuan-temple", // 修改为新的路由名称
         },
         {
           id: "summerPalace",
           name: "颐和园",
           position: [116.271, 39.999],
-          routeName: "SummerPalace",
+          routeName: "summer-palace", // 修改为新的路由名称
         },
-        {          id: "dashilan",
+        {
+          id: "dashilan",
           name: "大栅栏",
           position: [116.399, 39.899],
-          routeName: "DashilarPortal",
+          routeName: "dashilar", // 修改为新的路由名称
         },
       ],
       colorScaleConfig: {
@@ -127,6 +129,14 @@ export default {
     },
     handleLandmarkClick(landmark) {
       this.$router.push({ name: landmark.routeName });
+    },
+  },
+  watch: {
+    $route(to) {
+      // 如果有路由元信息中的标题，则更新页面标题
+      if (to.meta?.title) {
+        document.title = `${to.meta.title} | 北京地标导览`;
+      }
     },
   },
 };
