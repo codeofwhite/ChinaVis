@@ -46,15 +46,29 @@ const routes = [
     component: () => import("../views/landmarks/MingTombs.vue"),
   },
   {
-    path: "/landmark/mingTombs/detail",
-    name: "MingTombsDetail",
-    component: () => import("../views/landmarks/LandmarkDetailView.vue"),
-    props: true
-  },
-  {
     path: "/landmark/beihaiPark",
     name: "BeihaiPark",
     component: () => import("../views/landmarks/BeihaiPark.vue"),
+    children: [
+      {
+        path: "life-cycle",
+        name: "BeihaiParkLifeCycle",
+        component: () => import("@/components/BeihaiPark/LifeCycle.vue"),
+        props: true
+      },
+      {
+        path: "influence",
+        name: "BeihaiParkInfluence",
+        component: () => import("@/components/BeihaiPark/Influence.vue"),
+        props: true
+      },
+      {
+        path: "legends",
+        name: "BeihaiParkLegends",
+        component: () => import("@/components/BeihaiPark/Legends.vue"),
+        props: true
+      }
+    ]
   },
   {
     path: "/landmark/fayuanTemple",
@@ -74,7 +88,7 @@ const routes = [
   {
     path: "/landmark/dashilan/detail",
     name: "DashilanDetail",
-    component: () => import("../views/landmarks/LandmarkDetailView.vue"),
+    component: () => import("../views/landmarks/LandmarkRadarDisplayPage.vue"),
     props: true
   },
   {
@@ -82,35 +96,12 @@ const routes = [
     name: "LandmarkPortal",
     component: LandmarkPortal,
     props: true,
-  },
-  {
-    path: "/landmark/:landmarkId/influence",
-    name: "LandmarkRadarDisplayPage",
-    component: () => import("../views/landmarks/LandmarkRadarDisplayPage.vue"),
-    props: true
-  },
-  {
-    path: "/landmark/:landmarkId/:direction",
-    name: "LandmarkLifecyclePage",
-    component: () => import("../views/landmarks/LandmarkLifecycle.vue"),
-    props: true
-  },
-  {
-  path: "/landmark/:landmarkId/lifeCycle",
-  name: "BeihaiParkLifeCycle",
-  component: () => import("../views/landmarks/details/BeihaiParkLifeCycle.vue"),
-  props: true
-}
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    ...homeRoutes,
-    ...landmarkRoutes,
-    ...dynamicRoutes,
-    ...notFoundRoute
-  ],
+  routes,
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || { top: 0 };
   }
