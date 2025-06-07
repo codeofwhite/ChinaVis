@@ -12,7 +12,7 @@
       <div class="landmark-list">
         <h3>主要地标建筑</h3>
         <ul>
-          <li v-for="landmark in landmarks" :key="landmark.id">
+          <li v-for="landmark in landmarks" :key="landmark.id" class="landmark-item">
             <span class="landmark-name">{{ landmark.name }}</span>
           </li>
         </ul>
@@ -249,5 +249,10 @@ export default {
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
+}
+
+.landmark-item {
+  padding: 6px 0;
+  border-bottom: 1px dashed #eee;
 }
 </style>

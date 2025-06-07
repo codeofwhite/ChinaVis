@@ -274,8 +274,17 @@ export default {
 .marker-dot {
   fill: #ff5722;
   stroke: white;
+  stroke-width: 1;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.marker-dot:hover {
+  r: 5;
+  fill: #ff0000;
   stroke-width: 2;
-  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(255, 87, 34, 0.7));
+  transform: scale(1.2);
 }
 
 .marker-dot.highlight {
@@ -348,6 +357,11 @@ export default {
   opacity: 0.9;
 }
 
+.label-bg:hover {
+  fill: #fff8e1;
+  stroke-width: 1.5;
+}
+
 .label-text {
   font-size: 12px;
   fill: #333;
@@ -355,16 +369,13 @@ export default {
   pointer-events: none;
 }
 
-.marker-dot {
-  fill: #ff5722;
-  stroke: white;
-  stroke-width: 1;
-  cursor: pointer;
-  transition: all 0.3s;
+.map-layer path {
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.2));
+  transition: all 0.3s ease;
 }
 
-.marker-dot:hover {
-  r: 5;
-  fill: #ff0000;
+.map-layer path:hover {
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+  transform: translateY(-1px);
 }
 </style>
