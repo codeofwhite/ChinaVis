@@ -30,7 +30,7 @@
     <section class="exploration-cards-section" v-if="!activeChildRoute">
       <router-link
         class="exploration-card"
-        :to="{ name: 'BeihaiParkLifeCycle', params: { landmarkId: landmarkId || 'beihaiPark' } }"
+        :to="{ name: 'BeihaiParkLifeCycle'}"
         style="text-decoration:none;"
       >
         <div class="card-content">
@@ -45,13 +45,13 @@
           <p class="card-description">
             从兴建到重生的时光之旅，探索{{ landmark.name }}的建筑更迭与功能演变。
           </p>
-          <button class="explore-button" @click.stop.prevent>立即探索 →</button>
+          <button class="explore-button">立即探索 →</button>
         </div>
       </router-link>
 
       <router-link
         class="exploration-card"
-        :to="{ name: 'BeihaiParkInfluence', params: { landmarkId: landmarkId || 'beihaiPark' } }"
+        :to="{ name: 'BeihaiParkInfluence'}"
         style="text-decoration:none;"
       >
         <div class="card-content">
@@ -66,13 +66,13 @@
           <p class="card-description">
             解析{{ landmark.name }}如何融入当代生活，评估其在全球范围内的文化影响力与认知度。
           </p>
-          <button class="explore-button" @click.stop.prevent>立即探索 →</button>
+          <button class="explore-button">立即探索 →</button>
         </div>
       </router-link>
 
       <router-link
         class="exploration-card"
-        :to="{ name: 'BeihaiParkLegends', params: { landmarkId: landmarkId || 'beihaiPark' } }"
+        :to="{ name: 'BeihaiParkLegends' }"
         style="text-decoration:none;"
       >
         <div class="card-content">
@@ -87,7 +87,7 @@
           <p class="card-description">
             聆听{{ landmark.name }}背后那些引人入胜的帝王轶事、民间传说与文人墨客的动人篇章。
           </p>
-          <button class="explore-button" @click.stop.prevent>立即探索 →</button>
+          <button class="explore-button">立即探索 →</button>
         </div>
       </router-link>
     </section>
@@ -141,22 +141,12 @@ export default {
       this.$router.push("/");
     },
     explore(direction) {
-      // 跳转到不同的三级页面
       if (direction === "lifeCycle") {
-        this.$router.push({
-          name: "BeihaiParkLifeCycle",
-          params: { landmarkId: this.landmarkId || "beihaiPark" },
-        });
+        this.$router.push({ name: "BeihaiParkLifeCycle" });
       } else if (direction === "influence") {
-        this.$router.push({
-          name: "BeihaiParkInfluence",
-          params: { landmarkId: this.landmarkId || "beihaiPark" },
-        });
+        this.$router.push({ name: "BeihaiParkInfluence" });
       } else if (direction === "legends") {
-        this.$router.push({
-          name: "BeihaiParkLegends",
-          params: { landmarkId: this.landmarkId || "beihaiPark" },
-        });
+        this.$router.push({ name: "BeihaiParkLegends" });
       }
     },
   },
