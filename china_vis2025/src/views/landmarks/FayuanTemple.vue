@@ -27,8 +27,8 @@
       </div>
     </header>
 
-    <section class="exploration-cards-section">
-      <div class="exploration-card" @click="explore('lifeCycle')">
+    <section class="exploration-cards-section" v-if="!activeChildRoute">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">历史脉络</h2>
           <div class="card-preview-media">
@@ -39,13 +39,13 @@
             />
           </div>
           <p class="card-description">
-            探索{{ landmark.name }}从兴建到发展，历经变迁的千年历史。
+            探索{{ landmark.name }}历经千年沧桑，从唐代兴建到多次摧毁与重建的历史变迁。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('fayuan-LifeCycle')">立即探索 →</button>
         </div>
       </div>
 
-      <div class="exploration-card" @click="explore('influence')">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">佛教传承</h2>
           <div class="card-preview-media">
@@ -58,11 +58,11 @@
           <p class="card-description">
             洞察{{ landmark.name }}作为佛教圣地，在中国乃至亚洲佛教文化中的重要地位。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('fayuan-Influence')">立即探索 →</button>
         </div>
       </div>
 
-      <div class="exploration-card" @click="explore('legends')">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">寺庙传说</h2>
           <div class="card-preview-media">
@@ -75,10 +75,13 @@
           <p class="card-description">
             聆听{{ landmark.name }}的神秘传说、高僧故事以及与历史名人的渊源。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('fayuan-Legends')">立即探索 →</button>
         </div>
       </div>
     </section>
+
+    <!-- 子组件渲染区 -->
+    <router-view v-else :landmark="landmark"></router-view>
 
     <footer class="portal-footer">
       <p>发现更多：<a href="#">推荐探索路线</a> | <a href="#">更多发现</a></p>
@@ -94,13 +97,18 @@ export default {
     landmarkId: {
       type: String,
       required: true,
-      default: "fayuantemple", // Defaulting for standalone use, parent should provide actual ID
+      default: "fayuantemple", 
     },
   },
   data() {
     return {
       landmark: {},
     };
+  },
+  computed: {
+    activeChildRoute() {
+      return this.$route.matched.length >1;
+    },
   },
   created() {
     this.loadLandmarkData();
@@ -109,11 +117,8 @@ export default {
     goBack() {
       this.$router.push("/");
     },
-    explore(direction) {
-      this.$router.push({
-        name: "LandmarkDetail",
-        params: { id: this.landmarkId, direction: direction },
-      });
+    explore(routeName) {
+      this.$router.push({ name: routeName });
     },
     loadLandmarkData() {
       if (this.landmarkId === "fayuantemple") {

@@ -33,10 +33,7 @@
           <h2 class="card-title">街巷记忆</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
-            <img
-              :src="oldDashilanImage"
-              alt="街巷记忆预览"
-            />
+            <img :src="oldDashilanImage" alt="街巷记忆预览" />
           </div>
           <p class="card-description">
             从明代廊房的初兴，到清末民初的商铺林立与几经兴废，再到当代的保护性修缮与风貌重现。一同探寻大栅栏这条百年老街在时光流转中的建筑格局、市井风貌与功能角色的演变轨迹。
@@ -50,10 +47,7 @@
           <h2 class="card-title">商韵流传</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
-            <img
-              :src="tongRenTangImage"
-              alt="商韵流传预览"
-            />
+            <img :src="tongRenTangImage" alt="商韵流传预览" />
           </div>
           <p class="card-description">
             解读大栅栏作为京城重要商贸枢纽的历史地位，品味老字号的百年商誉与京味商业文化。评估其在当代如何延续商业活力，吸引八方来客，并在城市发展中焕发新的光彩。
@@ -67,10 +61,7 @@
           <h2 class="card-title">坊间拾趣</h2>
           <div class="card-preview-media">
             <div class="media-overlay"></div>
-            <img
-              :src="dashilanStoryImage"
-              alt="坊间拾趣预览"
-            />
+            <img :src="dashilanStoryImage" alt="坊间拾趣预览" />
           </div>
           <p class="card-description">
             漫步大栅栏，聆听那些流传于街头巷尾的奇闻轶事、梨园往事与民俗风情。从义和团的烽火到"大观楼"的首映光影，从"大石烂儿"的读音传说到元宵灯会的市井喧嚣，拾取那些生动鲜活的地标故事。
@@ -88,10 +79,10 @@
 </template>
 
 <script>
-import DashilarBackgroundImage from "../../assets/dashilan_bg.jpg";
-import oldDashilanImage from "../../assets/olddashilan.jpg";
-import tongRenTangImage from "../../assets/TongRenTang.jpg";
-import dashilanStoryImage from "../../assets/dashilan_story.jpg";
+import DashilarBackgroundImage from "../../assets/dashilan/dashilan_bg.jpg";
+import oldDashilanImage from "../../assets/dashilan/olddashilan.jpg";
+import tongRenTangImage from "../../assets/dashilan/TongRenTang.jpg";
+import dashilanStoryImage from "../../assets/dashilan/dashilan_story.jpg";
 
 export default {
   name: "DashilarPortal",
@@ -118,20 +109,21 @@ export default {
       this.$router.push("/");
     },
     explore(direction) {
-      if (direction === 'lifeCycle') {
+      const params = { landmarkId: this.landmarkId };
+      if (direction === "lifeCycle") {
         this.$router.push({
-          name: 'LandmarkLifecyclePage',
-          params: { landmarkId: this.landmarkId, direction: direction },
+          name: "landmark-lifecycle",
+          params: { ...params, direction: direction },
         });
-      } else if (direction === 'influence') {
+      } else if (direction === "influence") {
         this.$router.push({
-          name: 'LandmarkRadarDisplayPage',
-          params: { landmarkId: this.landmarkId },
+          name: "landmark-radar",
+          params,
         });
-      } else if (direction === 'legends') {
+      } else if (direction === "legends") {
         this.$router.push({
-          name: 'DashilanDetail',
-          params: { id: this.landmarkId },
+          name: "landmark-detail",
+          params,
         });
       } else {
         console.warn("Unknown exploration direction:", direction);
@@ -141,7 +133,8 @@ export default {
       if (this.landmarkId === "dashilar") {
         this.landmark = {
           name: "大栅栏",
-          summary: "北京著名的百年商业老街，京味文化与市井生活的鲜活画卷，承载着丰富的历史记忆与民国风情。",
+          summary:
+            "北京著名的百年商业老街，京味文化与市井生活的鲜活画卷，承载着丰富的历史记忆与民国风情。",
           image: DashilarBackgroundImage,
           metrics: [
             { icon: "📅", value: "明代初 (15世纪初)", label: "始建于" },
@@ -370,7 +363,11 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(139, 69, 19, 0.1), rgba(101, 67, 33, 0.4));
+  background: linear-gradient(
+    to bottom,
+    rgba(139, 69, 19, 0.1),
+    rgba(101, 67, 33, 0.4)
+  );
   z-index: 1;
 }
 

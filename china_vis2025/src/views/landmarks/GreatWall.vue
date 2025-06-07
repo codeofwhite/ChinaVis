@@ -39,7 +39,9 @@
             />
           </div>
           <p class="card-description">
-            从兴建到重生的时光之旅，探索{{ landmark.name }}的建筑更迭与功能演变。
+            从兴建到重生的时光之旅，探索{{
+              landmark.name
+            }}的建筑更迭与功能演变。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -56,7 +58,9 @@
             />
           </div>
           <p class="card-description">
-            解析{{ landmark.name }}如何融入当代生活，评估其在全球范围内的文化影响力与认知度。
+            解析{{
+              landmark.name
+            }}如何融入当代生活，评估其在全球范围内的文化影响力与认知度。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -73,7 +77,9 @@
             />
           </div>
           <p class="card-description">
-            聆听{{ landmark.name }}背后那些引人入胜的帝王轶事、民间传说与文人墨客的动人篇章。
+            聆听{{
+              landmark.name
+            }}背后那些引人入胜的帝王轶事、民间传说与文人墨客的动人篇章。
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
@@ -100,8 +106,10 @@ export default {
     return {
       landmark: {
         name: "长城",
-        summary: "世界最长的古代防御工程，中华民族的重要象征，1987年被列入世界文化遗产名录。",
-        image: "https://x0.ifengimg.com/ucms/2021_12/9D96B9B87AEAED9CB42CED7849A4F6CA71591D16_size119_w1024_h643.jpg",
+        summary:
+          "世界最长的古代防御工程，中华民族的重要象征，1987年被列入世界文化遗产名录。",
+        image:
+          "https://x0.ifengimg.com/ucms/2021_12/9D96B9B87AEAED9CB42CED7849A4F6CA71591D16_size119_w1024_h643.jpg",
         metrics: [
           { icon: "📅", value: "战国-明代", label: "修建时期" },
           { icon: "📏", value: "2万+", label: "公里总长" },

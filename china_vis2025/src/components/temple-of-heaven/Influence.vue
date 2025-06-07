@@ -150,7 +150,7 @@ import * as echarts from 'echarts';
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push('/landmark/temple-of-heaven');
+const goBack = () => router.push('/landmarks/temple-of-heaven');
 
 // ECharts图表引用
 const cosmosChart = ref(null);

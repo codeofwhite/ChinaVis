@@ -1,4 +1,5 @@
 <template>
+  <!-- 3D 模型的网页嵌入 -->
   <div id="cesiumContainer" class="cesium-container"></div>
 </template>
 

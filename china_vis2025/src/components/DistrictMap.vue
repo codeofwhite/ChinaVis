@@ -1,4 +1,4 @@
-<!-- DistrictMap.vue -->
+<!-- DistrictMap.vue 北京详细区的内部可视化地图 -->
 <template>
   <svg ref="mapSvg" width="800" height="600"></svg>
 </template>

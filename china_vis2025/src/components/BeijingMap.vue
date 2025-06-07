@@ -1,4 +1,5 @@
 <template>
+  <!-- 主页面的北京地图 -->
   <div class="map-container">
     <svg ref="mapSvg" width="100%" height="100%" viewBox="0 0 800 600">
       <!-- 地图区域 -->
