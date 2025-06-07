@@ -10,7 +10,7 @@
           class="landmark-main-media"
         />
       </div>
-            <div class="landmark-info">
+      <div class="landmark-info">
         <h1>{{ landmark.name }}</h1>
         <p class="summary">{{ landmark.summary }}</p>
         <div class="core-metrics">
@@ -27,8 +27,12 @@
       </div>
     </header>
 
-    <section class="exploration-cards-section">
-      <div class="exploration-card" @click="explore('lifeCycle')">
+    <section class="exploration-cards-section" v-if="!activeChildRoute">
+      <router-link
+        class="exploration-card"
+        :to="{ name: 'BeihaiParkLifeCycle', params: { landmarkId: landmarkId || 'beihaiPark' } }"
+        style="text-decoration:none;"
+      >
         <div class="card-content">
           <h2 class="card-title">生命年轮</h2>
           <div class="card-preview-media">
@@ -41,11 +45,15 @@
           <p class="card-description">
             从兴建到重生的时光之旅，探索{{ landmark.name }}的建筑更迭与功能演变。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click.stop.prevent>立即探索 →</button>
         </div>
-      </div>
+      </router-link>
 
-      <div class="exploration-card" @click="explore('influence')">
+      <router-link
+        class="exploration-card"
+        :to="{ name: 'BeihaiParkInfluence', params: { landmarkId: landmarkId || 'beihaiPark' } }"
+        style="text-decoration:none;"
+      >
         <div class="card-content">
           <h2 class="card-title">影响力光环</h2>
           <div class="card-preview-media">
@@ -58,11 +66,15 @@
           <p class="card-description">
             解析{{ landmark.name }}如何融入当代生活，评估其在全球范围内的文化影响力与认知度。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click.stop.prevent>立即探索 →</button>
         </div>
-      </div>
+      </router-link>
 
-      <div class="exploration-card" @click="explore('legends')">
+      <router-link
+        class="exploration-card"
+        :to="{ name: 'BeihaiParkLegends', params: { landmarkId: landmarkId || 'beihaiPark' } }"
+        style="text-decoration:none;"
+      >
         <div class="card-content">
           <h2 class="card-title">传奇故事</h2>
           <div class="card-preview-media">
@@ -75,10 +87,13 @@
           <p class="card-description">
             聆听{{ landmark.name }}背后那些引人入胜的帝王轶事、民间传说与文人墨客的动人篇章。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click.stop.prevent>立即探索 →</button>
         </div>
-      </div>
+      </router-link>
     </section>
+
+    <!-- 子路由渲染区 -->
+    <router-view />
 
     <footer class="portal-footer">
       <p>发现更多：<a href="#">推荐探索路线</a> | <a href="#">更多发现</a></p>
@@ -111,26 +126,36 @@ export default {
       },
     };
   },
+  computed: {
+    activeChildRoute() {
+      // 判断当前是否处于三级页面
+      return (
+        this.$route.name === "BeihaiParkLifeCycle" ||
+        this.$route.name === "BeihaiParkInfluence" ||
+        this.$route.name === "BeihaiParkLegends"
+      );
+    },
+  },
   methods: {
     goBack() {
       this.$router.push("/");
     },
     explore(direction) {
       // 跳转到不同的三级页面
-      if (direction === 'lifeCycle') {
+      if (direction === "lifeCycle") {
         this.$router.push({
           name: "BeihaiParkLifeCycle",
-          params: { landmarkId: this.landmarkId || 'beihaiPark' }
+          params: { landmarkId: this.landmarkId || "beihaiPark" },
         });
-      } else if (direction === 'influence') {
+      } else if (direction === "influence") {
         this.$router.push({
           name: "BeihaiParkInfluence",
-          params: { landmarkId: this.landmarkId || 'beihaiPark' }
+          params: { landmarkId: this.landmarkId || "beihaiPark" },
         });
-      } else if (direction === 'legends') {
+      } else if (direction === "legends") {
         this.$router.push({
           name: "BeihaiParkLegends",
-          params: { landmarkId: this.landmarkId || 'beihaiPark' }
+          params: { landmarkId: this.landmarkId || "beihaiPark" },
         });
       }
     },
