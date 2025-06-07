@@ -86,14 +86,42 @@
       </div>
     </div>
   </div>
+  <!-- 网络图弹窗 -->
+  <TimeLine :events="forbiddenCity.timeline" @show-network="openModal" />
+  <el-dialog
+    v-model="dialogVisible"
+    :title="
+      selectedEvent ? `${selectedEvent.year}年: ${selectedEvent.event}` : ''
+    "
+    width="80%"
+    top="5vh"
+  >
+    <LandmarkNetwork
+      v-if="dialogVisible"
+      :landmark="forbiddenCity"
+      :event="selectedEvent"
+    />
+  </el-dialog>
 </template>
 
 <script setup>
 import { ref, onMounted, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
+import TimeLine from "./TimeLine.vue";
+import LandmarkNetwork from "./LandmarkNetwork.vue";
+import forbiddenCityData from "../../assets/forbidden-city.json";
 
 const router = useRouter();
+const forbiddenCity = ref(forbiddenCityData);
+const dialogVisible = ref(false);
+const selectedEvent = ref(null);
+
+// 打开网络图
+const openModal = (event) => {
+  selectedEvent.value = event;
+  dialogVisible.value = true;
+};
 
 // 返回门户主页
 const goBack = () => router.push("/landmarks/forbidden-city");
