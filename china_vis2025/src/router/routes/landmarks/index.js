@@ -15,14 +15,14 @@ const landmarkRoutes = [
   ...mingTombs,
   ...dashilar,
   ...beihaiPark,
-  ...greatWall
+  ...greatWall,
 ];
 
-export default landmarkRoutes.map(route => ({
+export default landmarkRoutes.map((route) => ({
   ...route,
   path: `/landmarks${route.path}`,
   meta: {
     ...route.meta,
-    category: 'landmark'
-  }
+    category: "landmark",
+  },
 }));

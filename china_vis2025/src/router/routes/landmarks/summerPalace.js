@@ -1,6 +1,6 @@
 export default [
   {
-    path: "/summerPalace",
+    path: "/summer-Palace",
     name: "summer-palace",
     component: () => import("@/views/landmarks/SummerPalace.vue"),
     meta: {

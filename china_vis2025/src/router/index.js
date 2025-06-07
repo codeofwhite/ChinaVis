@@ -1,107 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import LandmarkPortal from "../views/LandmarkPortal.vue";
-
-const routes = [
-  {
-    path: "/",
-    name: "home",
-    component: HomeView
-  },
-  {
-    path: "/landmark/forbiddenCity",
-    name: "ForbiddenCity",
-    component: () => import("../views/landmarks/ForbiddenCity.vue"),
-  },
-  {
-    path: "/landmark/temple-of-heaven",
-    name: "TempleOfHeaven",
-    component: () => import("@/views/landmarks/TempleOfHeaven.vue"),
-    children: [
-      {
-        path: "life-cycle", 
-        name: "LifeCycle", 
-        component: () => import("@/components/temple-of-heaven/LifeCycle.vue")
-      },
-      {
-        path: "influence", 
-        name: "Influence", 
-        component: () => import("@/components/temple-of-heaven/Influence.vue")
-      },
-      {
-        path: "legends", 
-        name: "Legends", 
-        component: () => import("@/components/temple-of-heaven/Legends.vue")
-      }
-    ]
-  },
-  {
-    path: "/landmark/greatWall",
-    name: "GreatWall",
-    component: () => import("../views/landmarks/GreatWall.vue"),
-  },
-  {
-    path: "/landmark/mingTombs",
-    name: "MingTombsPortal", // 修改路由名称以匹配 goBack 方法中的引用
-    component: () => import("../views/landmarks/MingTombs.vue"),
-  },
-  {
-    path: "/landmark/beihaiPark",
-    name: "BeihaiPark",
-    component: () => import("../views/landmarks/BeihaiPark.vue"),
-    children: [
-      {
-        path: "life-cycle",
-        name: "BeihaiParkLifeCycle",
-        component: () => import("@/components/BeihaiPark/LifeCycle.vue"),
-        props: true
-      },
-      {
-        path: "influence",
-        name: "BeihaiParkInfluence",
-        component: () => import("@/components/BeihaiPark/Influence.vue"),
-        props: true
-      },
-      {
-        path: "legends",
-        name: "BeihaiParkLegends",
-        component: () => import("@/components/BeihaiPark/Legends.vue"),
-        props: true
-      }
-    ]
-  },
-  {
-    path: "/landmark/fayuanTemple",
-    name: "FayuanTemple",
-    component: () => import("../views/landmarks/FayuanTemple.vue"),
-  },
-  {
-    path: "/landmark/summerPalace",
-    name: "SummerPalace",
-    component: () => import("../views/landmarks/SummerPalace.vue"),
-  },
-  {
-    path: "/landmark/dashilar",
-    name: "DashilarPortal", // 修改路由名称以匹配 goBack 方法中的引用
-    component: () => import("../views/landmarks/Dashilan.vue"),
-  },
-  {
-    path: "/landmark/dashilan/detail",
-    name: "DashilanDetail",
-    component: () => import("../views/landmarks/LandmarkRadarDisplayPage.vue"),
-    props: true
-  },
-  {
-    path: "/landmark/:landmarkId",
-    name: "LandmarkPortal",
-    component: LandmarkPortal,
-    props: true,
-  }
-];
+import homeRoutes from "./routes/home";
+import landmarkRoutes from "./routes/landmarks";
+import dynamicRoutes from "./routes/dynamicRoutes";
+import notFoundRoute from "./routes/notFound";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  routes: [
+    ...homeRoutes,
+    ...landmarkRoutes,
+    ...dynamicRoutes,
+    ...notFoundRoute
+  ],
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || { top: 0 };
   }
