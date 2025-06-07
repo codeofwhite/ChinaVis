@@ -60,7 +60,7 @@ import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const goBack = () => router.push('/landmark/beihaiPark');
+const goBack = () => router.push('/landmarks/beihai-park'); // 修改为正确路径
 
 // 地图底图地址（请替换为你自己的图片或SVG地址）
 const mapUrl = 'https://your-domain.com/beihai-base.png'; // 或 .svg
