@@ -2,13 +2,13 @@
   <div class="influence-container">
     <!-- 返回按钮 -->
     <button @click="goBack" class="back-button">← 返回天坛门户</button>
-    
+
     <!-- 页面标题 -->
     <div class="influence-header">
       <h1>天坛建筑的宇宙观与世界影响</h1>
       <p>解读古代建筑中的哲学智慧及其全球文化遗产价值</p>
     </div>
-    
+
     <!-- 主要布局 -->
     <div class="main-content">
       <!-- 左侧：宇宙观解析 -->
@@ -17,53 +17,61 @@
           <h2>天坛建筑中的宇宙哲学</h2>
           <div class="divider"></div>
         </div>
-        
+
         <div class="philosophy-card">
           <div class="philosophy-item">
             <div class="icon-circle">
               <i class="icon">☯</i>
             </div>
             <h3>天圆地方的宇宙模型</h3>
-            <p>天坛整体布局呈现"北圆南方"结构，祈年殿的圆形三重檐象征"天"，方形的围墙代表"地"，完美诠释了中国古代"天圆地方"的宇宙观。这种几何象征在建筑史上具有开创性意义。</p>
+            <p>
+              天坛整体布局呈现"北圆南方"结构，祈年殿的圆形三重檐象征"天"，方形的围墙代表"地"，完美诠释了中国古代"天圆地方"的宇宙观。这种几何象征在建筑史上具有开创性意义。
+            </p>
           </div>
-          
+
           <div class="philosophy-item">
             <div class="icon-circle">
               <i class="icon">☀</i>
             </div>
             <h3>天人合一的哲学思想</h3>
-            <p>建筑群通过精确的轴线布局（南北中轴线长360丈）与天文方位对应，体现"天人合一"哲学。冬至祭天时，阳光会穿过皇穹宇门洞照亮祭坛中心，展现自然与建筑的完美融合。</p>
+            <p>
+              建筑群通过精确的轴线布局（南北中轴线长360丈）与天文方位对应，体现"天人合一"哲学。冬至祭天时，阳光会穿过皇穹宇门洞照亮祭坛中心，展现自然与建筑的完美融合。
+            </p>
           </div>
-          
+
           <div class="philosophy-item">
             <div class="icon-circle">
               <i class="icon">🌌</i>
             </div>
             <h3>数字象征的宇宙秩序</h3>
-            <p>祈年殿28根立柱象征二十八星宿；内圈12根金柱代表12个月份；外圈12根檐柱象征12时辰，整体36根立柱对应36天罡。这种数字象征系统表达了古人对宇宙秩序的深刻理解。</p>
+            <p>
+              祈年殿28根立柱象征二十八星宿；内圈12根金柱代表12个月份；外圈12根檐柱象征12时辰，整体36根立柱对应36天罡。这种数字象征系统表达了古人对宇宙秩序的深刻理解。
+            </p>
           </div>
-          
+
           <div class="philosophy-item">
             <div class="icon-circle">
               <i class="icon">☯</i>
             </div>
             <h3>阴阳五行的哲学系统</h3>
-            <p>建筑色彩运用深含阴阳五行哲学：蓝色琉璃瓦象征蓝天（阳），汉白玉栏杆代表大地（阴）；东侧青砖对应木（春），南侧红墙象征火（夏），西侧白阶对应金（秋），北侧黑瓦象征水（冬）。</p>
+            <p>
+              建筑色彩运用深含阴阳五行哲学：蓝色琉璃瓦象征蓝天（阳），汉白玉栏杆代表大地（阴）；东侧青砖对应木（春），南侧红墙象征火（夏），西侧白阶对应金（秋），北侧黑瓦象征水（冬）。
+            </p>
           </div>
         </div>
-        
+
         <div class="cosmos-chart">
           <div ref="cosmosChart" class="chart-box"></div>
         </div>
       </div>
-      
+
       <!-- 右侧：全球影响 -->
       <div class="impact-section">
         <div class="section-title">
           <h2>天坛的世界文化遗产价值</h2>
           <div class="divider"></div>
         </div>
-        
+
         <div class="impact-dimension">
           <h3><i class="icon">🏛️</i> 对建筑艺术的影响</h3>
           <div class="dimension-content">
@@ -78,7 +86,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="impact-dimension">
           <h3><i class="icon">📚</i> 对文化研究的影响</h3>
           <div class="dimension-content">
@@ -93,7 +101,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="impact-dimension">
           <h3><i class="icon">✈️</i> 对旅游产业的影响</h3>
           <div class="dimension-content">
@@ -110,7 +118,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- 全球影响总结 -->
     <div class="global-impact">
       <h2>天坛的全球文化遗产价值</h2>
@@ -133,24 +141,27 @@
         </div>
       </div>
     </div>
-    
+    <RadarChartBoard></RadarChartBoard>
     <!-- 页脚 -->
     <div class="influence-footer">
-      <p>天坛作为中国古代宇宙观的建筑象征，不仅体现了华夏文明的哲学智慧，更成为全人类共同的文化遗产。</p>
+      <p>
+        天坛作为中国古代宇宙观的建筑象征，不仅体现了华夏文明的哲学智慧，更成为全人类共同的文化遗产。
+      </p>
       <p>联合国教科文组织世界遗产 · 编号881</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import * as echarts from 'echarts';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import * as echarts from "echarts";
+import RadarChartBoard from "../RadarChartBoard.vue";
 
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push('/landmarks/forbidden-city');
+const goBack = () => router.push("/landmarks/forbidden-city");
 
 // ECharts图表引用
 const cosmosChart = ref(null);
@@ -162,55 +173,55 @@ const tourismChart = ref(null);
 const initCosmosChart = () => {
   if (cosmosChart.value) {
     const chart = echarts.init(cosmosChart.value);
-    
+
     const option = {
       tooltip: {
-        trigger: 'item',
-        formatter: '{b}: {c}'
+        trigger: "item",
+        formatter: "{b}: {c}",
       },
       legend: {
-        top: 'bottom',
+        top: "bottom",
         textStyle: {
-          color: '#5a4a42'
-        }
+          color: "#5a4a42",
+        },
       },
-      color: ['#8b4513', '#d4a76a', '#9c7c5c', '#b2967d'],
+      color: ["#8b4513", "#d4a76a", "#9c7c5c", "#b2967d"],
       series: [
         {
-          name: '宇宙哲学要素',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          center: ['50%', '40%'],
-          roseType: 'area',
+          name: "宇宙哲学要素",
+          type: "pie",
+          radius: ["40%", "70%"],
+          center: ["50%", "40%"],
+          roseType: "area",
           label: {
             show: true,
-            formatter: '{b|{b}}\n{c|{c}%}',
+            formatter: "{b|{b}}\n{c|{c}%}",
             rich: {
               b: {
                 fontSize: 14,
-                color: '#5a4a42',
-                lineHeight: 20
+                color: "#5a4a42",
+                lineHeight: 20,
               },
               c: {
                 fontSize: 16,
-                color: '#8b4513',
-                fontWeight: 'bold'
-              }
-            }
+                color: "#8b4513",
+                fontWeight: "bold",
+              },
+            },
           },
           data: [
-            { value: 35, name: '空间象征' },
-            { value: 30, name: '数字哲学' },
-            { value: 20, name: '色彩象征' },
-            { value: 15, name: '祭祀礼仪' }
-          ]
-        }
-      ]
+            { value: 35, name: "空间象征" },
+            { value: 30, name: "数字哲学" },
+            { value: 20, name: "色彩象征" },
+            { value: 15, name: "祭祀礼仪" },
+          ],
+        },
+      ],
     };
-    
+
     chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
+
+    window.addEventListener("resize", () => {
       chart.resize();
     });
   }
@@ -220,69 +231,69 @@ const initCosmosChart = () => {
 const initArchChart = () => {
   if (archChart.value) {
     const chart = echarts.init(archChart.value);
-    
+
     const option = {
       tooltip: {
-        trigger: 'axis',
+        trigger: "axis",
         axisPointer: {
-          type: 'shadow'
-        }
+          type: "shadow",
+        },
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true,
       },
       xAxis: {
-        type: 'category',
-        data: ['圆形布局', '色彩运用', '木构技术', '轴线序列', '声学设计'],
+        type: "category",
+        data: ["圆形布局", "色彩运用", "木构技术", "轴线序列", "声学设计"],
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
+            color: "#8b4513",
+          },
         },
         axisLabel: {
-          color: '#5a4a42',
-          rotate: 30
-        }
+          color: "#5a4a42",
+          rotate: 30,
+        },
       },
       yAxis: {
-        type: 'value',
-        name: '影响指数',
+        type: "value",
+        name: "影响指数",
         nameTextStyle: {
-          color: '#5a4a42'
+          color: "#5a4a42",
         },
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
+            color: "#8b4513",
+          },
         },
         splitLine: {
           lineStyle: {
-            color: 'rgba(139, 69, 19, 0.1)'
-          }
-        }
+            color: "rgba(139, 69, 19, 0.1)",
+          },
+        },
       },
       series: [
         {
-          name: '影响程度',
-          type: 'bar',
-          barWidth: '60%',
+          name: "影响程度",
+          type: "bar",
+          barWidth: "60%",
           itemStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#d4a76a' },
-              { offset: 1, color: '#8b4513' }
-            ])
+              { offset: 0, color: "#d4a76a" },
+              { offset: 1, color: "#8b4513" },
+            ]),
           },
-          data: [89, 78, 82, 75, 68]
-        }
-      ]
+          data: [89, 78, 82, 75, 68],
+        },
+      ],
     };
-    
+
     chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
+
+    window.addEventListener("resize", () => {
       chart.resize();
     });
   }
@@ -292,88 +303,88 @@ const initArchChart = () => {
 const initCultureChart = () => {
   if (cultureChart.value) {
     const chart = echarts.init(cultureChart.value);
-    
+
     const option = {
       tooltip: {
-        trigger: 'axis'
+        trigger: "axis",
       },
       legend: {
-        data: ['论文数量', '研究项目'],
+        data: ["论文数量", "研究项目"],
         textStyle: {
-          color: '#5a4a42'
+          color: "#5a4a42",
         },
-        bottom: 0
+        bottom: 0,
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '15%',
-        containLabel: true
+        left: "3%",
+        right: "4%",
+        bottom: "15%",
+        containLabel: true,
       },
       xAxis: {
-        type: 'category',
+        type: "category",
         boundaryGap: false,
-        data: ['1990', '1995', '2000', '2005', '2010', '2015', '2020', '2023'],
+        data: ["1990", "1995", "2000", "2005", "2010", "2015", "2020", "2023"],
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
-        }
+            color: "#8b4513",
+          },
+        },
       },
       yAxis: {
-        type: 'value',
-        name: '数量/项',
+        type: "value",
+        name: "数量/项",
         nameTextStyle: {
-          color: '#5a4a42'
+          color: "#5a4a42",
         },
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
+            color: "#8b4513",
+          },
         },
         splitLine: {
           lineStyle: {
-            color: 'rgba(139, 69, 19, 0.1)'
-          }
-        }
+            color: "rgba(139, 69, 19, 0.1)",
+          },
+        },
       },
       series: [
         {
-          name: '论文数量',
-          type: 'line',
+          name: "论文数量",
+          type: "line",
           smooth: true,
-          symbol: 'circle',
+          symbol: "circle",
           symbolSize: 8,
           lineStyle: {
             width: 4,
-            color: '#8b4513'
+            color: "#8b4513",
           },
           itemStyle: {
-            color: '#8b4513'
+            color: "#8b4513",
           },
-          data: [12, 28, 45, 78, 120, 210, 285, 320]
+          data: [12, 28, 45, 78, 120, 210, 285, 320],
         },
         {
-          name: '研究项目',
-          type: 'line',
+          name: "研究项目",
+          type: "line",
           smooth: true,
-          symbol: 'circle',
+          symbol: "circle",
           symbolSize: 8,
           lineStyle: {
             width: 4,
-            color: '#d4a76a'
+            color: "#d4a76a",
           },
           itemStyle: {
-            color: '#d4a76a'
+            color: "#d4a76a",
           },
-          data: [3, 8, 15, 26, 42, 68, 95, 120]
-        }
-      ]
+          data: [3, 8, 15, 26, 42, 68, 95, 120],
+        },
+      ],
     };
-    
+
     chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
+
+    window.addEventListener("resize", () => {
       chart.resize();
     });
   }
@@ -383,56 +394,56 @@ const initCultureChart = () => {
 const initTourismChart = () => {
   if (tourismChart.value) {
     const chart = echarts.init(tourismChart.value);
-    
+
     const option = {
       tooltip: {
-        trigger: 'item',
-        formatter: '{b}: {c} ({d}%)'
+        trigger: "item",
+        formatter: "{b}: {c} ({d}%)",
       },
       legend: {
-        orient: 'vertical',
+        orient: "vertical",
         right: 10,
-        top: 'center',
+        top: "center",
         textStyle: {
-          color: '#5a4a42'
-        }
+          color: "#5a4a42",
+        },
       },
-      color: ['#8b4513', '#d4a76a', '#9c7c5c', '#b2967d', '#c8b49c'],
+      color: ["#8b4513", "#d4a76a", "#9c7c5c", "#b2967d", "#c8b49c"],
       series: [
         {
-          name: '游客来源',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          center: ['40%', '50%'],
+          name: "游客来源",
+          type: "pie",
+          radius: ["40%", "70%"],
+          center: ["40%", "50%"],
           avoidLabelOverlap: false,
           label: {
             show: true,
-            formatter: '{b}: {d}%'
+            formatter: "{b}: {d}%",
           },
           emphasis: {
             label: {
               show: true,
-              fontSize: '18',
-              fontWeight: 'bold'
-            }
+              fontSize: "18",
+              fontWeight: "bold",
+            },
           },
           labelLine: {
-            show: true
+            show: true,
           },
           data: [
-            { value: 65, name: '中国游客' },
-            { value: 12, name: '东亚国家' },
-            { value: 10, name: '北美地区' },
-            { value: 8, name: '欧洲国家' },
-            { value: 5, name: '其他地区' }
-          ]
-        }
-      ]
+            { value: 65, name: "中国游客" },
+            { value: 12, name: "东亚国家" },
+            { value: 10, name: "北美地区" },
+            { value: 8, name: "欧洲国家" },
+            { value: 5, name: "其他地区" },
+          ],
+        },
+      ],
     };
-    
+
     chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
+
+    window.addEventListener("resize", () => {
       chart.resize();
     });
   }
@@ -524,7 +535,8 @@ onMounted(() => {
   gap: 40px;
 }
 
-.philosophy-section, .impact-section {
+.philosophy-section,
+.impact-section {
   flex: 1;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 20px;
@@ -770,11 +782,11 @@ onMounted(() => {
   .influence-header h1 {
     font-size: 2.2rem;
   }
-  
+
   .global-impact {
     padding: 30px 20px;
   }
-  
+
   .philosophy-card {
     grid-template-columns: 1fr;
   }
@@ -784,13 +796,13 @@ onMounted(() => {
   .influence-header {
     padding: 40px 15px 30px;
   }
-  
+
   .back-button {
     top: 15px;
     left: 15px;
     padding: 10px 15px;
   }
-  
+
   .impact-grid {
     grid-template-columns: 1fr;
   }
