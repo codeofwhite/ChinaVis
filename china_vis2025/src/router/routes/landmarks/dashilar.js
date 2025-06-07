@@ -5,7 +5,7 @@ export default [
     component: () => import("@/views/landmarks/Dashilan.vue"),
     meta: {
       title: "故宫",
-      icon: "icon-dashilar"
-    }
-  }
+      icon: "icon-dashilar",
+    },
+  },
 ];

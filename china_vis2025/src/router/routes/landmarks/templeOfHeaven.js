@@ -22,7 +22,7 @@ export default [
     ],
     meta: {
       title: "故宫",
-      icon: "icon-temple-of-heaven"
-    }
-  }
+      icon: "icon-temple-of-heaven",
+    },
+  },
 ];
