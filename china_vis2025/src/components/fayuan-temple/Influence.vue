@@ -150,7 +150,7 @@ import * as echarts from 'echarts';
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push('/landmark/fayuanTemple');
+const goBack = () => router.push('/landmarks/fayuan-temple');
 
 // ECharts图表引用
 const buddhismChart = ref(null);

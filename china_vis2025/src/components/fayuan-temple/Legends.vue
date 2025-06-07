@@ -79,7 +79,7 @@ import * as echarts from 'echarts';
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push('/landmark/fayuanTemple');
+const goBack = () => router.push('/landmarks/fayuan-temple');
 
 // 法源寺传奇数据
 const legendsData = ref([

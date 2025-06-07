@@ -94,7 +94,7 @@ import * as echarts from 'echarts';
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push('/landmark/fayuantemple');
+const goBack = () => router.push('/landmarks/fayuan-temple');
 
 // 时间轴数据 - 法源寺特有的历史节点
 const timelineData = ref([
