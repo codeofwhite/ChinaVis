@@ -125,8 +125,7 @@ export default {
       this.$router.push("/");
     },
 
-    explore(direction) {
-      const routeName = direction.charAt(0).toUpperCase() + direction.slice(1);
+    explore(routeName) {
       this.$router.push({ name: routeName });
     },
     loadLandmarkData() {
