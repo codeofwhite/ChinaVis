@@ -12,7 +12,11 @@
       <div class="landmark-list">
         <h3>主要地标建筑</h3>
         <ul>
-          <li v-for="landmark in landmarks" :key="landmark.id" class="landmark-item">
+          <li
+            v-for="landmark in landmarks"
+            :key="landmark.id"
+            class="landmark-item"
+          >
             <span class="landmark-name">{{ landmark.name }}</span>
           </li>
         </ul>

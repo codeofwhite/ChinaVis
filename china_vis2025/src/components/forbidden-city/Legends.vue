@@ -456,23 +456,23 @@ onMounted(() => {
 <style scoped>
 /* 基础样式 */
 :root {
-  --primary-color: #8B4513;
-  --secondary-color: #D4A76A;
-  --accent-color: #A0522D;
+  --primary-color: #8b4513;
+  --secondary-color: #d4a76a;
+  --accent-color: #a0522d;
   --text-dark: #333333;
-  --text-medium: #5A4A42;
-  --text-light: #7A6B64;
-  --bg-light: #F9F5ED;
-  --bg-lighter: #FFF8E1;
-  --bg-dark: #3E2723;
+  --text-medium: #5a4a42;
+  --text-light: #7a6b64;
+  --bg-light: #f9f5ed;
+  --bg-lighter: #fff8e1;
+  --bg-dark: #3e2723;
   --border-radius: 12px;
   --box-shadow: 0 8px 30px rgba(101, 67, 33, 0.12);
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 @font-face {
-  font-family: 'Noto Serif SC';
-  src: url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
+  font-family: "Noto Serif SC";
+  src: url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap");
 }
 
 * {
@@ -486,7 +486,7 @@ body {
 }
 
 .dashboard-container {
-  font-family: 'Noto Serif SC', serif;
+  font-family: "Noto Serif SC", serif;
   color: var(--text-dark);
   line-height: 1.6;
   min-height: 100vh;
@@ -499,7 +499,11 @@ body {
 
 /* 导航区样式 */
 .dashboard-nav {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--accent-color) 100%
+  );
   color: white;
   padding: 1.5rem 2rem;
   display: flex;
@@ -648,7 +652,11 @@ body {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+  background: linear-gradient(
+    to bottom,
+    var(--secondary-color),
+    var(--primary-color)
+  );
   z-index: 1;
 }
 
@@ -825,7 +833,12 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    transparent 100%
+  );
 }
 
 .media-caption {
@@ -968,13 +981,13 @@ body {
   .dashboard-main {
     flex-direction: column;
   }
-  
+
   .dashboard-sidepanel,
   .dashboard-sidepanel.right {
     flex: 1;
     width: 100%;
   }
-  
+
   .dashboard-content {
     order: -1;
     margin-bottom: 1.5rem;
@@ -987,21 +1000,21 @@ body {
     align-items: flex-start;
     padding: 1rem;
   }
-  
+
   .nav-title {
     padding: 1rem 0;
     text-align: left;
   }
-  
+
   .time-indicator {
     margin-top: 1rem;
     align-self: flex-start;
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .media-panel {
     height: 200px;
   }
@@ -1011,15 +1024,15 @@ body {
   .nav-title h1 {
     font-size: 1.8rem;
   }
-  
+
   .subtitle {
     font-size: 1rem;
   }
-  
+
   .dashboard-main {
     padding: 1rem;
   }
-  
+
   .card-header h2 {
     font-size: 1.5rem;
   }

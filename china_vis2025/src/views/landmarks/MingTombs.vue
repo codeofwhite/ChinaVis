@@ -165,8 +165,6 @@ export default {
 </script>
 
 <style scoped>
-/* 样式保持不变，此处省略以减少篇幅 */
-/* 整体容器 - 黄昏色调 */
 .landmark-portal-container {
   font-family: "Noto Serif SC", serif;
   color: #333;
@@ -178,15 +176,68 @@ export default {
   overflow: hidden;
 }
 
-/* 头部区域 - 黄昏效果 */
+.header-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 180px;
+}
+
+.main-title {
+  text-align: center;
+  font-size: 2.8em;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: #8b4513;
+  letter-spacing: 2px;
+}
+
+.intro-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.intro-card {
+  background: linear-gradient(135deg, #fffbe6 0%, #f5e6c8 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(139, 69, 19, 0.08);
+  padding: 24px 32px;
+  min-width: 220px;
+  max-width: 320px;
+  flex: 1 1 220px;
+  text-align: left;
+  border: 1px solid #e0cfa6;
+}
+
+.intro-card h2 {
+  font-size: 1.2em;
+  color: #a67c52;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.intro-card p {
+  font-size: 1em;
+  color: #5a4a42;
+  margin: 0;
+}
+
 .landmark-header {
   position: relative;
   width: 100%;
-  height: 80vh; /* 增加高度以better展示画卷 */
+  height: 70vh;
   overflow: hidden;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   text-align: center;
   color: white;
   padding-bottom: 30px;
@@ -200,31 +251,21 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 0;
-  background-color: #f5f2e9; /* 添加古典底色 */
 }
 
 .landmark-main-media {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.95) sepia(0.2) saturate(0.9); /* 调整滤镜效果以突出古画效果 */
-  transform: scale(1.02); /* 略微放大以覆盖边缘 */
-  transition: transform 10s ease; /* 添加缓慢的动画效果 */
-}
-
-.landmark-header:hover .landmark-main-media {
-  transform: scale(1.05); /* 悬停时轻微放大效果 */
+  filter: brightness(0.6) sepia(0.3) hue-rotate(-10deg) contrast(0.9);
 }
 
 .landmark-info {
   position: relative;
   z-index: 1;
   padding: 0 20px;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
   margin-bottom: 40px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  width: 100%;
-  padding-top: 100px; /* 增加渐变区域 */
 }
 
 .landmark-info h1 {
@@ -312,7 +353,6 @@ export default {
   transform: translateX(-5px);
 }
 
-/* 中部探索卡片区 - 流线型设计 */
 .exploration-cards-section {
   display: flex;
   justify-content: center;
@@ -436,7 +476,6 @@ export default {
   box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
 }
 
-/* 底部区域 */
 .portal-footer {
   text-align: center;
   padding: 30px 20px;
@@ -464,7 +503,6 @@ export default {
   opacity: 0.8;
 }
 
-/* 响应式设计 */
 @media (max-width: 1200px) {
   .exploration-card {
     width: 45%;
@@ -482,7 +520,7 @@ export default {
 
 @media (max-width: 768px) {
   .landmark-header {
-    height: 70vh;
+    height: 60vh;
   }
 
   .landmark-info h1 {
@@ -530,3 +568,4 @@ export default {
   }
 }
 </style>
+
