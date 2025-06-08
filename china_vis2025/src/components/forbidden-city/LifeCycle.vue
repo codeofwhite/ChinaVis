@@ -66,56 +66,61 @@
         </div>
 
         <!-- 右侧内容区域 -->
-        <div class="content-section">
-          <!-- 历史卡片 -->
-          <div class="history-card">
-            <div class="history-media">
-              <img :src="activeData.image" :alt="activeData.title" />
-            </div>
-            <div class="history-info">
-              <h2>{{ activeData.title }}</h2>
-              <div class="history-period">{{ activeData.period }}</div>
-              <div class="history-desc">{{ activeData.description }}</div>
+        <div v-if="isModalOpen" class="modal-overlay" @click.self="closeModal">
+          <div class="modal-content">
+            <button class="modal-close" @click="closeModal">×</button>
+            <!-- 历史卡片 -->
+            <div class="history-card">
+              <div class="history-media">
+                <img :src="activeData.image" :alt="activeData.title" />
+              </div>
+              <div class="history-info">
+                <h2>{{ activeData.title }}</h2>
+                <div class="history-period">{{ activeData.period }}</div>
+                <div class="history-desc">{{ activeData.description }}</div>
 
-              <!-- 数据指标 -->
-              <div class="history-metrics">
-                <div
-                  class="metric"
-                  v-for="(metric, idx) in activeData.metrics"
-                  :key="idx"
-                >
-                  <div class="metric-value">{{ metric.value }}</div>
-                  <div class="metric-label">{{ metric.label }}</div>
+                <!-- 数据指标 -->
+                <div class="history-metrics">
+                  <div
+                    class="metric"
+                    v-for="(metric, idx) in activeData.metrics"
+                    :key="idx"
+                  >
+                    <div class="metric-value">{{ metric.value }}</div>
+                    <div class="metric-label">{{ metric.label }}</div>
+                  </div>
+                </div>
+
+                <!-- 建筑特点 -->
+                <div class="architectural-features" v-if="activeData.features">
+                  <h3>建筑特点</h3>
+                  <ul>
+                    <li
+                      v-for="(feature, idx) in activeData.features"
+                      :key="idx"
+                    >
+                      {{ feature }}
+                    </li>
+                  </ul>
                 </div>
               </div>
-
-              <!-- 建筑特点 -->
-              <div class="architectural-features" v-if="activeData.features">
-                <h3>建筑特点</h3>
-                <ul>
-                  <li v-for="(feature, idx) in activeData.features" :key="idx">
-                    {{ feature }}
-                  </li>
-                </ul>
-              </div>
             </div>
           </div>
-
-          <!-- 可视化图表区域 -->
-          <div class="visualization-section">
-            <div class="visualization-card">
-              <h3>建筑规模演变</h3>
-              <div ref="chart" class="chart-container"></div>
-            </div>
-            <div class="visualization-card">
-              <h3>建筑类型分布</h3>
-              <div ref="typeChart" class="chart-container"></div>
-            </div>
-            <div class="visualization-card">
-              <h3>修缮材料变化</h3>
-              <div class="chart-container"></div>
-            </div>
-          </div>
+        </div>
+      </div>
+      <!-- 可视化图表区域 -->
+      <div class="visualization-section">
+        <div class="visualization-card">
+          <h3>建筑规模演变</h3>
+          <div ref="chart" class="chart-container"></div>
+        </div>
+        <div class="visualization-card">
+          <h3>建筑类型分布</h3>
+          <div ref="typeChart" class="chart-container"></div>
+        </div>
+        <div class="visualization-card">
+          <h3>修缮材料变化</h3>
+          <div class="chart-container"></div>
         </div>
       </div>
     </div>
@@ -238,14 +243,22 @@ const timelineData = ref([
   },
 ]);
 
+const isModalOpen = ref(false);
+
 // 当前活动索引
 const activeIndex = ref(0);
-const setActiveIndex = (index) => {
-  activeIndex.value = index;
-};
 
 // 当前活动数据
 const activeData = computed(() => timelineData.value[activeIndex.value]);
+
+function setActiveIndex(index) {
+  activeIndex.value = index;
+  isModalOpen.value = true;
+}
+
+function closeModal() {
+  isModalOpen.value = false;
+}
 
 // ECharts图表实例
 const chart = ref(null);
@@ -626,53 +639,62 @@ onMounted(() => {
 
 /* 时间轴区域 */
 .timeline-section {
-  flex: 1;
-  min-width: 300px;
+  width: 100%;
+  overflow-x: auto;
 }
 
 .timeline {
   position: relative;
+  display: flex;
+  align-items: center;
   padding: 40px 0;
+  height: auto;
+  min-height: 120px;
 }
 
 .timeline-line {
   position: absolute;
-  left: 30px;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: linear-gradient(to bottom, #d4a76a, #8b4513);
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #d4a76a, #8b4513);
   border-radius: 2px;
+  z-index: 1;
 }
 
+/* 时间轴项横向排列 */
 .timeline-item {
   position: relative;
-  padding: 20px 15px 20px 70px;
-  margin-bottom: 15px;
+  min-width: 180px;
+  margin-right: 40px;
+  padding-top: 60px;
+  text-align: center;
   cursor: pointer;
-  border-radius: 12px;
-  transition: all 0.4s ease;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(5px);
   border: 1px solid rgba(139, 69, 19, 0.1);
+  border-radius: 12px;
+  z-index: 2;
+  transition: all 0.4s ease;
 }
 
 .timeline-item:hover {
   background: rgba(255, 248, 225, 0.8);
-  transform: translateX(5px);
+  transform: translateY(-5px);
 }
 
 .timeline-item.active {
   background: rgba(255, 248, 225, 0.95);
   box-shadow: 0 10px 30px rgba(139, 69, 19, 0.15);
-  transform: translateX(10px);
+  transform: translateY(-10px);
 }
 
 .timeline-dot {
   position: absolute;
-  left: 26px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -680,6 +702,7 @@ onMounted(() => {
   border: 3px solid #f5f2e9;
   box-shadow: 0 0 0 4px rgba(212, 167, 106, 0.3);
   transition: all 0.4s ease;
+  z-index: 3;
 }
 
 .timeline-item.active .timeline-dot {
@@ -689,7 +712,7 @@ onMounted(() => {
   box-shadow: 0 0 0 6px rgba(139, 69, 19, 0.3);
 }
 
-.timeline-item .timeline-year {
+.timeline-year {
   font-size: 1.1rem;
   font-weight: bold;
   color: #8b4513;
@@ -963,5 +986,38 @@ onMounted(() => {
   .chart-container {
     height: 200px;
   }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 </style>
