@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "echarts": "^5.6.0",
+    "echarts-wordcloud": "^2.1.0",
+    "vue-echarts": "^7.0.3",
+    "vue-image-compare": "^0.6.1"
+  }
+}

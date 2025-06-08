@@ -27,7 +27,7 @@
       </div>
     </header>
 
-    <section class="exploration-cards-section">
+    <section class="exploration-cards-section" v-if="!activeChildRoute">
       <div class="exploration-card" @click="explore('lifeCycle')">
         <div class="card-content">
           <h2 class="card-title">皇陵沿革</h2>
@@ -71,6 +71,9 @@
       </div>
     </section>
 
+    <!-- 子组件渲染区 -->
+    <router-view v-else :landmark="landmark"></router-view>
+
     <footer class="portal-footer">
       <p>发现更多：<a href="#">推荐探索路线</a> | <a href="#">更多发现</a></p>
       <p class="copyright">© 2023 北京历史文化遗产数字平台</p>
@@ -106,26 +109,36 @@ export default {
   created() {
     this.loadLandmarkData();
   },
+  computed: {
+    // 新增：检测子路由是否激活[6,7](@ref)
+    activeChildRoute() {
+      return this.$route.matched.length > 1;
+    },
+  },
   methods: {
     goBack() {
       this.$router.push("/");
     },
     explore(direction) {
-      const params = { landmarkId: this.landmarkId };
+      const params = {
+        landmarkId: this.landmarkId,
+        landmark: this.landmark, // 如果需要传递整个 landmark 对象
+      };
       if (direction === "lifeCycle") {
         this.$router.push({
-          name: "landmark-lifecycle",
+          name: "landmark-lifecycle-ming",
           params: { ...params, direction: direction },
         });
       } else if (direction === "influence") {
         this.$router.push({
-          name: "landmark-radar",
+          name: "landmark-radar-ming",
           params,
         });
       } else if (direction === "legends") {
         this.$router.push({
-          name: "landmark-detail",
+          name: "landmark-detail-ming",
           params,
+          query: { landmarkId: this.landmarkId }, // 通过 query 传递
         });
       } else {
         console.warn("Unknown exploration direction:", direction);
