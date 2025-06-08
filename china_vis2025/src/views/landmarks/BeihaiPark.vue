@@ -10,7 +10,7 @@
           class="landmark-main-media"
         />
       </div>
-            <div class="landmark-info">
+      <div class="landmark-info">
         <h1>{{ landmark.name }}</h1>
         <p class="summary">{{ landmark.summary }}</p>
         <div class="core-metrics">
@@ -27,8 +27,12 @@
       </div>
     </header>
 
-    <section class="exploration-cards-section">
-      <div class="exploration-card" @click="explore('lifeCycle')">
+    <section class="exploration-cards-section" v-if="!activeChildRoute">
+      <router-link
+        class="exploration-card"
+        :to="{ name: 'BeihaiParkLifeCycle'}"
+        style="text-decoration:none;"
+      >
         <div class="card-content">
           <h2 class="card-title">生命年轮</h2>
           <div class="card-preview-media">
@@ -43,9 +47,13 @@
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
-      </div>
+      </router-link>
 
-      <div class="exploration-card" @click="explore('influence')">
+      <router-link
+        class="exploration-card"
+        :to="{ name: 'BeihaiParkInfluence'}"
+        style="text-decoration:none;"
+      >
         <div class="card-content">
           <h2 class="card-title">影响力光环</h2>
           <div class="card-preview-media">
@@ -60,9 +68,13 @@
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
-      </div>
+      </router-link>
 
-      <div class="exploration-card" @click="explore('legends')">
+      <router-link
+        class="exploration-card"
+        :to="{ name: 'BeihaiParkLegends' }"
+        style="text-decoration:none;"
+      >
         <div class="card-content">
           <h2 class="card-title">传奇故事</h2>
           <div class="card-preview-media">
@@ -77,8 +89,11 @@
           </p>
           <button class="explore-button">立即探索 →</button>
         </div>
-      </div>
+      </router-link>
     </section>
+
+    <!-- 子路由渲染区 -->
+    <router-view />
 
     <footer class="portal-footer">
       <p>发现更多：<a href="#">推荐探索路线</a> | <a href="#">更多发现</a></p>
@@ -111,27 +126,27 @@ export default {
       },
     };
   },
+  computed: {
+    activeChildRoute() {
+      // 判断当前是否处于三级页面
+      return (
+        this.$route.name === "BeihaiParkLifeCycle" ||
+        this.$route.name === "BeihaiParkInfluence" ||
+        this.$route.name === "BeihaiParkLegends"
+      );
+    },
+  },
   methods: {
     goBack() {
       this.$router.push("/");
     },
     explore(direction) {
-      // 跳转到不同的三级页面
-      if (direction === 'lifeCycle') {
-        this.$router.push({
-          name: "BeihaiParkLifeCycle",
-          params: { landmarkId: this.landmarkId || 'beihaiPark' }
-        });
-      } else if (direction === 'influence') {
-        this.$router.push({
-          name: "BeihaiParkInfluence",
-          params: { landmarkId: this.landmarkId || 'beihaiPark' }
-        });
-      } else if (direction === 'legends') {
-        this.$router.push({
-          name: "BeihaiParkLegends",
-          params: { landmarkId: this.landmarkId || 'beihaiPark' }
-        });
+      if (direction === "lifeCycle") {
+        this.$router.push({ name: "BeihaiParkLifeCycle" });
+      } else if (direction === "influence") {
+        this.$router.push({ name: "BeihaiParkInfluence" });
+      } else if (direction === "legends") {
+        this.$router.push({ name: "BeihaiParkLegends" });
       }
     },
   },
