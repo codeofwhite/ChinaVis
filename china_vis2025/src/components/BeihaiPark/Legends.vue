@@ -6,10 +6,10 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { useRouter } from "vue-router";
+const router = useRouter();
 function goBack() {
-  router.push('/landmarks/beihai-park')
+  router.push("/landmarks/beihai-park");
 }
 </script>
 

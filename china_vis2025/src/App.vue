@@ -2,9 +2,6 @@
   <div class="app-container">
     <router-view></router-view>
   </div>
-  <LawScreen></LawScreen>
-  <CulturalTree />
-  <PhoenixVisualization />
 </template>
 
 <script setup>

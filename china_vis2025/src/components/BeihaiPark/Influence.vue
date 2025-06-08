@@ -63,145 +63,163 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import * as echarts from 'echarts'
-import { useRouter } from 'vue-router'
+import { ref, onMounted } from "vue";
+import * as echarts from "echarts";
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 function goBack() {
-  router.push('/landmarks/beihai-park')
+  router.push("/landmarks/beihai-park");
 }
 
-const radarChart = ref(null)
-const mediaLineChart = ref(null)
-const internationalLineChart = ref(null)
-const agePieChart = ref(null)
-const interactionBarChart = ref(null)
-const sankeyChart = ref(null)
+const radarChart = ref(null);
+const mediaLineChart = ref(null);
+const internationalLineChart = ref(null);
+const agePieChart = ref(null);
+const interactionBarChart = ref(null);
+const sankeyChart = ref(null);
 
 onMounted(() => {
   // 游客画像雷达图
-  const radar = echarts.init(radarChart.value)
+  const radar = echarts.init(radarChart.value);
   radar.setOption({
     tooltip: {},
     radar: {
       indicator: [
-        { name: '18-25', max: 100 },
-        { name: '26-35', max: 100 },
-        { name: '女性', max: 100 },
-        { name: '本地', max: 100 },
-        { name: '文化兴趣', max: 100 }
-      ]
+        { name: "18-25", max: 100 },
+        { name: "26-35", max: 100 },
+        { name: "女性", max: 100 },
+        { name: "本地", max: 100 },
+        { name: "文化兴趣", max: 100 },
+      ],
     },
-    series: [{
-      type: 'radar',
-      data: [{
-        value: [80, 70, 65, 50, 90],
-        name: '游客画像'
-      }]
-    }]
-  })
-
-  // 媒体报道数量折线图
-  const mediaLine = echarts.init(mediaLineChart.value)
-  mediaLine.setOption({
-    tooltip: { trigger: 'axis' },
-    xAxis: { type: 'category', data: ['2019', '2020', '2021', '2022', '2023', '2024'] },
-    yAxis: { type: 'value' },
-    series: [{
-      data: [50, 60, 120, 180, 220, 300],
-      type: 'line',
-      smooth: true,
-      name: '媒体报道量'
-    }]
-  })
-
-  // 海外提及增长趋势图
-  const internationalLine = echarts.init(internationalLineChart.value)
-  internationalLine.setOption({
-    tooltip: { trigger: 'axis' },
-    xAxis: { type: 'category', data: ['2019', '2020', '2021', '2022', '2023', '2024'] },
-    yAxis: { type: 'value' },
-    series: [{
-      data: [5, 8, 12, 30, 50, 95],
-      type: 'line',
-      name: '海外提及量',
-      smooth: true,
-      areaStyle: {}
-    }]
-  })
-
-  // 年龄段分布饼图
-  const agePie = echarts.init(agePieChart.value)
-  agePie.setOption({
-    tooltip: { trigger: 'item' },
-    legend: { top: 'bottom' },
-    series: [{
-      type: 'pie',
-      radius: '50%',
-      data: [
-        { value: 35, name: '18-25岁' },
-        { value: 40, name: '26-35岁' },
-        { value: 15, name: '36-45岁' },
-        { value: 10, name: '其他' }
-      ]
-    }]
-  })
-
-  // 互动热度柱状图
-  const bar = echarts.init(interactionBarChart.value)
-  bar.setOption({
-    tooltip: { trigger: 'axis' },
-    xAxis: {
-      type: 'category',
-      data: ['微博', '抖音', '小红书', '微信公众号', '新闻网站']
-    },
-    yAxis: { type: 'value' },
-    series: [{
-      data: [320, 410, 290, 180, 150],
-      type: 'bar',
-      name: '热度指数'
-    }]
-  })
-
-  // 桑基图（游客游览路径流向）
-  const sankey = echarts.init(sankeyChart.value)
-  sankey.setOption({
-    tooltip: { trigger: 'item', triggerOn: 'mousemove' },
     series: [
       {
-        type: 'sankey',
-        layout: 'none',
+        type: "radar",
         data: [
-          { name: '入口' },
-          { name: '琼岛' },
-          { name: '白塔' },
-          { name: '九龙壁' },
-          { name: '小西天' },
-          { name: '出口' }
+          {
+            value: [80, 70, 65, 50, 90],
+            name: "游客画像",
+          },
+        ],
+      },
+    ],
+  });
+
+  // 媒体报道数量折线图
+  const mediaLine = echarts.init(mediaLineChart.value);
+  mediaLine.setOption({
+    tooltip: { trigger: "axis" },
+    xAxis: {
+      type: "category",
+      data: ["2019", "2020", "2021", "2022", "2023", "2024"],
+    },
+    yAxis: { type: "value" },
+    series: [
+      {
+        data: [50, 60, 120, 180, 220, 300],
+        type: "line",
+        smooth: true,
+        name: "媒体报道量",
+      },
+    ],
+  });
+
+  // 海外提及增长趋势图
+  const internationalLine = echarts.init(internationalLineChart.value);
+  internationalLine.setOption({
+    tooltip: { trigger: "axis" },
+    xAxis: {
+      type: "category",
+      data: ["2019", "2020", "2021", "2022", "2023", "2024"],
+    },
+    yAxis: { type: "value" },
+    series: [
+      {
+        data: [5, 8, 12, 30, 50, 95],
+        type: "line",
+        name: "海外提及量",
+        smooth: true,
+        areaStyle: {},
+      },
+    ],
+  });
+
+  // 年龄段分布饼图
+  const agePie = echarts.init(agePieChart.value);
+  agePie.setOption({
+    tooltip: { trigger: "item" },
+    legend: { top: "bottom" },
+    series: [
+      {
+        type: "pie",
+        radius: "50%",
+        data: [
+          { value: 35, name: "18-25岁" },
+          { value: 40, name: "26-35岁" },
+          { value: 15, name: "36-45岁" },
+          { value: 10, name: "其他" },
+        ],
+      },
+    ],
+  });
+
+  // 互动热度柱状图
+  const bar = echarts.init(interactionBarChart.value);
+  bar.setOption({
+    tooltip: { trigger: "axis" },
+    xAxis: {
+      type: "category",
+      data: ["微博", "抖音", "小红书", "微信公众号", "新闻网站"],
+    },
+    yAxis: { type: "value" },
+    series: [
+      {
+        data: [320, 410, 290, 180, 150],
+        type: "bar",
+        name: "热度指数",
+      },
+    ],
+  });
+
+  // 桑基图（游客游览路径流向）
+  const sankey = echarts.init(sankeyChart.value);
+  sankey.setOption({
+    tooltip: { trigger: "item", triggerOn: "mousemove" },
+    series: [
+      {
+        type: "sankey",
+        layout: "none",
+        data: [
+          { name: "入口" },
+          { name: "琼岛" },
+          { name: "白塔" },
+          { name: "九龙壁" },
+          { name: "小西天" },
+          { name: "出口" },
         ],
         links: [
-          { source: '入口', target: '琼岛', value: 320 },
-          { source: '琼岛', target: '白塔', value: 250 },
-          { source: '琼岛', target: '九龙壁', value: 120 },
-          { source: '白塔', target: '小西天', value: 100 },
-          { source: '九龙壁', target: '小西天', value: 80 },
-          { source: '小西天', target: '出口', value: 170 }
+          { source: "入口", target: "琼岛", value: 320 },
+          { source: "琼岛", target: "白塔", value: 250 },
+          { source: "琼岛", target: "九龙壁", value: 120 },
+          { source: "白塔", target: "小西天", value: 100 },
+          { source: "九龙壁", target: "小西天", value: 80 },
+          { source: "小西天", target: "出口", value: 170 },
         ],
         emphasis: {
-          focus: 'adjacency'
+          focus: "adjacency",
         },
         lineStyle: {
-          color: 'gradient',
-          curveness: 0.5
+          color: "gradient",
+          curveness: 0.5,
         },
         label: {
-          color: '#8b4513'
-        }
-      }
-    ]
-  })
-})
+          color: "#8b4513",
+        },
+      },
+    ],
+  });
+});
 </script>
 
 <style scoped>
@@ -245,7 +263,7 @@ onMounted(() => {
 .chart-card {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(139,69,19,0.08);
+  box-shadow: 0 2px 12px rgba(139, 69, 19, 0.08);
   padding: 18px 18px 12px 18px;
   display: flex;
   flex-direction: column;
