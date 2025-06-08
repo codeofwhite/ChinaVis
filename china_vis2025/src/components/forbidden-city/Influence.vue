@@ -822,7 +822,11 @@ onMounted(() => {
   max-width: 1200px;
   margin: 60px auto;
   padding: 40px;
-  background: linear-gradient(135deg, rgba(255, 248, 230, 0.8), rgba(240, 230, 210, 0.7));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 248, 230, 0.8),
+    rgba(240, 230, 210, 0.7)
+  );
   border-radius: 15px;
   box-shadow: 0 15px 40px rgba(101, 67, 33, 0.15);
   text-align: center;
@@ -852,7 +856,7 @@ onMounted(() => {
   .radar-section {
     padding: 30px 20px;
   }
-  
+
   .radar-container {
     min-height: 300px;
   }

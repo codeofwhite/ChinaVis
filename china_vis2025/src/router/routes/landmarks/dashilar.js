@@ -36,7 +36,7 @@ export default [
         path: ":direction",
         name: "landmark-lifecycle-dashilar",
         component: () =>
-          import("@/views/landmarks/Dashilan/LandmarkLifecycle.vue"),
+          import("@/views/landmarks/Dashilan/LandmarkLifecyclePage.vue"),
         props: true,
         meta: {
           title: "生命周期分析",

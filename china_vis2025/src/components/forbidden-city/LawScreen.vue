@@ -7,14 +7,14 @@
       <div class="scroll-bar"></div>
       <div class="scroll-knob right"></div>
     </div>
-    
+
     <!-- 竹简内容区域 -->
     <div class="bamboo-strips">
-      <div 
-        v-for="(strip, index) in bambooStrips" 
-        :key="index" 
+      <div
+        v-for="(strip, index) in bambooStrips"
+        :key="index"
         class="bamboo-strip"
-        :class="{ 'highlight': strip.highlight }"
+        :class="{ highlight: strip.highlight }"
       >
         <div class="bamboo-knot left"></div>
         <div class="strip-content">
@@ -25,7 +25,7 @@
         <div class="bamboo-knot right"></div>
       </div>
     </div>
-    
+
     <!-- 底部卷轴 -->
     <div class="scroll-bottom">
       <div class="scroll-knob left"></div>
@@ -36,41 +36,47 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const bambooStrips = ref([
   {
-    title: '中华人民共和国文物保护法',
-    content: '第一条 为了加强对文物的保护，继承中华民族优秀的历史文化遗产，促进科学研究工作，进行爱国主义和革命传统教育，建设社会主义精神文明和物质文明，根据宪法，制定本法。',
+    title: "中华人民共和国文物保护法",
+    content:
+      "第一条 为了加强对文物的保护，继承中华民族优秀的历史文化遗产，促进科学研究工作，进行爱国主义和革命传统教育，建设社会主义精神文明和物质文明，根据宪法，制定本法。",
     highlight: true,
-    year: ''
+    year: "",
   },
   {
-    content: '第二条 在中华人民共和国境内，下列文物受国家保护：（一）具有历史、艺术、科学价值的古文化遗址、古墓葬、古建筑、石窟寺和石刻、壁画；',
+    content:
+      "第二条 在中华人民共和国境内，下列文物受国家保护：（一）具有历史、艺术、科学价值的古文化遗址、古墓葬、古建筑、石窟寺和石刻、壁画；",
     highlight: false,
-    year: ''
+    year: "",
   },
   {
-    content: '第三条 古文化遗址、古墓葬、古建筑、石窟寺、石刻、壁画、近代现代重要史迹和代表性建筑等不可移动文物，根据它们的历史、艺术、科学价值，可以分别确定为全国重点文物保护单位，省级文物保护单位，市、县级文物保护单位。',
+    content:
+      "第三条 古文化遗址、古墓葬、古建筑、石窟寺、石刻、壁画、近代现代重要史迹和代表性建筑等不可移动文物，根据它们的历史、艺术、科学价值，可以分别确定为全国重点文物保护单位，省级文物保护单位，市、县级文物保护单位。",
     highlight: true,
-    year: '1961年'
+    year: "1961年",
   },
   {
-    title: '故宫保护条例',
-    content: '故宫是世界文化遗产，是中国古代宫廷建筑之精华，必须严格保护其完整性和真实性。',
+    title: "故宫保护条例",
+    content:
+      "故宫是世界文化遗产，是中国古代宫廷建筑之精华，必须严格保护其完整性和真实性。",
     highlight: false,
-    year: ''
+    year: "",
   },
   {
-    content: '故宫保护应当坚持保护为主、抢救第一、合理利用、加强管理的方针，确保故宫文化遗产的真实性和完整性。',
+    content:
+      "故宫保护应当坚持保护为主、抢救第一、合理利用、加强管理的方针，确保故宫文化遗产的真实性和完整性。",
     highlight: true,
-    year: '1987年'
+    year: "1987年",
   },
   {
-    content: '故宫博物院应当制定故宫保护规划，经国务院文物行政部门审核同意后报国务院批准实施。',
+    content:
+      "故宫博物院应当制定故宫保护规划，经国务院文物行政部门审核同意后报国务院批准实施。",
     highlight: false,
-    year: ''
-  }
+    year: "",
+  },
 ]);
 </script>
 
@@ -78,12 +84,13 @@ const bambooStrips = ref([
 .bamboo-scroll-container {
   max-width: 800px;
   margin: 0 auto;
-  font-family: 'SimSun', 'STKaiti', serif;
+  font-family: "SimSun", "STKaiti", serif;
   perspective: 1000px;
 }
 
 /* 卷轴样式 */
-.scroll-top, .scroll-bottom {
+.scroll-top,
+.scroll-bottom {
   display: flex;
   justify-content: center;
   margin: 0 -10px;
@@ -91,15 +98,15 @@ const bambooStrips = ref([
 
 .scroll-bar {
   height: 40px;
-  background: linear-gradient(to right, #8B4513, #A0522D, #8B4513);
+  background: linear-gradient(to right, #8b4513, #a0522d, #8b4513);
   flex-grow: 1;
-  border-top: 2px solid #5D2906;
-  border-bottom: 2px solid #5D2906;
+  border-top: 2px solid #5d2906;
+  border-bottom: 2px solid #5d2906;
   position: relative;
 }
 
 .scroll-bar:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 5px;
   bottom: 5px;
@@ -107,29 +114,29 @@ const bambooStrips = ref([
   right: 0;
   background: repeating-linear-gradient(
     to right,
-    #D2B48C,
-    #D2B48C 10px,
-    #A0522D 10px,
-    #A0522D 20px
+    #d2b48c,
+    #d2b48c 10px,
+    #a0522d 10px,
+    #a0522d 20px
   );
 }
 
 .scroll-knob {
   width: 50px;
   height: 40px;
-  background: linear-gradient(to bottom, #8B4513, #5D2906);
+  background: linear-gradient(to bottom, #8b4513, #5d2906);
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   position: relative;
-  box-shadow: inset 0 -5px 10px rgba(0,0,0,0.3);
+  box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .scroll-bottom .scroll-knob {
   border-radius: 0 0 50% 50% / 0 0 100% 100%;
-  box-shadow: inset 0 5px 10px rgba(0,0,0,0.3);
+  box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .scroll-knob:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -137,21 +144,21 @@ const bambooStrips = ref([
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: radial-gradient(circle, #5D2906, #3A1B09);
+  background: radial-gradient(circle, #5d2906, #3a1b09);
 }
 
 /* 竹简条样式 */
 .bamboo-strips {
-  background-color: #F5E8C9;
+  background-color: #f5e8c9;
   padding: 20px 40px;
-  border-left: 15px solid #8B4513;
-  border-right: 15px solid #8B4513;
+  border-left: 15px solid #8b4513;
+  border-right: 15px solid #8b4513;
   box-shadow: inset 0 0 30px rgba(139, 69, 19, 0.3);
   position: relative;
 }
 
 .bamboo-strips:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -181,13 +188,13 @@ const bambooStrips = ref([
 .bamboo-knot {
   width: 8px;
   height: 100%;
-  background: linear-gradient(to bottom, #8B4513, #A0522D, #8B4513);
+  background: linear-gradient(to bottom, #8b4513, #a0522d, #8b4513);
   border-radius: 3px;
   position: relative;
 }
 
 .bamboo-knot:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -196,41 +203,41 @@ const bambooStrips = ref([
     to bottom,
     transparent,
     transparent 5px,
-    rgba(255,255,255,0.2) 5px,
-    rgba(255,255,255,0.2) 7px
+    rgba(255, 255, 255, 0.2) 5px,
+    rgba(255, 255, 255, 0.2) 7px
   );
 }
 
 .strip-content {
   flex-grow: 1;
   padding: 10px 15px;
-  background-color: #F9F3E6;
-  border-top: 1px solid #D2B48C;
-  border-bottom: 1px solid #D2B48C;
+  background-color: #f9f3e6;
+  border-top: 1px solid #d2b48c;
+  border-bottom: 1px solid #d2b48c;
   position: relative;
 }
 
 .strip-content:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   width: 3px;
-  background: linear-gradient(to bottom, #8B4513, #D2B48C, #8B4513);
+  background: linear-gradient(to bottom, #8b4513, #d2b48c, #8b4513);
 }
 
 .strip-title {
-  color: #8B4513;
+  color: #8b4513;
   margin-top: 0;
   padding-bottom: 5px;
-  border-bottom: 1px dashed #D2B48C;
+  border-bottom: 1px dashed #d2b48c;
   text-align: center;
   font-size: 1.3em;
 }
 
 .strip-text {
-  color: #5D2906;
+  color: #5d2906;
   line-height: 1.8;
   text-align: justify;
   margin: 10px 0;
@@ -241,12 +248,12 @@ const bambooStrips = ref([
   position: absolute;
   top: -10px;
   right: 20px;
-  background-color: #8B4513;
-  color: #F9F3E6;
+  background-color: #8b4513;
+  color: #f9f3e6;
   padding: 3px 10px;
   border-radius: 15px;
   font-size: 0.8em;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* 动画效果 */
@@ -264,33 +271,45 @@ const bambooStrips = ref([
 }
 
 /* 为每个竹简条添加不同的延迟 */
-.bamboo-strip:nth-child(1) { animation-delay: 0.1s; }
-.bamboo-strip:nth-child(2) { animation-delay: 0.3s; }
-.bamboo-strip:nth-child(3) { animation-delay: 0.5s; }
-.bamboo-strip:nth-child(4) { animation-delay: 0.7s; }
-.bamboo-strip:nth-child(5) { animation-delay: 0.9s; }
-.bamboo-strip:nth-child(6) { animation-delay: 1.1s; }
+.bamboo-strip:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.bamboo-strip:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.bamboo-strip:nth-child(3) {
+  animation-delay: 0.5s;
+}
+.bamboo-strip:nth-child(4) {
+  animation-delay: 0.7s;
+}
+.bamboo-strip:nth-child(5) {
+  animation-delay: 0.9s;
+}
+.bamboo-strip:nth-child(6) {
+  animation-delay: 1.1s;
+}
 
 /* 响应式设计 */
 @media (max-width: 768px) {
   .bamboo-scroll-container {
     margin: 0 10px;
   }
-  
+
   .bamboo-strips {
     padding: 15px 20px;
-    border-left: 10px solid #8B4513;
-    border-right: 10px solid #8B4513;
+    border-left: 10px solid #8b4513;
+    border-right: 10px solid #8b4513;
   }
-  
+
   .strip-content {
     padding: 8px 10px;
   }
-  
+
   .strip-title {
     font-size: 1.1em;
   }
-  
+
   .strip-text {
     font-size: 1em;
     line-height: 1.6;

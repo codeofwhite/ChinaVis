@@ -35,7 +35,7 @@ export default [
         path: ":direction",
         name: "landmark-lifecycle-ming",
         component: () =>
-          import("@/views/landmarks/MingTombs/LandmarkLifecycle.vue"),
+          import("@/views/landmarks/MingTombs/LandmarkLifecyclePage.vue"),
         props: true,
         meta: {
           title: "生命周期分析",
