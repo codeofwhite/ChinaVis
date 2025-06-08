@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import homeRoutes from "./routes/home";
 import landmarkRoutes from "./routes/landmarks";
-import dynamicRoutes from "./routes/dynamicRoutes";
 import notFoundRoute from "./routes/notFound";
 
 const router = createRouter({
@@ -9,7 +8,6 @@ const router = createRouter({
   routes: [
     ...homeRoutes,
     ...landmarkRoutes,
-    ...dynamicRoutes,
     ...notFoundRoute
   ],
   scrollBehavior(to, from, savedPosition) {

@@ -29,7 +29,7 @@
     </header>
 
     <section class="exploration-cards-section">
-      <div class="exploration-card" @click="explore('lifeCycle')">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">生命年轮</h2>
           <div class="card-preview-media">
@@ -40,15 +40,13 @@
             />
           </div>
           <p class="card-description">
-            从兴建到重生的时光之旅，探索{{
-              landmark.name
-            }}的建筑更迭与功能演变。
+            从兴建到重生的时光之旅，探索{{ landmark.name }}的建筑更迭与功能演变。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click="explore('lifeCycle')">立即探索 →</button>
         </div>
       </div>
 
-      <div class="exploration-card" @click="explore('influence')">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">影响力光环</h2>
           <div class="card-preview-media">
@@ -59,15 +57,13 @@
             />
           </div>
           <p class="card-description">
-            解析{{
-              landmark.name
-            }}如何融入当代生活，评估其在全球范围内的文化影响力与认知度。
+            解析{{ landmark.name }}如何融入当代生活，评估其在全球范围内的文化影响力与认知度。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click="explore('influence')">立即探索 →</button>
         </div>
       </div>
 
-      <div class="exploration-card" @click="explore('legends')">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">传奇故事</h2>
           <div class="card-preview-media">
@@ -78,11 +74,9 @@
             />
           </div>
           <p class="card-description">
-            聆听{{
-              landmark.name
-            }}背后那些引人入胜的帝王轶事、民间传说与文人墨客的动人篇章。
+            聆听{{ landmark.name }}背后那些引人入胜的帝王轶事、民间传说与文人墨客的动人篇章。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click="explore('legends')">立即探索 →</button>
         </div>
       </div>
     </section>
