@@ -72,7 +72,7 @@
     </section>
 
     <!-- 子组件渲染区 -->
-    <router-view v-else :landmark="landmark"></router-view>
+    <router-view :landmark-id="landmarkId" :landmark="landmark" />
 
     <footer class="portal-footer">
       <p>发现更多：<a href="#">推荐探索路线</a> | <a href="#">更多发现</a></p>

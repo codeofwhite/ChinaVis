@@ -1,85 +1,170 @@
 <template>
-  <div class="legends-container">
-    <!-- 返回按钮 -->
-    <button @click="goBack" class="back-button">← 返回天坛门户</button>
-    
-    <!-- 页面标题 -->
-    <div class="legends-header">
-      <h1>天坛六百年皇家秘事</h1>
-      <p>从嘉靖帝雷击事件到光绪帝祈雨传奇，感受圣坛背后的历史风云</p>
+  <div class="dashboard-container">
+    <!-- 导航区 -->
+    <div class="dashboard-nav">
+      <button @click="goBack" class="nav-button">
+        <i class="icon-back"></i> 返回天坛门户
+      </button>
+      <div class="nav-title">
+        <h1>天坛六百年皇家秘事</h1>
+        <p class="subtitle">
+          从嘉靖帝雷击事件到光绪帝祈雨传奇，感受圣坛背后的历史风云
+        </p>
+      </div>
+      <div class="time-indicator">
+        <span class="current-year">{{ activeData.year }}</span>
+        <span class="era">{{ activeData.period }}</span>
+      </div>
     </div>
-    
-    <!-- 主要布局 -->
-    <div class="legends-content">
-      <!-- 左侧时间轴 -->
-      <div class="timeline-section">
-        <div class="timeline">
-          <div class="timeline-line"></div>
-          <div 
-            v-for="(item, index) in legendsData" 
-            :key="index" 
-            :class="['timeline-item', { 'active': activeIndex === index }]"
-            @click="setActiveIndex(index)"
-          >
-            <div class="timeline-dot" :style="{ backgroundColor: item.color }"></div>
-            <div class="timeline-year">{{ item.year }}</div>
-            <div class="timeline-title">{{ item.title }}</div>
+
+    <!-- 主仪表盘 -->
+    <div class="dashboard-main">
+      <!-- 左侧面板 -->
+      <div class="dashboard-sidepanel">
+        <div class="timeline-widget">
+          <h3 class="widget-title">历史时间轴</h3>
+          <div class="timeline-container">
+            <div class="timeline-line"></div>
+            <div
+              v-for="(item, index) in legendsData"
+              :key="index"
+              :class="['timeline-event', { active: activeIndex === index }]"
+              @click="setActiveIndex(index)"
+            >
+              <div class="event-marker" :style="{ borderColor: item.color }">
+                <div
+                  class="event-dot"
+                  :style="{ backgroundColor: item.color }"
+                ></div>
+              </div>
+              <div class="event-info">
+                <div class="event-year">{{ item.year }}</div>
+                <div class="event-title">{{ item.title }}</div>
+                <div
+                  class="event-type-tag"
+                  :style="{ backgroundColor: item.color }"
+                >
+                  {{ item.type }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-widget">
+          <h3 class="widget-title">事件统计</h3>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-value">{{ legendsData.length }}</div>
+              <div class="stat-label">总事件数</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">1420-1918</div>
+              <div class="stat-label">时间跨度</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">12</div>
+              <div class="stat-label">涉及皇帝</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">4</div>
+              <div class="stat-label">事件类型</div>
+            </div>
           </div>
         </div>
       </div>
-      
-      <!-- 右侧内容区域 -->
-      <div class="content-section">
-        <!-- 传奇事件卡片 -->
-        <div class="legend-card">
-          <div class="legend-media" :style="{ backgroundImage: `url(${activeData.image})` }">
-            <div class="event-type" :style="{ backgroundColor: activeData.color }">
-              {{ activeData.type }}
-            </div>
-          </div>
-          
-          <div class="legend-info">
+
+      <!-- 中央内容区 -->
+      <div class="dashboard-content">
+        <div class="main-card">
+          <div class="card-header">
             <h2>{{ activeData.title }}</h2>
-            <div class="legend-period">{{ activeData.period }}</div>
-            <div class="legend-desc">{{ activeData.description }}</div>
-            
-            <div class="legend-significance">
-              <h3>历史意义</h3>
-              <p>{{ activeData.significance }}</p>
+            <div class="card-meta">
+              <span class="meta-item">{{ activeData.period }}</span>
+              <span class="meta-item">{{ activeData.type }}</span>
+              <span class="meta-item">{{ activeData.year }}年</span>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div
+              class="media-panel"
+              :style="{ backgroundImage: `url(${activeData.image})` }"
+            >
+              <div class="media-overlay"></div>
+              <div class="media-caption">
+                <i class="icon-image"></i>
+                {{ activeData.imageCaption || "天坛历史资料图" }}
+              </div>
+            </div>
+
+            <div class="content-panel">
+              <div class="description-section">
+                <h3 class="section-title">事件描述</h3>
+                <p>{{ activeData.description }}</p>
+              </div>
+
+              <div class="significance-section">
+                <h3 class="section-title">
+                  历史意义 <i class="icon-importance"></i>
+                </h3>
+                <p>{{ activeData.significance }}</p>
+              </div>
             </div>
           </div>
         </div>
-        
-        <!-- 传奇事件类型分布图表 -->
-        <div class="chart-section">
-          <h3>天坛传奇事件类型分布</h3>
+      </div>
+
+      <!-- 右侧面板 -->
+      <div class="dashboard-sidepanel right">
+        <div class="type-chart-widget">
+          <h3 class="widget-title">事件类型分布</h3>
           <div ref="typeChart" class="chart-container"></div>
+          <div class="chart-legend">
+            <div
+              v-for="(type, index) in eventTypes"
+              :key="index"
+              class="legend-item"
+            >
+              <span
+                class="legend-color"
+                :style="{ backgroundColor: type.color }"
+              ></span>
+              <span class="legend-label">{{ type.name }}</span>
+              <span class="legend-value">{{ type.percentage }}%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-chart-widget">
+          <h3 class="widget-title">事件时间分布 (1420-1918)</h3>
+          <div ref="timelineChart" class="chart-container"></div>
         </div>
       </div>
     </div>
-    
-    <!-- 事件时间分布图表 -->
-    <div class="timeline-chart">
-      <h3>天坛传奇事件时间分布 (1420-1918)</h3>
-      <div ref="timelineChart" class="chart-container"></div>
-    </div>
-    
-    <!-- 页脚 -->
-    <div class="legends-footer">
-      <p>天坛作为明清两代皇家祭坛，见证了无数历史风云变幻，这些传奇故事至今仍为人们所传颂。</p>
+
+    <!-- 底部信息栏 -->
+    <div class="dashboard-footer">
+      <div class="footer-note">
+        <i class="icon-info"></i>
+        天坛作为明清两代皇家祭坛，见证了无数历史风云变幻，这些传奇故事至今仍为人们所传颂。
+      </div>
+      <div class="footer-credits">
+        数据来源：中国第一历史档案馆 · 设计：天坛文化研究中心
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import * as echarts from 'echarts';
+import { ref, onMounted, watch, computed } from "vue";
+import { useRouter } from "vue-router";
+import * as echarts from "echarts";
 
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push('/landmarks/forbidden-city');
+const goBack = () => router.push("/landmarks/forbidden-city");
 
 // 传奇事件数据
 const legendsData = ref([
@@ -89,9 +174,11 @@ const legendsData = ref([
     period: "明嘉靖三年",
     type: "天象异事",
     color: "#8b4513",
-    description: "嘉靖皇帝首次祭天时，天空突降惊雷，击中斋宫檐角。钦天监解读为上天警示，建议皇帝反省施政。嘉靖遂下诏减免赋税，大赦天下，此事被记入《明实录》。",
-    significance: "此次雷击事件被视为上天对皇帝的警示，促使嘉靖皇帝反思治国方略，对后续政治改革产生了深远影响。",
-    image: "https://picsum.photos/600/400?lightning=1"
+    description:
+      "嘉靖皇帝首次祭天时，天空突降惊雷，击中斋宫檐角。钦天监解读为上天警示，建议皇帝反省施政。嘉靖遂下诏减免赋税，大赦天下，此事被记入《明实录》。",
+    significance:
+      "此次雷击事件被视为上天对皇帝的警示，促使嘉靖皇帝反思治国方略，对后续政治改革产生了深远影响。",
+    image: "https://picsum.photos/600/400?lightning=1",
   },
   {
     year: "1540",
@@ -99,9 +186,11 @@ const legendsData = ref([
     period: "明嘉靖十九年",
     type: "祭祀灵验",
     color: "#1e90ff",
-    description: "华北连年大旱，嘉靖皇帝亲赴圜丘祈雨。祭祀礼成时，乌云突聚，甘霖普降三日。皇帝命在祈年殿前立'感应碑'记述此事，此碑至今犹存。",
-    significance: "此次祈雨成功极大提升了皇家祭祀的权威性，巩固了天坛作为天人沟通圣地的地位，成为明清两代重要的政治象征。",
-    image: "https://picsum.photos/600/400?rain=1"
+    description:
+      "华北连年大旱，嘉靖皇帝亲赴圜丘祈雨。祭祀礼成时，乌云突聚，甘霖普降三日。皇帝命在祈年殿前立'感应碑'记述此事，此碑至今犹存。",
+    significance:
+      "此次祈雨成功极大提升了皇家祭祀的权威性，巩固了天坛作为天人沟通圣地的地位，成为明清两代重要的政治象征。",
+    image: "https://picsum.photos/600/400?rain=1",
   },
   {
     year: "1644",
@@ -109,9 +198,11 @@ const legendsData = ref([
     period: "明崇祯十七年",
     type: "历史转折",
     color: "#b22222",
-    description: "李自成兵临北京城下，崇祯皇帝仍按例赴天坛祭天。据《明史》记载，祭祀途中狂风大作，燎炉倾倒，被视为亡国凶兆。十日后，崇祯自缢煤山。",
-    significance: "这次祭祀成为明朝最后一次皇家祭天仪式，象征着大明王朝的终结，具有重要的历史节点意义。",
-    image: "https://picsum.photos/600/400?last=1"
+    description:
+      "李自成兵临北京城下，崇祯皇帝仍按例赴天坛祭天。据《明史》记载，祭祀途中狂风大作，燎炉倾倒，被视为亡国凶兆。十日后，崇祯自缢煤山。",
+    significance:
+      "这次祭祀成为明朝最后一次皇家祭天仪式，象征着大明王朝的终结，具有重要的历史节点意义。",
+    image: "https://picsum.photos/600/400?last=1",
   },
   {
     year: "1743",
@@ -119,9 +210,11 @@ const legendsData = ref([
     period: "清乾隆八年",
     type: "祭祀灵验",
     color: "#1e90ff",
-    description: "乾隆皇帝祈谷礼毕，数万燕子盘旋于祈年殿上空，形成'百鸟朝凤'奇观。乾隆视为祥瑞，命画院绘《天坛瑞应图》，并作《瑞应颂》诗文刻石纪念。",
-    significance: "这一自然奇观被解读为上天对乾隆盛世的嘉许，极大提升了乾隆皇权的神圣性，成为康乾盛世的重要象征事件。",
-    image: "https://picsum.photos/600/400?birds=1"
+    description:
+      "乾隆皇帝祈谷礼毕，数万燕子盘旋于祈年殿上空，形成'百鸟朝凤'奇观。乾隆视为祥瑞，命画院绘《天坛瑞应图》，并作《瑞应颂》诗文刻石纪念。",
+    significance:
+      "这一自然奇观被解读为上天对乾隆盛世的嘉许，极大提升了乾隆皇权的神圣性，成为康乾盛世的重要象征事件。",
+    image: "https://picsum.photos/600/400?birds=1",
   },
   {
     year: "1889",
@@ -129,9 +222,11 @@ const legendsData = ref([
     period: "清光绪十五年",
     type: "天象异事",
     color: "#8b4513",
-    description: "农历八月二十四日，祈年殿遭雷击起火，三昼夜方熄。京城轰动，传言'天罚昏君'。光绪帝顶住压力，耗银百万两重建，历时七年方成。",
-    significance: "此次雷击事件引发朝野震动，光绪帝力排众议重建祈年殿，展现了皇权对天坛象征意义的重视，也为后世留下了珍贵的建筑遗产。",
-    image: "https://picsum.photos/600/400?fire=1"
+    description:
+      "农历八月二十四日，祈年殿遭雷击起火，三昼夜方熄。京城轰动，传言'天罚昏君'。光绪帝顶住压力，耗银百万两重建，历时七年方成。",
+    significance:
+      "此次雷击事件引发朝野震动，光绪帝力排众议重建祈年殿，展现了皇权对天坛象征意义的重视，也为后世留下了珍贵的建筑遗产。",
+    image: "https://picsum.photos/600/400?fire=1",
   },
   {
     year: "1899",
@@ -139,10 +234,12 @@ const legendsData = ref([
     period: "清光绪二十五年",
     type: "祭祀灵验",
     color: "#1e90ff",
-    description: "北方大旱，光绪皇帝素服步行至圜丘祈雨。祭祀当日酷热难当，但礼成时忽起东风，三日内普降甘霖。京城百姓跪迎'圣雨'，此事件被多国使节记录在回忆录中。",
-    significance: "在清朝国势衰微之际，此次祈雨成功短暂提振了皇权威望，成为晚清重要的政治宣传事件，展示了传统祭祀文化的持久影响力。",
-    image: "https://picsum.photos/600/400?pray=1"
-  }
+    description:
+      "北方大旱，光绪皇帝素服步行至圜丘祈雨。祭祀当日酷热难当，但礼成时忽起东风，三日内普降甘霖。京城百姓跪迎'圣雨'，此事件被多国使节记录在回忆录中。",
+    significance:
+      "在清朝国势衰微之际，此次祈雨成功短暂提振了皇权威望，成为晚清重要的政治宣传事件，展示了传统祭祀文化的持久影响力。",
+    image: "https://picsum.photos/600/400?pray=1",
+  },
 ]);
 
 // 当前活动索引
@@ -163,28 +260,30 @@ let timelineChartInstance = null;
 // 事件类型分布数据
 const typeData = computed(() => {
   const types = {};
-  legendsData.value.forEach(item => {
+  legendsData.value.forEach((item) => {
     types[item.type] = (types[item.type] || 0) + 1;
   });
-  
-  return Object.keys(types).map(type => {
+
+  return Object.keys(types).map((type) => {
     return {
       name: type,
       value: types[type],
-      itemStyle: { color: legendsData.value.find(d => d.type === type).color }
+      itemStyle: {
+        color: legendsData.value.find((d) => d.type === type).color,
+      },
     };
   });
 });
 
 // 时间分布数据
 const timelineData = computed(() => {
-  return legendsData.value.map(item => {
+  return legendsData.value.map((item) => {
     return {
       name: item.title,
       value: [item.year, 1], // 在时间轴上位置
       itemStyle: { color: item.color },
       year: item.year,
-      description: item.description.substring(0, 60) + '...'
+      description: item.description.substring(0, 60) + "...",
     };
   });
 });
@@ -193,56 +292,56 @@ const timelineData = computed(() => {
 const initTypeChart = () => {
   if (typeChart.value) {
     typeChartInstance = echarts.init(typeChart.value);
-    
+
     const option = {
       tooltip: {
-        trigger: 'item',
-        formatter: '{b}: {c}次 ({d}%)'
+        trigger: "item",
+        formatter: "{b}: {c}次 ({d}%)",
       },
       legend: {
-        orient: 'vertical',
+        orient: "vertical",
         right: 10,
-        top: 'center',
+        top: "center",
         textStyle: {
-          color: '#5a4a42'
-        }
+          color: "#5a4a42",
+        },
       },
       series: [
         {
-          name: '事件类型',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          center: ['40%', '50%'],
+          name: "事件类型",
+          type: "pie",
+          radius: ["40%", "70%"],
+          center: ["40%", "50%"],
           avoidLabelOverlap: false,
           itemStyle: {
             borderRadius: 10,
-            borderColor: '#f5f2e9',
-            borderWidth: 2
+            borderColor: "#f5f2e9",
+            borderWidth: 2,
           },
           label: {
             show: true,
-            formatter: '{b}: {c}次',
-            fontSize: 14
+            formatter: "{b}: {c}次",
+            fontSize: 14,
           },
           emphasis: {
             label: {
               show: true,
               fontSize: 16,
-              fontWeight: 'bold'
-            }
+              fontWeight: "bold",
+            },
           },
           labelLine: {
-            show: true
+            show: true,
           },
-          data: typeData.value
-        }
-      ]
+          data: typeData.value,
+        },
+      ],
     };
-    
+
     typeChartInstance.setOption(option);
-    
+
     // 窗口大小改变时重绘图表
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       typeChartInstance.resize();
     });
   }
@@ -252,76 +351,74 @@ const initTypeChart = () => {
 const initTimelineChart = () => {
   if (timelineChart.value) {
     timelineChartInstance = echarts.init(timelineChart.value);
-    
+
     const years = [];
     for (let year = 1420; year <= 1918; year += 10) {
       years.push(year);
     }
-    
+
     const option = {
       tooltip: {
-        trigger: 'item',
-        formatter: function(params) {
+        trigger: "item",
+        formatter: function (params) {
           return `<strong>${params.data.name}</strong><br/>
                   <span style="color:${params.color}">●</span> ${params.data.year}年<br/>
                   ${params.data.description}`;
-        }
+        },
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true,
       },
       xAxis: {
-        type: 'category',
+        type: "category",
         data: years,
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
+            color: "#8b4513",
+          },
         },
         axisLabel: {
-          color: '#5a4a42'
+          color: "#5a4a42",
         },
-        name: '年份',
-        nameLocation: 'middle',
-        nameGap: 30
+        name: "年份",
+        nameLocation: "middle",
+        nameGap: 30,
       },
       yAxis: {
-        type: 'value',
-        show: false
+        type: "value",
+        show: false,
       },
       series: [
         {
-          name: '传奇事件',
-          type: 'scatter',
-          symbolSize: function(data) {
+          name: "传奇事件",
+          type: "scatter",
+          symbolSize: function (data) {
             return 20 + data[1] * 10;
           },
           data: timelineData.value,
           markLine: {
-            symbol: 'none',
+            symbol: "none",
             label: {
-              formatter: '天坛传奇事件时间分布',
-              position: 'start'
+              formatter: "天坛传奇事件时间分布",
+              position: "start",
             },
             lineStyle: {
-              color: '#d4a76a',
-              type: 'solid'
+              color: "#d4a76a",
+              type: "solid",
             },
-            data: [
-              { yAxis: 0.5 }
-            ]
-          }
-        }
-      ]
+            data: [{ yAxis: 0.5 }],
+          },
+        },
+      ],
     };
-    
+
     timelineChartInstance.setOption(option);
-    
+
     // 窗口大小改变时重绘图表
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       timelineChartInstance.resize();
     });
   }
@@ -332,20 +429,20 @@ watch(activeIndex, () => {
   if (timelineChartInstance) {
     // 高亮时间线图表对应点
     timelineChartInstance.dispatchAction({
-      type: 'downplay',
-      seriesIndex: 0
-    });
-    
-    timelineChartInstance.dispatchAction({
-      type: 'highlight',
+      type: "downplay",
       seriesIndex: 0,
-      dataIndex: activeIndex.value
     });
-    
+
     timelineChartInstance.dispatchAction({
-      type: 'showTip',
+      type: "highlight",
       seriesIndex: 0,
-      dataIndex: activeIndex.value
+      dataIndex: activeIndex.value,
+    });
+
+    timelineChartInstance.dispatchAction({
+      type: "showTip",
+      seriesIndex: 0,
+      dataIndex: activeIndex.value,
     });
   }
 });
@@ -357,359 +454,574 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.legends-container {
-  font-family: "Noto Serif SC", serif;
-  color: #333;
+/* 基础样式 */
+:root {
+  --primary-color: #8B4513;
+  --secondary-color: #D4A76A;
+  --accent-color: #A0522D;
+  --text-dark: #333333;
+  --text-medium: #5A4A42;
+  --text-light: #7A6B64;
+  --bg-light: #F9F5ED;
+  --bg-lighter: #FFF8E1;
+  --bg-dark: #3E2723;
+  --border-radius: 12px;
+  --box-shadow: 0 8px 30px rgba(101, 67, 33, 0.12);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@font-face {
+  font-family: 'Noto Serif SC';
+  src: url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f5f2e9;
+}
+
+.dashboard-container {
+  font-family: 'Noto Serif SC', serif;
+  color: var(--text-dark);
   line-height: 1.6;
-  background: linear-gradient(135deg, #f0e6d1 0%, #e2d4b7 100%);
   min-height: 100vh;
-  padding: 20px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #f0e6d1 0%, #e2d4b7 100%);
+  padding: 0;
   overflow-x: hidden;
 }
 
-.back-button {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  background-color: rgba(139, 69, 19, 0.7);
-  color: #fff8e1;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 1em;
+/* 导航区样式 */
+.dashboard-nav {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  color: white;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
   z-index: 10;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.back-button:hover {
-  background-color: rgba(160, 82, 45, 0.9);
+.nav-button {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  transition: var(--transition);
+  backdrop-filter: blur(5px);
+}
+
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.25);
   transform: translateX(-5px);
 }
 
-.legends-header {
-  text-align: center;
-  padding: 60px 20px 40px;
-  position: relative;
-}
-
-.legends-header h1 {
-  font-size: 2.8rem;
-  color: #8b4513;
-  margin-bottom: 15px;
-  position: relative;
+.icon-back {
   display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.legends-header h1:after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: 3px;
-  background: linear-gradient(90deg, #d4a76a 0%, #8b4513 100%);
-  border-radius: 3px;
+.nav-title {
+  text-align: center;
+  flex-grow: 1;
+  padding: 0 2rem;
 }
 
-.legends-header p {
-  font-size: 1.2rem;
-  color: #5a4a42;
+.nav-title h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
   max-width: 700px;
-  margin: 25px auto 0;
-  line-height: 1.8;
-}
-
-/* 主要内容布局 */
-.legends-content {
-  display: flex;
-  max-width: 1400px;
   margin: 0 auto;
-  gap: 40px;
 }
 
-.timeline-section {
+.time-indicator {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+
+.current-year {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.era {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* 主仪表盘布局 */
+.dashboard-main {
+  display: flex;
   flex: 1;
-  position: relative;
+  padding: 2rem;
+  gap: 1.5rem;
+  max-width: 1800px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.content-section {
-  flex: 2;
+.dashboard-sidepanel {
+  flex: 0 0 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-/* 时间轴样式 */
-.timeline {
+.dashboard-sidepanel.right {
+  flex: 0 0 350px;
+}
+
+.dashboard-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 小部件通用样式 */
+.widget-title {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--secondary-color);
+  display: flex;
+  align-items: center;
+}
+
+.widget-title::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background-color: var(--secondary-color);
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+/* 时间轴小部件 */
+.timeline-widget {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  height: fit-content;
+}
+
+.timeline-container {
   position: relative;
-  padding: 40px 0;
+  padding: 1rem 0;
 }
 
 .timeline-line {
   position: absolute;
-  left: 30px;
+  left: 24px;
   top: 0;
   bottom: 0;
-  width: 4px;
-  background: linear-gradient(to bottom, #d4a76a, #8b4513);
-  border-radius: 2px;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+  z-index: 1;
 }
 
-.timeline-item {
+.timeline-event {
   position: relative;
-  padding: 25px 20px 25px 70px;
-  margin-bottom: 10px;
+  padding: 1rem 1rem 1rem 3.5rem;
+  margin-bottom: 0.75rem;
   cursor: pointer;
-  border-radius: 12px;
-  transition: all 0.4s ease;
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(5px);
+  border-radius: 8px;
+  transition: var(--transition);
+  background: white;
   border: 1px solid rgba(139, 69, 19, 0.1);
+  z-index: 2;
 }
 
-.timeline-item:hover {
-  background: rgba(255, 248, 225, 0.8);
-  transform: translateX(10px);
+.timeline-event:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(139, 69, 19, 0.1);
 }
 
-.timeline-item.active {
-  background: rgba(255, 248, 225, 0.95);
-  box-shadow: 0 10px 30px rgba(139, 69, 19, 0.15);
-  transform: translateX(15px);
+.timeline-event.active {
+  background: var(--bg-lighter);
+  box-shadow: 0 5px 20px rgba(139, 69, 19, 0.15);
+  border-left: 3px solid var(--primary-color);
 }
 
-.timeline-dot {
+.event-marker {
   position: absolute;
-  left: 26px;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 3px solid #f5f2e9;
-  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.4s ease;
-}
-
-.timeline-item.active .timeline-dot {
   width: 24px;
   height: 24px;
-  box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border: 3px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
-.timeline-year {
-  font-size: 1.3rem;
+.event-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.event-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-year {
+  font-size: 1rem;
   font-weight: bold;
-  color: #8b4513;
-  margin-bottom: 8px;
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
 }
 
-.timeline-title {
-  font-size: 1.1rem;
-  color: #5a4a42;
-  line-height: 1.5;
+.event-title {
+  font-size: 0.95rem;
+  color: var(--text-medium);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
 }
 
-/* 传奇事件卡片 */
-.legend-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f9f5ed 100%);
-  border-radius: 20px;
+.event-type-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  color: white;
+  align-self: flex-start;
+}
+
+/* 统计小部件 */
+.stats-widget {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.stat-item {
+  background: var(--bg-lighter);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.stat-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(139, 69, 19, 0.1);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* 主卡片样式 */
+.main-card {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   overflow: hidden;
-  box-shadow: 0 15px 40px rgba(101, 67, 33, 0.15);
-  margin-bottom: 40px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.legend-media {
-  height: 350px;
+.card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+}
+
+.card-header h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.card-meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+}
+
+.meta-item::before {
+  content: "•";
+  margin-right: 0.5rem;
+  color: var(--secondary-color);
+}
+
+.card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.media-panel {
+  height: 300px;
   background-size: cover;
   background-position: center;
   position: relative;
   transition: all 0.8s ease;
 }
 
-.legend-card:hover .legend-media {
-  transform: scale(1.02);
-}
-
-.event-type {
+.media-overlay {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 8px 16px;
-  border-radius: 30px;
-  color: white;
-  font-weight: bold;
-  font-size: 0.9rem;
-  backdrop-filter: blur(5px);
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.legend-info {
-  padding: 30px;
-}
-
-.legend-info h2 {
-  font-size: 2rem;
-  color: #8b4513;
-  margin-bottom: 10px;
-  position: relative;
-  display: inline-block;
-}
-
-.legend-info h2:after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
+  top: 0;
   left: 0;
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, #d4a76a 0%, #8b4513 100%);
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
 }
 
-.legend-period {
-  font-size: 1.1rem;
-  color: #9c7c5c;
-  font-style: italic;
-  margin-bottom: 20px;
+.media-caption {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  color: white;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
 }
 
-.legend-desc {
-  font-size: 1.05rem;
-  color: #5a4a42;
+.icon-image {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.content-panel {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.icon-importance {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-left: 8px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238B4513'%3E%3Cpath d='M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1.06 13.54L7.4 12l1.41-1.41 2.12 2.12 4.24-4.24 1.41 1.41-5.64 5.66z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.description-section p,
+.significance-section p {
+  color: var(--text-medium);
   line-height: 1.8;
-  margin-bottom: 30px;
 }
 
-.legend-significance {
+.significance-section {
   background: rgba(212, 167, 106, 0.1);
-  border-left: 4px solid #d4a76a;
-  padding: 15px 20px;
+  border-left: 4px solid var(--secondary-color);
+  padding: 1rem;
   border-radius: 0 8px 8px 0;
 }
 
-.legend-significance h3 {
-  font-size: 1.3rem;
-  color: #8b4513;
-  margin-bottom: 10px;
-}
-
-.legend-significance p {
-  color: #5a4a42;
-  line-height: 1.8;
-}
-
-/* 图表区域 */
-.chart-section {
-  background: linear-gradient(135deg, #ffffff 0%, #f9f5ed 100%);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 15px 40px rgba(101, 67, 33, 0.15);
-  margin-bottom: 40px;
-}
-
-.chart-section h3 {
-  font-size: 1.5rem;
-  color: #8b4513;
-  margin-bottom: 20px;
-  text-align: center;
-  position: relative;
-  padding-bottom: 15px;
-}
-
-.chart-section h3:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 2px;
-  background: linear-gradient(90deg, #d4a76a 0%, #8b4513 100%);
+/* 图表小部件 */
+.type-chart-widget,
+.timeline-chart-widget {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
 }
 
 .chart-container {
-  height: 300px;
+  height: 200px;
   width: 100%;
+  margin-bottom: 1rem;
 }
 
-/* 时间线图表区域 */
-.timeline-chart {
-  max-width: 1400px;
-  margin: 0 auto 40px;
-  background: linear-gradient(135deg, #ffffff 0%, #f9f5ed 100%);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 15px 40px rgba(101, 67, 33, 0.15);
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
 }
 
-.timeline-chart h3 {
-  font-size: 1.5rem;
-  color: #8b4513;
-  margin-bottom: 20px;
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-medium);
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  margin-right: 6px;
+}
+
+.legend-value {
+  margin-left: 4px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* 底部信息栏 */
+.dashboard-footer {
+  background: var(--primary-color);
+  color: white;
+  padding: 1.5rem 2rem;
   text-align: center;
-  position: relative;
-  padding-bottom: 15px;
+  margin-top: auto;
 }
 
-.timeline-chart h3:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: 2px;
-  background: linear-gradient(90deg, #d4a76a 0%, #8b4513 100%);
-}
-
-/* 页脚 */
-.legends-footer {
-  text-align: center;
-  padding: 40px 20px;
-  color: #5a4a42;
-  font-size: 1.1rem;
-  line-height: 1.8;
+.footer-note {
   max-width: 800px;
-  margin: 0 auto;
-  border-top: 1px solid rgba(139, 69, 19, 0.2);
+  margin: 0 auto 1rem;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-info {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.footer-credits {
+  font-size: 0.85rem;
+  opacity: 0.8;
 }
 
 /* 响应式设计 */
-@media (max-width: 1200px) {
-  .legends-content {
+@media (max-width: 1400px) {
+  .dashboard-main {
     flex-direction: column;
   }
   
-  .timeline-section {
-    margin-bottom: 40px;
+  .dashboard-sidepanel,
+  .dashboard-sidepanel.right {
+    flex: 1;
+    width: 100%;
+  }
+  
+  .dashboard-content {
+    order: -1;
+    margin-bottom: 1.5rem;
   }
 }
 
 @media (max-width: 768px) {
-  .legends-header h1 {
-    font-size: 2.2rem;
+  .dashboard-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
   }
   
-  .timeline-item {
-    padding: 20px 15px 20px 60px;
+  .nav-title {
+    padding: 1rem 0;
+    text-align: left;
   }
   
-  .legend-media {
-    height: 250px;
+  .time-indicator {
+    margin-top: 1rem;
+    align-self: flex-start;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .media-panel {
+    height: 200px;
   }
 }
 
 @media (max-width: 480px) {
-  .legends-header {
-    padding: 40px 15px 30px;
+  .nav-title h1 {
+    font-size: 1.8rem;
   }
   
-  .back-button {
-    top: 15px;
-    left: 15px;
-    padding: 10px 15px;
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .dashboard-main {
+    padding: 1rem;
+  }
+  
+  .card-header h2 {
+    font-size: 1.5rem;
   }
 }
 </style>
