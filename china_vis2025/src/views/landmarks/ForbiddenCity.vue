@@ -145,7 +145,7 @@ export default {
         });
       } else if (direction === "legends") {
         this.$router.push({
-          name: "ForbiddenCitylegends",
+          name: "ForbiddenCityLegends",
           params: { landmarkId: this.landmarkId || "forbidden-city" },
         });
       }
