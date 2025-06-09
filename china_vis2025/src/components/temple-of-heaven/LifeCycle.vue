@@ -1,90 +1,149 @@
 <template>
   <div class="lifecycle-container">
-    <!-- 返回按钮 -->
-    <button @click="goBack" class="back-button">← 返回天坛门户</button>
-
     <!-- 页面标题 -->
     <div class="lifecycle-header">
       <h1>天坛建筑群演变与修缮历程</h1>
-      <p>从永乐敕建到世界文化遗产的六百年建筑变迁</p>
-    </div>
-
-    <!-- 时间轴导航 -->
-    <div class="timeline-nav">
-      <div
-        v-for="(item, index) in timelineData"
-        :key="index"
-        :class="['timeline-point', { active: activeIndex === index }]"
-        @click="setActiveIndex(index)"
-      >
-        <div class="timeline-marker"></div>
-        <span class="timeline-year">{{ item.year }}</span>
+      <p class="intro-text">从永乐敕建到世界文化遗产的六百年建筑变迁</p>
+      <!-- 返回按钮 -->
+      <button @click="goBack" class="back-button">← 返回天坛门户</button>
+      <!-- 新增状态概览卡片 -->
+      <div class="status-overview">
+        <div class="status-card">
+          <span class="status-icon">🏗️</span>
+          <div>
+            <h3>主要修缮</h3>
+            <p class="status-value">23次</p>
+          </div>
+        </div>
+        <div class="status-card">
+          <span class="status-icon">⏳</span>
+          <div>
+            <h3>历史跨度</h3>
+            <p class="status-value">602年</p>
+          </div>
+        </div>
+        <div class="status-card">
+          <span class="status-icon">📐</span>
+          <div>
+            <h3>现存面积</h3>
+            <p class="status-value">273公顷</p>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- 主要内容区域 -->
-    <div class="lifecycle-content">
-      <!-- 时间轴左侧 -->
-      <div class="timeline-section">
-        <div class="timeline">
-          <div class="timeline-line"></div>
-          <div
-            v-for="(item, index) in timelineData"
-            :key="index"
-            :class="['timeline-item', { active: activeIndex === index }]"
-            @click="setActiveIndex(index)"
-          >
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">{{ item.year }}</div>
-            <div class="timeline-title">{{ item.title }}</div>
-          </div>
+    <div class="lifecycle-main">
+      <!-- 时间轴导航 -->
+      <div class="timeline-nav">
+        <div
+          v-for="(item, index) in timelineData"
+          :key="index"
+          :class="['timeline-point', { active: activeIndex === index }]"
+          @click="setActiveIndex(index)"
+        >
+          <div class="timeline-marker"></div>
+          <span class="timeline-year">{{ item.year }}</span>
         </div>
       </div>
 
-      <!-- 右侧内容区域 -->
-      <div class="content-section">
-        <div class="history-card">
-          <div class="history-media"></div>
-          <div class="history-info">
-            <h2>{{ activeData.title }}</h2>
-            <div class="history-period">{{ activeData.period }}</div>
-            <div class="history-desc">{{ activeData.description }}</div>
-            <div class="history-metrics">
-              <div
-                class="metric"
-                v-for="(metric, idx) in activeData.metrics"
-                :key="idx"
-              >
-                <div class="metric-value">{{ metric.value }}</div>
-                <div class="metric-label">{{ metric.label }}</div>
-              </div>
-            </div>
-
-            <!-- 新增建筑特点部分 -->
-            <div class="architectural-features" v-if="activeData.features">
-              <h3>建筑特点</h3>
-              <ul>
-                <li v-for="(feature, idx) in activeData.features" :key="idx">
-                  {{ feature }}
-                </li>
-              </ul>
+      <div class="content-wrapper">
+        <!-- 时间轴左侧 -->
+        <div class="timeline-section">
+          <div class="timeline">
+            <div class="timeline-line"></div>
+            <div
+              v-for="(item, index) in timelineData"
+              :key="index"
+              :class="['timeline-item', { active: activeIndex === index }]"
+              @click="handleClick(index, $event)"
+            >
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">{{ item.year }}</div>
+              <div class="timeline-title">{{ item.title }}</div>
             </div>
           </div>
         </div>
 
-        <!-- 建筑规模变化图表 -->
-        <div class="chart-section">
-          <h3>天坛建筑群规模演变</h3>
+        <!-- 右侧内容区域 -->
+        <div v-if="isModalOpen" class="modal-overlay" @click.self="closeModal">
+          <!-- 弹窗内容 -->
+          <div class="modal-content">
+            <button class="modal-close" @click="closeModal">×</button>
+
+            <div class="modal-body">
+              <!-- 左侧文字内容 -->
+              <div class="history-card">
+                <!-- 图 + 标题 -->
+                <div class="history-info">
+                  <h2>{{ activeData.title }}</h2>
+                  <div class="history-period">{{ activeData.period }}</div>
+                  <div class="history-desc">{{ activeData.description }}</div>
+
+                  <!-- 数据指标 -->
+                  <div class="history-metrics">
+                    <div
+                      class="metric"
+                      v-for="(metric, idx) in activeData.metrics"
+                      :key="idx"
+                    >
+                      <div class="metric-value">{{ metric.value }}</div>
+                      <div class="metric-label">{{ metric.label }}</div>
+                    </div>
+                  </div>
+
+                  <!-- 建筑特点 -->
+                  <div
+                    class="architectural-features"
+                    v-if="activeData.features"
+                  >
+                    <h3>建筑特点</h3>
+                    <ul>
+                      <li
+                        v-for="(feature, idx) in activeData.features"
+                        :key="idx"
+                      >
+                        {{ feature }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 右侧网络图 -->
+              <div class="network-section" v-if="selectedEvent">
+                <h3>{{ selectedEvent.year }}年：{{ selectedEvent.event }}</h3>
+                <LandmarkNetwork
+                  :landmark="forbiddenCity"
+                  :event="selectedEvent"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 可视化图表区域 -->
+      <div class="visualization-section">
+        <div class="visualization-card">
+          <h3>建筑规模演变</h3>
           <div ref="chart" class="chart-container"></div>
         </div>
-
-        <!-- 新增建筑类型分布图表 -->
-        <div class="chart-section">
-          <h3>建筑类型分布变化</h3>
+        <div class="visualization-card">
+          <h3>建筑类型分布</h3>
           <div ref="typeChart" class="chart-container"></div>
+        </div>
+        <div class="visualization-card">
+          <h3>修缮材料变化</h3>
+          <div class="chart-container"></div>
         </div>
       </div>
     </div>
+
+    <footer class="lifecycle-footer">
+      <p class="copyright">
+        © {{ new Date().getFullYear() }} 北京历史文化遗产数字平台
+      </p>
+    </footer>
   </div>
 </template>
 
@@ -92,17 +151,22 @@
 import { ref, onMounted, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
+import LandmarkNetwork from "../LandmarkNetwork.vue";
+import forbiddenCityData from "../../assets/forbidden-city.json";
 
 const router = useRouter();
 
+const forbiddenCity = ref(forbiddenCityData);
+
 // 返回门户主页
-const goBack = () => router.push("/landmarks/temple-of-heaven");
+const goBack = () => router.push("/landmarks/forbidden-city");
 
 // 时间轴数据 - 重点强化建筑演变内容
 const timelineData = ref([
   {
     year: "1420",
     title: "永乐敕建",
+    event: "开始建造",
     period: "明永乐十八年",
     description:
       '明成祖朱棣下诏建造天地坛，作为皇帝祭天、祈谷的场所。初建时采用天地合祀格局，主要建筑包括大祀殿、大祀门、斋宫等，奠定了天坛建筑群的基本格局。建筑群严格遵循"天圆地方"的宇宙观设计，主体建筑呈圆形，围墙为方形。',
@@ -198,14 +262,26 @@ const timelineData = ref([
   },
 ]);
 
+const isModalOpen = ref(false);
+
 // 当前活动索引
 const activeIndex = ref(0);
-const setActiveIndex = (index) => {
-  activeIndex.value = index;
-};
 
 // 当前活动数据
 const activeData = computed(() => timelineData.value[activeIndex.value]);
+
+const selectedEvent = ref(null);
+
+// 点击处理函数
+function handleClick(index, event) {
+  activeIndex.value = index;
+  isModalOpen.value = true;
+  selectedEvent.value = timelineData.value[index]; // ✅ 这才是正确的数据
+}
+
+function closeModal() {
+  isModalOpen.value = false;
+}
 
 // ECharts图表实例
 const chart = ref(null);
@@ -421,117 +497,113 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* 新增样式 */
-.history-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s ease;
-}
-
-.history-card:hover .history-media img {
-  transform: scale(1.05);
-}
-
-.architectural-features {
-  margin-top: 25px;
-  padding-top: 20px;
-  border-top: 1px dashed rgba(139, 69, 19, 0.2);
-}
-
-.architectural-features h3 {
-  font-size: 1.2rem;
-  color: #8b4513;
-  margin-bottom: 12px;
-}
-
-.architectural-features ul {
-  list-style-type: none;
-  padding-left: 20px;
-}
-
-.architectural-features li {
-  position: relative;
-  margin-bottom: 10px;
-  padding-left: 20px;
-  color: #5a4a42;
-}
-
-.architectural-features li:before {
-  content: "•";
-  color: #d4a76a;
-  font-size: 1.5rem;
-  position: absolute;
-  left: 0;
-  top: -3px;
-}
-
-/* 原有样式保持不变 */
+/* 基础容器样式 */
 .lifecycle-container {
-  font-family: "Noto Serif SC", serif;
-  color: #333;
-  line-height: 1.6;
-  background: linear-gradient(135deg, #f5f2e9 0%, #e8d8c3 100%);
+  font-family: "Noto Serif SC", "SimSun", serif;
+  color: #5a4a42;
+  background: linear-gradient(to bottom, #f9f5ed, #e8dfd1);
   min-height: 100vh;
-  padding: 20px;
-  position: relative;
-  overflow-x: hidden;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.back-button {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  background-color: rgba(139, 69, 19, 0.7);
-  color: #fff8e1;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 1em;
-  z-index: 10;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.back-button:hover {
-  background-color: rgba(160, 82, 45, 0.9);
-  transform: translateX(-5px);
-}
-
+/* 头部区域 */
 .lifecycle-header {
   text-align: center;
-  padding: 60px 20px 40px;
+  padding: 60px 20px 30px;
+  background: linear-gradient(to right, #c19a6b, #b78a56);
   position: relative;
+  box-shadow: 0 4px 12px rgba(101, 67, 33, 0.2);
+  margin-bottom: 30px;
 }
 
 .lifecycle-header h1 {
-  font-size: 2.8rem;
-  color: #8b4513;
-  margin-bottom: 15px;
-  position: relative;
-  display: inline-block;
+  font-size: 2.5em;
+  color: #fff8e1;
+  margin-bottom: 8px;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.lifecycle-header h1:after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 3px;
-  background: linear-gradient(90deg, #d4a76a 0%, #8b4513 100%);
-  border-radius: 3px;
-}
-
-.lifecycle-header p {
-  font-size: 1.2rem;
-  color: #5a4a42;
+.intro-text {
+  font-size: 1.1em;
+  color: #fff8e1;
   max-width: 700px;
-  margin: 20px auto 0;
-  line-height: 1.8;
+  margin: 0 auto 15px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* 返回按钮 */
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(94, 66, 41, 0.8);
+  color: #fff8e1;
+  border: 1px solid #5d4037;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9em;
+  z-index: 10;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+  background-color: rgba(121, 85, 72, 0.9);
+  transform: translateX(-2px);
+}
+
+/* 状态概览卡片 */
+.status-overview {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.status-card {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  padding: 15px 20px;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.status-icon {
+  font-size: 1.8em;
+}
+
+.status-card h3 {
+  font-size: 0.9em;
+  color: #fff8e1;
+  margin: 0 0 5px;
+  font-weight: normal;
+}
+
+.status-value {
+  font-size: 1.4em;
+  color: white;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* 主要内容区域 */
+.lifecycle-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
 }
 
 /* 时间轴导航 */
@@ -539,8 +611,10 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin: 20px auto 40px;
+  margin: 0 auto 40px;
   max-width: 1000px;
+  overflow-x: auto;
+  padding: 10px 0;
 }
 
 .timeline-point {
@@ -549,6 +623,7 @@ onMounted(() => {
   align-items: center;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-width: 80px;
 }
 
 .timeline-point.active .timeline-year {
@@ -576,124 +651,118 @@ onMounted(() => {
   font-size: 1rem;
   color: #9c7c5c;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
-/* 主要内容布局 */
-.lifecycle-content {
+/* 内容包装器 */
+.content-wrapper {
   display: flex;
-  max-width: 1400px;
-  margin: 0 auto;
-  gap: 40px;
+  gap: 30px;
 }
 
+/* 时间轴区域 */
 .timeline-section {
-  flex: 1;
-  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 20px; /* Space for scrollbar */
 }
 
-.content-section {
-  flex: 2;
-}
-
-/* 时间轴样式 */
 .timeline {
   position: relative;
-  padding: 40px 0;
+  display: inline-flex; /* Changed from flex to inline-flex */
+  align-items: center;
+  padding: 40px 60px; /* Increased horizontal padding */
+  height: auto;
+  min-height: 120px;
+  /* Add these: */
+  min-width: 100%; /* Ensure it takes full width */
+  white-space: nowrap; /* Prevent items from wrapping */
 }
 
 .timeline-line {
   position: absolute;
-  left: 30px;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: linear-gradient(to bottom, #d4a76a, #8b4513);
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #d4a76a, #8b4513);
   border-radius: 2px;
+  z-index: 1;
 }
 
+/* 时间轴项横向排列 */
 .timeline-item {
   position: relative;
-  padding: 25px 20px 25px 70px;
-  margin-bottom: 10px;
+  min-width: 180px;
+  margin-right: 40px;
+  padding-top: 60px;
+  text-align: center;
   cursor: pointer;
-  border-radius: 12px;
-  transition: all 0.4s ease;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(5px);
   border: 1px solid rgba(139, 69, 19, 0.1);
+  border-radius: 12px;
+  z-index: 2;
+  transition: all 0.4s ease;
 }
 
 .timeline-item:hover {
   background: rgba(255, 248, 225, 0.8);
-  transform: translateX(10px);
+  transform: translateY(-5px);
 }
 
 .timeline-item.active {
   background: rgba(255, 248, 225, 0.95);
   box-shadow: 0 10px 30px rgba(139, 69, 19, 0.15);
-  transform: translateX(15px);
+  transform: translateY(-10px);
 }
 
 .timeline-dot {
   position: absolute;
-  left: 26px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background-color: #d4a76a;
   border: 3px solid #f5f2e9;
   box-shadow: 0 0 0 4px rgba(212, 167, 106, 0.3);
   transition: all 0.4s ease;
+  z-index: 3;
 }
 
 .timeline-item.active .timeline-dot {
   background-color: #8b4513;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   box-shadow: 0 0 0 6px rgba(139, 69, 19, 0.3);
 }
 
 .timeline-year {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #8b4513;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .timeline-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #5a4a42;
   line-height: 1.5;
 }
 
-/* 历史卡片样式 */
+/* 历史卡片 */
 .history-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f9f5ed 100%);
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 15px 40px rgba(101, 67, 33, 0.15);
+  flex: 1.2;
   display: flex;
   flex-direction: column;
 }
 
-.history-media {
-  height: 300px;
-  overflow: hidden;
-  position: relative;
-}
-
-.history-info {
-  padding: 30px;
-}
-
 .history-info h2 {
-  font-size: 2rem;
-  color: #8b4513;
-  margin-bottom: 10px;
-  position: relative;
-  display: inline-block;
+  font-size: 28px;
+  margin-bottom: 8px;
+  color: #6c4f2c;
 }
 
 .history-info h2:after {
@@ -707,103 +776,174 @@ onMounted(() => {
 }
 
 .history-period {
-  font-size: 1.1rem;
-  color: #9c7c5c;
-  font-style: italic;
-  margin-bottom: 20px;
+  font-size: 16px;
+  color: #9c805a;
+  margin-bottom: 12px;
 }
 
 .history-desc {
-  font-size: 1.05rem;
-  color: #5a4a42;
+  font-size: 16px;
   line-height: 1.8;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  text-align: justify;
 }
 
+/* 数据指标 */
 .history-metrics {
   display: flex;
-  gap: 20px;
-  border-top: 1px dashed rgba(139, 69, 19, 0.2);
-  padding-top: 20px;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
 .metric {
+  background-color: #e8dbc2;
+  padding: 12px;
+  border-radius: 10px;
   text-align: center;
-  flex: 1;
+  min-width: 80px;
 }
 
 .metric-value {
-  font-size: 1.5rem;
+  font-size: 18px;
   font-weight: bold;
-  color: #8b4513;
-  margin-bottom: 5px;
+  color: #5e4123;
 }
 
 .metric-label {
-  font-size: 0.9rem;
-  color: #9c7c5c;
+  font-size: 14px;
+  color: #7e6b4e;
 }
 
-/* 图表区域 */
-.chart-section {
-  margin-top: 40px;
+.architectural-features h3 {
+  margin-bottom: 8px;
+  color: #5e4123;
+}
+
+.architectural-features ul {
+  padding-left: 20px;
+  list-style: square;
+}
+
+.network-section {
+  flex: 1;
+  background-color: #f2ebd8;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 12px rgba(100, 80, 40, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.network-section h3 {
+  font-size: 20px;
+  color: #6a5030;
+  margin-bottom: 12px;
+}
+
+/* 可视化图表区域 */
+.visualization-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.visualization-card {
   background: linear-gradient(135deg, #ffffff 0%, #f9f5ed 100%);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 15px 40px rgba(101, 67, 33, 0.15);
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(101, 67, 33, 0.1);
+  border: 1px solid rgba(139, 69, 19, 0.1);
 }
 
-.chart-section h3 {
-  font-size: 1.5rem;
-  color: #8b4513;
+.visualization-card h3 {
+  color: #5d4037;
+  font-size: 1.2em;
+  margin-top: 0;
   margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d4b483;
   text-align: center;
-  position: relative;
-  padding-bottom: 15px;
-}
-
-.chart-section h3:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 2px;
-  background: linear-gradient(90deg, #d4a76a 0%, #8b4513 100%);
 }
 
 .chart-container {
-  height: 300px;
-  width: 100%;
+  height: 250px;
+  background-color: rgba(255, 253, 245, 0.5);
+  border: 1px dashed #8d6e63;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8d6e63;
+  position: relative;
+}
+
+.chart-container:after {
+  content: "可视化图表区域";
+  position: absolute;
+  font-size: 1.1em;
+}
+
+/* 页脚 */
+.lifecycle-footer {
+  text-align: center;
+  padding: 25px 20px;
+  margin-top: 50px;
+  color: #5a4a42;
+  font-size: 0.9em;
+  border-top: 1px solid rgba(139, 69, 19, 0.15);
+  background-color: rgba(255, 253, 245, 0.7);
 }
 
 /* 响应式设计 */
 @media (max-width: 1200px) {
-  .lifecycle-content {
+  .content-wrapper {
     flex-direction: column;
   }
 
   .timeline-section {
     margin-bottom: 40px;
   }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .timeline-line {
+    display: none;
+  }
+
+  .timeline-item {
+    padding: 15px;
+    margin-bottom: 10px;
+  }
+
+  .timeline-dot {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
   .lifecycle-header h1 {
-    font-size: 2.2rem;
+    font-size: 2em;
+    padding-top: 10px;
   }
 
-  .timeline-item {
-    padding: 20px 15px 20px 60px;
+  .status-overview {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .history-media {
-    height: 250px;
+  .status-card {
+    width: 100%;
+    max-width: 250px;
   }
 
-  .chart-section {
-    padding: 20px;
+  .visualization-section {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -828,7 +968,46 @@ onMounted(() => {
   }
 
   .chart-container {
-    height: 250px;
+    height: 200px;
   }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #f4f1e1; /* 米黄色底 */
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: "Serif", "Songti SC", serif;
+  color: #3c2f1e;
+}
+
+.modal-body {
+  display: flex;
+  gap: 24px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 </style>
