@@ -41,7 +41,7 @@
           <p class="card-description">
             探索{{ landmark.name }}历经千年沧桑，从唐代兴建到多次摧毁与重建的历史变迁。
           </p>
-          <button class="explore-button" @click.stop="explore('fayuan-LifeCycle')">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('FayuanTempleLifeCycle')">立即探索 →</button>
         </div>
       </div>
 
@@ -58,7 +58,7 @@
           <p class="card-description">
             洞察{{ landmark.name }}作为佛教圣地，在中国乃至亚洲佛教文化中的重要地位。
           </p>
-          <button class="explore-button" @click.stop="explore('fayuan-Influence')">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('FayuanTempleInfluence')">立即探索 →</button>
         </div>
       </div>
 
@@ -75,7 +75,7 @@
           <p class="card-description">
             聆听{{ landmark.name }}的神秘传说、高僧故事以及与历史名人的渊源。
           </p>
-          <button class="explore-button" @click.stop="explore('fayuan-Legends')">立即探索 →</button>
+          <button class="explore-button" @click.stop="explore('FayuanTempleLegends')">立即探索 →</button>
         </div>
       </div>
     </section>
