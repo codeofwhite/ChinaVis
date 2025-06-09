@@ -2,31 +2,31 @@
   <div class="lifecycle-container">
     <!-- 页面标题 -->
     <div class="lifecycle-header">
-      <h1>天坛建筑群演变与修缮历程</h1>
-      <p class="intro-text">从永乐敕建到世界文化遗产的六百年建筑变迁</p>
+      <h1>故宫建筑群演变与修缮历程</h1>
+      <p class="intro-text">从永乐肇建到世界文化遗产的六百年紫禁传奇</p>
       <!-- 返回按钮 -->
-      <button @click="goBack" class="back-button">← 返回天坛门户</button>
+      <button @click="goBack" class="back-button">← 返回故宫门户</button>
       <!-- 新增状态概览卡片 -->
       <div class="status-overview">
         <div class="status-card">
           <span class="status-icon">🏗️</span>
           <div>
-            <h3>主要修缮</h3>
-            <p class="status-value">23次</p>
+            <h3>主要建筑</h3>
+            <p class="status-value">980座</p>
           </div>
         </div>
         <div class="status-card">
           <span class="status-icon">⏳</span>
           <div>
             <h3>历史跨度</h3>
-            <p class="status-value">602年</p>
+            <p class="status-value">603年</p>
           </div>
         </div>
         <div class="status-card">
           <span class="status-icon">📐</span>
           <div>
-            <h3>现存面积</h3>
-            <p class="status-value">273公顷</p>
+            <h3>占地面积</h3>
+            <p class="status-value">72万㎡</p>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
               v-for="(item, index) in timelineData"
               :key="index"
               :class="['timeline-item', { active: activeIndex === index }]"
-              @click="setActiveIndex(index)"
+              @click="handleClick(index, $event)"
             >
               <div class="timeline-dot"></div>
               <div class="timeline-year">{{ item.year }}</div>
@@ -67,42 +67,56 @@
 
         <!-- 右侧内容区域 -->
         <div v-if="isModalOpen" class="modal-overlay" @click.self="closeModal">
+          <!-- 弹窗内容 -->
           <div class="modal-content">
             <button class="modal-close" @click="closeModal">×</button>
-            <!-- 历史卡片 -->
-            <div class="history-card">
-              <div class="history-media">
-                <img :src="activeData.image" :alt="activeData.title" />
-              </div>
-              <div class="history-info">
-                <h2>{{ activeData.title }}</h2>
-                <div class="history-period">{{ activeData.period }}</div>
-                <div class="history-desc">{{ activeData.description }}</div>
 
-                <!-- 数据指标 -->
-                <div class="history-metrics">
-                  <div
-                    class="metric"
-                    v-for="(metric, idx) in activeData.metrics"
-                    :key="idx"
-                  >
-                    <div class="metric-value">{{ metric.value }}</div>
-                    <div class="metric-label">{{ metric.label }}</div>
-                  </div>
-                </div>
+            <div class="modal-body">
+              <!-- 左侧文字内容 -->
+              <div class="history-card">
+                <!-- 图 + 标题 -->
+                <div class="history-info">
+                  <h2>{{ activeData.title }}</h2>
+                  <div class="history-period">{{ activeData.period }}</div>
+                  <div class="history-desc">{{ activeData.description }}</div>
 
-                <!-- 建筑特点 -->
-                <div class="architectural-features" v-if="activeData.features">
-                  <h3>建筑特点</h3>
-                  <ul>
-                    <li
-                      v-for="(feature, idx) in activeData.features"
+                  <!-- 数据指标 -->
+                  <div class="history-metrics">
+                    <div
+                      class="metric"
+                      v-for="(metric, idx) in activeData.metrics"
                       :key="idx"
                     >
-                      {{ feature }}
-                    </li>
-                  </ul>
+                      <div class="metric-value">{{ metric.value }}</div>
+                      <div class="metric-label">{{ metric.label }}</div>
+                    </div>
+                  </div>
+
+                  <!-- 建筑特点 -->
+                  <div
+                    class="architectural-features"
+                    v-if="activeData.features"
+                  >
+                    <h3>建筑特点</h3>
+                    <ul>
+                      <li
+                        v-for="(feature, idx) in activeData.features"
+                        :key="idx"
+                      >
+                        {{ feature }}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+              </div>
+
+              <!-- 右侧网络图 -->
+              <div class="network-section" v-if="selectedEvent">
+                <h3>{{ selectedEvent.year }}年：{{ selectedEvent.event }}</h3>
+                <LandmarkNetwork
+                  :landmark="forbiddenCity"
+                  :event="selectedEvent"
+                />
               </div>
             </div>
           </div>
@@ -111,15 +125,15 @@
       <!-- 可视化图表区域 -->
       <div class="visualization-section">
         <div class="visualization-card">
-          <h3>建筑规模演变</h3>
+          <h3>宫殿建筑规模演变</h3>
           <div ref="chart" class="chart-container"></div>
         </div>
         <div class="visualization-card">
-          <h3>建筑类型分布</h3>
+          <h3>建筑功能分布</h3>
           <div ref="typeChart" class="chart-container"></div>
         </div>
         <div class="visualization-card">
-          <h3>修缮材料变化</h3>
+          <h3>琉璃瓦使用变迁</h3>
           <div class="chart-container"></div>
         </div>
       </div>
@@ -127,7 +141,7 @@
 
     <footer class="lifecycle-footer">
       <p class="copyright">
-        © {{ new Date().getFullYear() }} 北京历史文化遗产数字平台
+        © {{ new Date().getFullYear() }} 故宫博物院数字文化遗产中心
       </p>
     </footer>
   </div>
@@ -137,8 +151,12 @@
 import { ref, onMounted, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
+import LandmarkNetwork from "../LandmarkNetwork.vue";
+import forbiddenCityData from "../../assets/forbidden-city.json";
 
 const router = useRouter();
+
+const forbiddenCity = ref(forbiddenCityData);
 
 // 返回门户主页
 const goBack = () => router.push("/landmarks/forbidden-city");
@@ -146,99 +164,117 @@ const goBack = () => router.push("/landmarks/forbidden-city");
 // 时间轴数据 - 重点强化建筑演变内容
 const timelineData = ref([
   {
+    year: "1406",
+    title: "奉旨动工",
+    event: "开始筹建",
+    period: "明永乐四年",
+    description:
+      "明成祖朱棣迁都北京后，下诏仿照南京故宫规制，在元大都皇宫旧址基础上开始兴建北京宫殿。规划严格遵循《周礼·考工记》的“前朝后寝，左祖右社”的礼制格局，奠定了紫禁城宏伟壮丽的建筑群基础。主要建筑包括奉天殿、华盖殿、谨身殿、以及乾清宫、坤宁宫等。",
+    image: "https://picsum.photos/600/400?palace=1",
+    metrics: [
+      { value: "72万平方米", label: "占地面积" },
+      { value: "9000余间", label: "房屋数量" },
+      { value: "52米", label: "午门高度" },
+    ],
+    features: [
+      "黄瓦红墙，金碧辉煌",
+      "严格的中轴对称布局",
+      "三重殿宇与内廷宫殿",
+    ],
+  },
+  {
     year: "1420",
-    title: "永乐敕建",
+    title: "紫禁城落成",
+    event: "正式启用",
     period: "明永乐十八年",
     description:
-      '明成祖朱棣下诏建造天地坛，作为皇帝祭天、祈谷的场所。初建时采用天地合祀格局，主要建筑包括大祀殿、大祀门、斋宫等，奠定了天坛建筑群的基本格局。建筑群严格遵循"天圆地方"的宇宙观设计，主体建筑呈圆形，围墙为方形。',
-    image: "https://picsum.photos/600/400?temple=1",
+      "北京宫殿建成，明成祖朱棣迁都北京，正式启用。紫禁城作为明清两代的皇宫，成为国家政治、文化中心长达五百年。建成之初，其建筑规制和规模达到了封建社会皇宫的顶峰，象征着皇权的至高无上。宫殿建筑群的木结构、石雕、彩绘等工艺均代表了当时的最高水平。",
+    image: "https://picsum.photos/600/400?palace=2",
     metrics: [
-      { value: "273公顷", label: "占地面积" },
-      { value: "20座", label: "主要建筑" },
-      { value: "4大区域", label: "建筑分区" },
+      { value: "500年", label: "皇家历史" },
+      { value: "24位", label: "帝王居住" },
+      { value: "15年", label: "建造工期" },
     ],
     features: [
-      "大祀殿为矩形重檐建筑",
-      "采用蓝绿为主色调的琉璃瓦",
-      "严格的中轴对称布局",
+      "太和殿为中心的三大殿",
+      "内金水桥和太和门广场",
+      "角楼与护城河的防御体系",
     ],
   },
   {
-    year: "1530",
-    title: "天地分祀",
-    period: "明嘉靖九年",
+    year: "1644",
+    title: "甲申之变",
+    event: "宫殿受损",
+    period: "明崇祯十七年",
     description:
-      "嘉靖皇帝改革礼制，实行天地分祀制度。在天地坛南郊新建圜丘坛专用于祭天，原天地坛改建为祈谷坛（后称祈年殿）。此次改造新增了圜丘、皇穹宇等建筑，改变了天坛的整体格局。建筑工艺上大量使用汉白玉石材，形成了三重圆坛的独特结构。",
-    image: "https://picsum.photos/600/400?temple=2",
+      "李自成攻入北京，明朝灭亡。紫禁城部分建筑在此期间遭受焚毁，特别是三大殿（奉天殿、华盖殿、谨身殿）被付之一炬。清军入关后，在这些废墟上进行重建，并更名为太和殿、中和殿、保和殿，奠定了清代紫禁城的格局。此次事件是紫禁城历史上一次重大的破坏与重建。",
+    image: "https://picsum.photos/600/400?palace=3",
     metrics: [
-      { value: "圜丘坛", label: "新增建筑" },
-      { value: "3层结构", label: "圜丘形制" },
-      { value: "360块", label: "栏板数量" },
+      { value: "3座", label: "被毁大殿" },
+      { value: "数年", label: "重建时间" },
+      { value: "清顺治元年", label: "重建开始" },
     ],
     features: [
-      "圜丘三层九重坛台结构",
-      "皇穹宇圆形单檐建筑",
-      "汉白玉栏板雕刻云龙纹",
+      "太和殿宏伟重建",
+      "保留明代建筑规制",
+      "清代彩绘风格融入",
     ],
   },
   {
-    year: "1751",
-    title: "乾隆大修",
-    period: "清乾隆十六年",
+    year: "1733",
+    title: "清代鼎盛",
+    event: "乾隆修缮与增建",
+    period: "清雍正十一年",
     description:
-      "乾隆皇帝对天坛进行了史上最大规模的改建和扩建。将祈年殿三重檐全部更换为象征天空的蓝色琉璃瓦，重建皇穹宇为单檐圆攒尖顶，扩建圜丘坛。同时改建了斋宫、神乐署等配套建筑，形成了今日所见的天坛基本格局。此次修缮采用了最高规格的建筑材料和技术。",
-    image: "https://picsum.photos/600/400?temple=3",
+      "乾隆皇帝在位期间，对紫禁城进行了大规模的修缮、扩建和美化。不仅修复了多处宫殿，还增建了宁寿宫区（乾隆花园、倦勤斋等）、慈宁宫花园等，极大地丰富了紫禁城的建筑群。此次修缮注重细节与装饰，大量使用雕刻、彩绘、陈设等艺术手法，使紫禁城达到其艺术成就的巅峰。",
+    image: "https://picsum.photos/600/400?palace=4",
     metrics: [
-      { value: "12年", label: "工期" },
-      { value: "9.5万两", label: "耗银" },
-      { value: "30处", label: "修缮建筑" },
+      { value: "100+", label: "修缮宫殿" },
+      { value: "50+", label: "新增建筑" },
+      { value: "30年+", label: "持续工程" },
     ],
-    features: ["祈年殿蓝色琉璃瓦顶", "皇穹宇单檐圆攒尖顶", "楠木梁柱结构体系"],
+    features: [
+      "宁寿宫花园精巧设计",
+      "养心殿作为皇帝理政居所",
+      "倦勤斋的通景画与竹丝镶嵌",
+    ],
   },
   {
-    year: "1889",
-    title: "祈年殿重建",
-    period: "清光绪十五年",
+    year: "1912",
+    title: "清帝退位",
+    event: "故宫博物院筹备",
+    period: "民国元年",
     description:
-      "祈年殿遭雷击焚毁，光绪皇帝下令按原样重建。此次重建严格遵循乾隆时期的建筑规制，采用珍贵的楠木作为主要结构材料，历时七年完成。重建过程中采用了传统榫卯结构技术，没有使用一颗钉子，成为中国古代木构建筑的巅峰之作。建筑细节上恢复了乾隆时期的彩绘图案。",
-    image: "https://picsum.photos/600/400?temple=4",
+      "清朝灭亡，末代皇帝溥仪退位，但仍居于紫禁城内廷。1924年，冯玉祥发动“北京政变”，将溥仪驱逐出宫。随后，清室善后委员会成立，着手清点文物，并筹备在紫禁城的基础上建立故宫博物院。这一时期是紫禁城从皇家宫殿向公共博物馆转变的关键阶段。",
+    image: "https://picsum.photos/600/400?palace=5",
     metrics: [
-      { value: "38米", label: "高度" },
-      { value: "28根", label: "楠木柱" },
-      { value: "7年", label: "工期" },
+      { value: "12年", label: "溥仪居宫" },
+      { value: "1925年", label: "博物院成立" },
+      { value: "120万+", label: "馆藏文物" },
     ],
-    features: ["三重檐圆攒尖顶", "28根楠木柱象征星宿", "榫卯结构无钉建造"],
+    features: [
+      "文物清点与整理",
+      "部分区域对外开放",
+      "宫殿功能逐渐转型",
+    ],
   },
   {
-    year: "1918",
-    title: "辟为公园",
-    period: "民国七年",
-    description:
-      "天坛结束近500年的皇家禁地历史，正式作为公园向公众开放。民国政府对部分建筑进行了保护性修缮，修复了因战乱损坏的围墙和部分殿宇。同时增加了服务性建筑，如售票处、休息亭等，使建筑群适应公共游览需求。这一转变开启了天坛从皇家祭祀场所到公共文化空间的演变。",
-    image: "https://picsum.photos/600/400?temple=5",
-    metrics: [
-      { value: "20万+", label: "年游客量" },
-      { value: "10处", label: "开放区域" },
-      { value: "5处", label: "新增设施" },
-    ],
-    features: ["保持原有建筑格局", "新增公共游览设施", "部分建筑功能转换"],
-  },
-  {
-    year: "1998",
+    year: "1987",
     title: "世界遗产",
+    event: "列入名录",
     period: "现代",
     description:
-      '天坛被联合国教科文组织列入《世界遗产名录》。中国政府启动了大规模的保护性修缮工程，采用传统工艺和材料对祈年殿、皇穹宇、圜丘等主要建筑进行了全面修缮。同时建立了科学的建筑监测系统，对木结构、彩绘等进行数字化保护。修缮严格遵循"修旧如旧"原则，恢复了部分历史建筑原貌。',
-    image: "https://picsum.photos/600/400?temple=6",
+      "故宫博物院被联合国教科文组织列入《世界遗产名录》，成为全人类的文化瑰宝。中国政府加大了对故宫的保护力度，进行大规模的修缮和数字化保护工程，致力于恢复其历史原貌，并不断提升展览水平和游客服务。故宫每年吸引着数千万游客，成为展示中华文明的重要窗口。",
+    image: "https://picsum.photos/600/400?palace=6",
     metrics: [
-      { value: "273公顷", label: "保护面积" },
-      { value: "50+次", label: "专业修缮" },
-      { value: "800万+", label: "年游客量" },
+      { value: "100+", label: "修缮项目" },
+      { value: "2000万+", label: "年游客量" },
+      { value: "98%", label: "开放面积" },
     ],
     features: [
-      "传统工艺与现代技术结合",
-      "数字化建筑监测系统",
-      "遗产完整性保护",
+      "“平安故宫”工程实施",
+      "数字化展示与研究",
+      "文化创意产品开发",
     ],
   },
 ]);
@@ -251,9 +287,13 @@ const activeIndex = ref(0);
 // 当前活动数据
 const activeData = computed(() => timelineData.value[activeIndex.value]);
 
-function setActiveIndex(index) {
+const selectedEvent = ref(null);
+
+// 点击处理函数
+function handleClick(index, event) {
   activeIndex.value = index;
   isModalOpen.value = true;
+  selectedEvent.value = timelineData.value[index]; // ✅ 这才是正确的数据
 }
 
 function closeModal() {
@@ -641,15 +681,19 @@ onMounted(() => {
 .timeline-section {
   width: 100%;
   overflow-x: auto;
+  padding-bottom: 20px; /* Space for scrollbar */
 }
 
 .timeline {
   position: relative;
-  display: flex;
+  display: inline-flex; /* Changed from flex to inline-flex */
   align-items: center;
-  padding: 40px 0;
+  padding: 40px 60px; /* Increased horizontal padding */
   height: auto;
   min-height: 120px;
+  /* Add these: */
+  min-width: 100%; /* Ensure it takes full width */
+  white-space: nowrap; /* Prevent items from wrapping */
 }
 
 .timeline-line {
@@ -725,48 +769,17 @@ onMounted(() => {
   line-height: 1.5;
 }
 
-/* 右侧内容区域 */
-.content-section {
-  flex: 2;
-  min-width: 0;
-}
-
 /* 历史卡片 */
 .history-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f9f5ed 100%);
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 15px 40px rgba(101, 67, 33, 0.1);
-  margin-bottom: 30px;
-}
-
-.history-media {
-  height: 350px;
-  overflow: hidden;
-  position: relative;
-}
-
-.history-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s ease;
-}
-
-.history-card:hover .history-media img {
-  transform: scale(1.05);
-}
-
-.history-info {
-  padding: 30px;
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
 }
 
 .history-info h2 {
-  font-size: 1.8rem;
-  color: #8b4513;
-  margin-bottom: 10px;
-  position: relative;
-  display: inline-block;
+  font-size: 28px;
+  margin-bottom: 8px;
+  color: #6c4f2c;
 }
 
 .history-info h2:after {
@@ -780,77 +793,69 @@ onMounted(() => {
 }
 
 .history-period {
-  font-size: 1.1rem;
-  color: #9c7c5c;
-  font-style: italic;
-  margin-bottom: 20px;
+  font-size: 16px;
+  color: #9c805a;
+  margin-bottom: 12px;
 }
 
 .history-desc {
-  font-size: 1.05rem;
-  color: #5a4a42;
+  font-size: 16px;
   line-height: 1.8;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  text-align: justify;
 }
 
 /* 数据指标 */
 .history-metrics {
   display: flex;
-  gap: 20px;
-  border-top: 1px dashed rgba(139, 69, 19, 0.2);
-  padding-top: 20px;
+  gap: 16px;
   margin-bottom: 20px;
 }
 
 .metric {
+  background-color: #e8dbc2;
+  padding: 12px;
+  border-radius: 10px;
   text-align: center;
-  flex: 1;
+  min-width: 80px;
 }
 
 .metric-value {
-  font-size: 1.5rem;
+  font-size: 18px;
   font-weight: bold;
-  color: #8b4513;
-  margin-bottom: 5px;
+  color: #5e4123;
 }
 
 .metric-label {
-  font-size: 0.9rem;
-  color: #9c7c5c;
-}
-
-/* 建筑特点 */
-.architectural-features {
-  margin-top: 25px;
-  padding-top: 20px;
-  border-top: 1px dashed rgba(139, 69, 19, 0.2);
+  font-size: 14px;
+  color: #7e6b4e;
 }
 
 .architectural-features h3 {
-  font-size: 1.2rem;
-  color: #8b4513;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  color: #5e4123;
 }
 
 .architectural-features ul {
-  list-style-type: none;
   padding-left: 20px;
+  list-style: square;
 }
 
-.architectural-features li {
-  position: relative;
-  margin-bottom: 10px;
-  padding-left: 20px;
-  color: #5a4a42;
+.network-section {
+  flex: 1;
+  background-color: #f2ebd8;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 12px rgba(100, 80, 40, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.architectural-features li:before {
-  content: "•";
-  color: #d4a76a;
-  font-size: 1.5rem;
-  position: absolute;
-  left: 0;
-  top: -3px;
+.network-section h3 {
+  font-size: 20px;
+  color: #6a5030;
+  margin-bottom: 12px;
 }
 
 /* 可视化图表区域 */
@@ -954,10 +959,6 @@ onMounted(() => {
     max-width: 250px;
   }
 
-  .history-media {
-    height: 250px;
-  }
-
   .visualization-section {
     grid-template-columns: 1fr;
   }
@@ -1002,13 +1003,19 @@ onMounted(() => {
 }
 
 .modal-content {
-  background: #fff;
-  padding: 20px;
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  border-radius: 8px;
-  position: relative;
+  background-color: #f4f1e1; /* 米黄色底 */
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: "Serif", "Songti SC", serif;
+  color: #3c2f1e;
+}
+
+.modal-body {
+  display: flex;
+  gap: 24px;
 }
 
 .modal-close {

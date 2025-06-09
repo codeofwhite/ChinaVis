@@ -11,10 +11,9 @@ export default [
     props: true,
     children: [
       {
-        path: "detail",
-        name: "landmark-detail-dashilar",
-        component: () =>
-          import("@/views/landmarks/Dashilan/LandmarkDetailView.vue"),
+        path: "life-cycle",
+        name: "DashilanLifeCycle",
+        component: () => import("@/components/dashilan/LifeCycle.vue"),
         props: true,
         meta: {
           title: "景区详情",
@@ -23,9 +22,8 @@ export default [
       },
       {
         path: "influence",
-        name: "landmark-radar-dashilar",
-        component: () =>
-          import("@/views/landmarks/Dashilan/LandmarkRadarDisplayPage.vue"),
+        name: "DashilanInfluence",
+        component: () => import("@/components/dashilan/Influence.vue"),
         props: true,
         meta: {
           title: "影响力雷达图",
@@ -33,10 +31,9 @@ export default [
         },
       },
       {
-        path: ":direction",
-        name: "landmark-lifecycle-dashilar",
-        component: () =>
-          import("@/views/landmarks/Dashilan/LandmarkLifecyclePage.vue"),
+        path: "legends",
+        name: "DashilanLegends",
+        component: () => import("@/components/dashilan/Legends.vue"),
         props: true,
         meta: {
           title: "生命周期分析",

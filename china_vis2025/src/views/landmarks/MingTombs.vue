@@ -126,17 +126,17 @@ export default {
       };
       if (direction === "lifeCycle") {
         this.$router.push({
-          name: "landmark-lifecycle-ming",
+          name: "MingTombsLifeCycle",
           params: { ...params, direction: direction },
         });
       } else if (direction === "influence") {
         this.$router.push({
-          name: "landmark-radar-ming",
+          name: "MingTombsInfluence",
           params,
         });
       } else if (direction === "legends") {
         this.$router.push({
-          name: "landmark-detail-ming",
+          name: "MingTombsLegends",
           params,
           query: { landmarkId: this.landmarkId }, // 通过 query 传递
         });
@@ -568,4 +568,3 @@ export default {
   }
 }
 </style>
-
