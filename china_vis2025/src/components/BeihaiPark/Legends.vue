@@ -17,13 +17,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import * as echarts from 'echarts'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
+import { useRouter } from "vue-router";
+const router = useRouter();
 function goBack() {
-  router.push('/landmarks/beihai-park')
+  router.push("/landmarks/beihai-park");
 }
 
 const graphChart = ref(null)
@@ -189,40 +186,5 @@ onMounted(() => {
 }
 .back-button:hover {
   background: #a67c52;
-}
-.graph-layout {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-}
-.chart-box {
-  flex: 1;
-  height: 600px;
-  min-height: 400px;
-  margin-bottom: 20px;
-}
-.info-panel {
-  width: 320px;
-  background: linear-gradient(to bottom, #fffaf3, #f9f3e8);
-  border-left: 2px solid #d4a76a;
-  padding: 20px;
-  color: #4a3d2f;
-  font-size: 1em;
-  line-height: 1.6;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
-  overflow-y: auto;
-  max-height: 600px;
-}
-.info-panel h2 {
-  font-size: 1.25em;
-  margin-bottom: 10px;
-  color: #8b4513;
-}
-.chart-desc {
-  color: #5a4a42;
-  font-size: 1em;
-  text-align: center;
-  margin-top: 20px;
 }
 </style>

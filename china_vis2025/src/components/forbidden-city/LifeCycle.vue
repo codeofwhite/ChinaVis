@@ -2,31 +2,31 @@
   <div class="lifecycle-container">
     <!-- 页面标题 -->
     <div class="lifecycle-header">
-      <h1>法源寺建筑群演变与修缮历程</h1>
-      <p class="intro-text">从唐代悯忠古刹到中国佛学院的千年佛寺变迁</p>
+      <h1>故宫建筑群演变与修缮历程</h1>
+      <p class="intro-text">从永乐肇建到世界文化遗产的六百年紫禁传奇</p>
       <!-- 返回按钮 -->
-      <button @click="goBack" class="back-button">← 返回法源寺门户</button>
+      <button @click="goBack" class="back-button">← 返回故宫门户</button>
       <!-- 新增状态概览卡片 -->
       <div class="status-overview">
         <div class="status-card">
           <span class="status-icon">🏗️</span>
           <div>
-            <h3>主要殿宇</h3>
-            <p class="status-value">7进院落</p>
+            <h3>主要建筑</h3>
+            <p class="status-value">980座</p>
           </div>
         </div>
         <div class="status-card">
           <span class="status-icon">⏳</span>
           <div>
             <h3>历史跨度</h3>
-            <p class="status-value">1400年</p>
+            <p class="status-value">603年</p>
           </div>
         </div>
         <div class="status-card">
           <span class="status-icon">📐</span>
           <div>
             <h3>占地面积</h3>
-            <p class="status-value">6700㎡</p>
+            <p class="status-value">72万㎡</p>
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@
               <div class="network-section" v-if="selectedEvent">
                 <h3>{{ selectedEvent.year }}年：{{ selectedEvent.event }}</h3>
                 <LandmarkNetwork
-                  :landmark="fayuanTemple"
+                  :landmark="forbiddenCity"
                   :event="selectedEvent"
                 />
               </div>
@@ -125,15 +125,15 @@
       <!-- 可视化图表区域 -->
       <div class="visualization-section">
         <div class="visualization-card">
-          <h3>寺院规模演变</h3>
+          <h3>宫殿建筑规模演变</h3>
           <div ref="chart" class="chart-container"></div>
         </div>
         <div class="visualization-card">
-          <h3>佛教建筑类型</h3>
+          <h3>建筑功能分布</h3>
           <div ref="typeChart" class="chart-container"></div>
         </div>
         <div class="visualization-card">
-          <h3>历代佛像艺术</h3>
+          <h3>琉璃瓦使用变迁</h3>
           <div class="chart-container"></div>
         </div>
       </div>
@@ -141,7 +141,7 @@
 
     <footer class="lifecycle-footer">
       <p class="copyright">
-        © {{ new Date().getFullYear() }} 北京佛教文化遗产数字中心
+        © {{ new Date().getFullYear() }} 故宫博物院数字文化遗产中心
       </p>
     </footer>
   </div>
@@ -159,141 +159,123 @@ const router = useRouter();
 const forbiddenCity = ref(forbiddenCityData);
 
 // 返回门户主页
-const goBack = () => router.push("/landmarks/fayuan-temple");
+const goBack = () => router.push("/landmarks/forbidden-city");
 
-// 时间轴数据 - 法源寺特有的历史节点
+// 时间轴数据 - 重点强化建筑演变内容
 const timelineData = ref([
   {
-    year: "645",
-    title: "唐代始建",
-    event: "悯忠寺奠基",
-    period: "唐贞观十九年",
+    year: "1406",
+    title: "奉旨动工",
+    event: "开始筹建",
+    period: "明永乐四年",
     description:
-      "唐太宗李世民为悼念东征阵亡将士下诏建寺，初名悯忠寺。工程浩大，历时51年才建成。建筑群采用典型唐代寺院布局，中轴线对称，建有山门、钟鼓楼、悯忠阁、大雄宝殿等核心建筑。建筑材料以木结构为主，屋顶覆盖青瓦，体现盛唐建筑的雄浑风格。",
-    image:
-      "https://img2.baidu.com/it/u=173075004,1001130261&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "明成祖朱棣迁都北京后，下诏仿照南京故宫规制，在元大都皇宫旧址基础上开始兴建北京宫殿。规划严格遵循《周礼·考工记》的“前朝后寝，左祖右社”的礼制格局，奠定了紫禁城宏伟壮丽的建筑群基础。主要建筑包括奉天殿、华盖殿、谨身殿、以及乾清宫、坤宁宫等。",
+    image: "https://picsum.photos/600/400?palace=1",
     metrics: [
-      { value: "51年", label: "建造工期" },
-      { value: "7进院落", label: "建筑布局" },
-      { value: "30+座", label: "主要殿堂" },
+      { value: "72万平方米", label: "占地面积" },
+      { value: "9000余间", label: "房屋数量" },
+      { value: "52米", label: "午门高度" },
     ],
     features: [
-      "典型唐代寺院中轴对称布局",
-      "木构架承重体系",
-      "青瓦歇山顶建筑群",
+      "黄瓦红墙，金碧辉煌",
+      "严格的中轴对称布局",
+      "三重殿宇与内廷宫殿",
     ],
   },
   {
-    year: "882",
-    title: "唐代焚毁",
-    event: "寺院遭火灾",
-    period: "唐中和二年",
+    year: "1420",
+    title: "紫禁城落成",
+    event: "正式启用",
+    period: "明永乐十八年",
     description:
-      "悯忠寺遭火灾焚毁，主体建筑悯忠阁及东西双塔化为灰烬。此时正值唐末战乱，朝廷无力重修，寺院荒废近百年。史料记载'悯忠高阁，去天一握'的壮丽景象就此消失，仅存地基遗址。这是法源寺历史上第一次重大损毁。",
-    image:
-      "https://img0.baidu.com/it/u=2429986127,1302041570&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "北京宫殿建成，明成祖朱棣迁都北京，正式启用。紫禁城作为明清两代的皇宫，成为国家政治、文化中心长达五百年。建成之初，其建筑规制和规模达到了封建社会皇宫的顶峰，象征着皇权的至高无上。宫殿建筑群的木结构、石雕、彩绘等工艺均代表了当时的最高水平。",
+    image: "https://picsum.photos/600/400?palace=2",
     metrics: [
-      { value: "100%", label: "主殿损毁" },
-      { value: "70年", label: "荒废时间" },
-      { value: "2座", label: "焚毁佛塔" },
+      { value: "500年", label: "皇家历史" },
+      { value: "24位", label: "帝王居住" },
+      { value: "15年", label: "建造工期" },
     ],
-    features: ["主体建筑全毁", "仅存地基遗址", "荒废近百年"],
+    features: [
+      "太和殿为中心的三大殿",
+      "内金水桥和太和门广场",
+      "角楼与护城河的防御体系",
+    ],
   },
   {
-    year: "1057",
-    title: "辽代地震",
-    event: "寺院全毁",
-    period: "辽清宁三年",
+    year: "1644",
+    title: "甲申之变",
+    event: "宫殿受损",
+    period: "明崇祯十七年",
     description:
-      "幽州大地震导致寺院全毁，这是法源寺历史上第二次重大损毁。辽代皇室虽崇信佛教，但因战事频繁，仅对部分建筑进行了简单修复。寺内现存最古老的建筑遗存——辽代石经幢就是震后重建时安放的。",
-    image:
-      "https://img2.baidu.com/it/u=4153467665,1521801940&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "李自成攻入北京，明朝灭亡。紫禁城部分建筑在此期间遭受焚毁，特别是三大殿（奉天殿、华盖殿、谨身殿）被付之一炬。清军入关后，在这些废墟上进行重建，并更名为太和殿、中和殿、保和殿，奠定了清代紫禁城的格局。此次事件是紫禁城历史上一次重大的破坏与重建。",
+    image: "https://picsum.photos/600/400?palace=3",
     metrics: [
-      { value: "8.0级", label: "地震强度" },
-      { value: "100%", label: "建筑损毁" },
-      { value: "20年", label: "修复时间" },
+      { value: "3座", label: "被毁大殿" },
+      { value: "数年", label: "重建时间" },
+      { value: "清顺治元年", label: "重建开始" },
     ],
-    features: ["现存辽代石经幢", "部分建筑基础保留", "规模大幅缩减"],
-  },
-  {
-    year: "1447",
-    title: "明代重修",
-    event: "敕令重建",
-    period: "明正统二年",
-    description:
-      "明英宗敕令重修寺院，并赐额'崇福寺'。此次重建奠定了现存建筑群的基础格局。大雄宝殿、悯忠阁等主要建筑均按明代官式营造法式重建，采用楠木柱梁，屋顶改为黄色琉璃瓦。现存的明代风格斗拱和梁架结构大多源自此次重建。",
-    image:
-      "https://img0.baidu.com/it/u=1199122887,2021459&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
-    metrics: [
-      { value: "30年", label: "工期" },
-      { value: "48根", label: "楠木柱" },
-      { value: "5进院落", label: "新布局" },
+    features: [
+      "太和殿宏伟重建",
+      "保留明代建筑规制",
+      "清代彩绘风格融入",
     ],
-    features: ["黄色琉璃瓦顶", "明代官式斗拱", "楠木梁柱结构"],
   },
   {
     year: "1733",
-    title: "雍正赐名",
-    event: "法源寺定名",
+    title: "清代鼎盛",
+    event: "乾隆修缮与增建",
     period: "清雍正十一年",
     description:
-      "雍正皇帝敕令全面重修，赐名'法源寺'并沿用至今。重建工程严格按照清代营造则例，大修各殿宇，增建藏经阁、戒坛等重要建筑。寺内现存主体建筑大多定型于此次重修，形成了七进六院的宏大格局。同时铸造了大量佛教文物，现存寺内重要法器大多源于此时期。",
-    image:
-      "https://img1.baidu.com/it/u=330730148,3984278631&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "乾隆皇帝在位期间，对紫禁城进行了大规模的修缮、扩建和美化。不仅修复了多处宫殿，还增建了宁寿宫区（乾隆花园、倦勤斋等）、慈宁宫花园等，极大地丰富了紫禁城的建筑群。此次修缮注重细节与装饰，大量使用雕刻、彩绘、陈设等艺术手法，使紫禁城达到其艺术成就的巅峰。",
+    image: "https://picsum.photos/600/400?palace=4",
     metrics: [
-      { value: "法源寺", label: "赐名" },
-      { value: "7进6院", label: "建筑格局" },
-      { value: "300+件", label: "新增法器" },
+      { value: "100+", label: "修缮宫殿" },
+      { value: "50+", label: "新增建筑" },
+      { value: "30年+", label: "持续工程" },
     ],
-    features: ["清代官式彩绘", "满汉双语匾额", "戒坛与藏经阁"],
+    features: [
+      "宁寿宫花园精巧设计",
+      "养心殿作为皇帝理政居所",
+      "倦勤斋的通景画与竹丝镶嵌",
+    ],
   },
   {
-    year: "1900",
-    title: "庚子劫难",
-    event: "寺院遭破坏",
-    period: "清光绪二十六年",
+    year: "1912",
+    title: "清帝退位",
+    event: "故宫博物院筹备",
+    period: "民国元年",
     description:
-      "八国联军占领北京期间，法源寺遭严重破坏。寺内文物被掠夺，建筑被损毁，佛像法器被劫掠一空。据记载，侵略军将寺院作为马厩和军营，导致多处建筑受损。这是近代史上法源寺最严重的劫难。",
-    image:
-      "https://img1.baidu.com/it/u=2479781627,3435865456&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "清朝灭亡，末代皇帝溥仪退位，但仍居于紫禁城内廷。1924年，冯玉祥发动“北京政变”，将溥仪驱逐出宫。随后，清室善后委员会成立，着手清点文物，并筹备在紫禁城的基础上建立故宫博物院。这一时期是紫禁城从皇家宫殿向公共博物馆转变的关键阶段。",
+    image: "https://picsum.photos/600/400?palace=5",
     metrics: [
-      { value: "60%", label: "建筑损毁" },
-      { value: "200+件", label: "文物损失" },
-      { value: "8年", label: "修复时间" },
+      { value: "12年", label: "溥仪居宫" },
+      { value: "1925年", label: "博物院成立" },
+      { value: "120万+", label: "馆藏文物" },
     ],
-    features: ["建筑作为马厩使用", "大量文物被掠夺", "佛像金箔被刮除"],
+    features: [
+      "文物清点与整理",
+      "部分区域对外开放",
+      "宫殿功能逐渐转型",
+    ],
   },
   {
-    year: "1956",
-    title: "佛学院成立",
-    event: "教育新篇章",
-    period: "新中国时期",
-    description:
-      "法源寺成为中国佛学院所在地，开启佛教教育新篇章。政府拨款进行保护性修缮，修复了战争损毁的建筑部分。寺院功能从纯粹宗教场所转变为佛教教育中心，培养了大批佛教人才。1963年曾在此举办亚洲宗教会议。",
-    image:
-      "https://img0.baidu.com/it/u=1931515007,3894831794&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
-    metrics: [
-      { value: "中国佛学院", label: "新功能" },
-      { value: "200+位", label: "培养学僧" },
-      { value: "40+次", label: "国际会议" },
-    ],
-    features: ["佛教教育中心", "保护性修缮", "国际交流平台"],
-  },
-  {
-    year: "2001",
-    title: "国保单位",
-    event: "重点文物保护",
+    year: "1987",
+    title: "世界遗产",
+    event: "列入名录",
     period: "现代",
     description:
-      "法源寺被列为全国重点文物保护单位，启动全面修缮工程。采用传统工艺修复了所有殿宇，重建了部分历史建筑。同时成立中国佛教图书文物馆，珍藏历代佛教文物。现今法源寺集宗教活动、文化展示、旅游观光于一体，成为北京重要的文化地标。",
-    image:
-      "https://img0.baidu.com/it/u=318203156,3842292057&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "故宫博物院被联合国教科文组织列入《世界遗产名录》，成为全人类的文化瑰宝。中国政府加大了对故宫的保护力度，进行大规模的修缮和数字化保护工程，致力于恢复其历史原貌，并不断提升展览水平和游客服务。故宫每年吸引着数千万游客，成为展示中华文明的重要窗口。",
+    image: "https://picsum.photos/600/400?palace=6",
     metrics: [
-      { value: "全国重点", label: "文物保护" },
-      { value: "8万+件", label: "馆藏文物" },
-      { value: "30万+", label: "年访客量" },
+      { value: "100+", label: "修缮项目" },
+      { value: "2000万+", label: "年游客量" },
+      { value: "98%", label: "开放面积" },
     ],
-    features: ["传统工艺修复", "佛教文物馆藏", "多元文化空间"],
+    features: [
+      "“平安故宫”工程实施",
+      "数字化展示与研究",
+      "文化创意产品开发",
+    ],
   },
 ]);
 

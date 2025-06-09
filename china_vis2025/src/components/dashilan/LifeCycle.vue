@@ -2,31 +2,31 @@
   <div class="lifecycle-container">
     <!-- 页面标题 -->
     <div class="lifecycle-header">
-      <h1>法源寺建筑群演变与修缮历程</h1>
-      <p class="intro-text">从唐代悯忠古刹到中国佛学院的千年佛寺变迁</p>
+      <h1>天坛建筑群演变与修缮历程</h1>
+      <p class="intro-text">从永乐敕建到世界文化遗产的六百年建筑变迁</p>
       <!-- 返回按钮 -->
-      <button @click="goBack" class="back-button">← 返回法源寺门户</button>
+      <button @click="goBack" class="back-button">← 返回天坛门户</button>
       <!-- 新增状态概览卡片 -->
       <div class="status-overview">
         <div class="status-card">
           <span class="status-icon">🏗️</span>
           <div>
-            <h3>主要殿宇</h3>
-            <p class="status-value">7进院落</p>
+            <h3>主要修缮</h3>
+            <p class="status-value">23次</p>
           </div>
         </div>
         <div class="status-card">
           <span class="status-icon">⏳</span>
           <div>
             <h3>历史跨度</h3>
-            <p class="status-value">1400年</p>
+            <p class="status-value">602年</p>
           </div>
         </div>
         <div class="status-card">
           <span class="status-icon">📐</span>
           <div>
-            <h3>占地面积</h3>
-            <p class="status-value">6700㎡</p>
+            <h3>现存面积</h3>
+            <p class="status-value">273公顷</p>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@
       </div>
 
       <div class="content-wrapper">
-        <!-- 时间轴左侧 -->
+        <!-- 时间轴 -->
         <div class="timeline-section">
           <div class="timeline">
             <div class="timeline-line"></div>
@@ -114,7 +114,7 @@
               <div class="network-section" v-if="selectedEvent">
                 <h3>{{ selectedEvent.year }}年：{{ selectedEvent.event }}</h3>
                 <LandmarkNetwork
-                  :landmark="fayuanTemple"
+                  :landmark="forbiddenCity"
                   :event="selectedEvent"
                 />
               </div>
@@ -125,15 +125,15 @@
       <!-- 可视化图表区域 -->
       <div class="visualization-section">
         <div class="visualization-card">
-          <h3>寺院规模演变</h3>
+          <h3>建筑规模演变</h3>
           <div ref="chart" class="chart-container"></div>
         </div>
         <div class="visualization-card">
-          <h3>佛教建筑类型</h3>
+          <h3>建筑类型分布</h3>
           <div ref="typeChart" class="chart-container"></div>
         </div>
         <div class="visualization-card">
-          <h3>历代佛像艺术</h3>
+          <h3>修缮材料变化</h3>
           <div class="chart-container"></div>
         </div>
       </div>
@@ -141,7 +141,7 @@
 
     <footer class="lifecycle-footer">
       <p class="copyright">
-        © {{ new Date().getFullYear() }} 北京佛教文化遗产数字中心
+        © {{ new Date().getFullYear() }} 北京历史文化遗产数字平台
       </p>
     </footer>
   </div>
@@ -159,141 +159,159 @@ const router = useRouter();
 const forbiddenCity = ref(forbiddenCityData);
 
 // 返回门户主页
-const goBack = () => router.push("/landmarks/fayuan-temple");
+const goBack = () => router.push("/landmarks/dashilar");
 
-// 时间轴数据 - 法源寺特有的历史节点
+// 时间轴数据 - 重点强化建筑演变内容
 const timelineData = ref([
   {
-    year: "645",
-    title: "唐代始建",
-    event: "悯忠寺奠基",
-    period: "唐贞观十九年",
+    year: "1420",
+    title: "廊房商业街区兴建",
+    event: "商业区创建",
+    period: "明永乐年间",
     description:
-      "唐太宗李世民为悼念东征阵亡将士下诏建寺，初名悯忠寺。工程浩大，历时51年才建成。建筑群采用典型唐代寺院布局，中轴线对称，建有山门、钟鼓楼、悯忠阁、大雄宝殿等核心建筑。建筑材料以木结构为主，屋顶覆盖青瓦，体现盛唐建筑的雄浑风格。",
-    image:
-      "https://img2.baidu.com/it/u=173075004,1001130261&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "北京鼓励商贸，在皇城四门等地兴建廊房商业街区。该地区最早称'廊房四条'，成为京城重要商业中心之一。建筑多为传统北方商铺样式，砖木结构，前店后坊格局。",
+    image: "https://picsum.photos/600/400?dashilar=1",
     metrics: [
-      { value: "51年", label: "建造工期" },
-      { value: "7进院落", label: "建筑布局" },
-      { value: "30+座", label: "主要殿堂" },
+      { value: "4条", label: "主要廊房" },
+      { value: "200+", label: "商户数量" },
+      { value: "500米", label: "街道长度" },
     ],
-    features: [
-      "典型唐代寺院中轴对称布局",
-      "木构架承重体系",
-      "青瓦歇山顶建筑群",
-    ],
+    features: ["传统北方商铺样式", "砖木结构", "前店后坊格局"],
   },
   {
-    year: "882",
-    title: "唐代焚毁",
-    event: "寺院遭火灾",
-    period: "唐中和二年",
+    year: "1488",
+    title: "大栅栏得名",
+    event: "栅栏修建",
+    period: "明弘治元年",
     description:
-      "悯忠寺遭火灾焚毁，主体建筑悯忠阁及东西双塔化为灰烬。此时正值唐末战乱，朝廷无力重修，寺院荒废近百年。史料记载'悯忠高阁，去天一握'的壮丽景象就此消失，仅存地基遗址。这是法源寺历史上第一次重大损毁。",
-    image:
-      "https://img0.baidu.com/it/u=2429986127,1302041570&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "为维护京师治安，廊房四条两端设木质栅栏，由商户出资修建，规模格外巨大，逐渐被称为'大栅栏'而沿用至今。栅栏夜间关闭，形成封闭式商业街区，增强了安全性和商业聚集效应。",
+    image: "https://picsum.photos/600/400?dashilar=2",
     metrics: [
-      { value: "100%", label: "主殿损毁" },
-      { value: "70年", label: "荒废时间" },
-      { value: "2座", label: "焚毁佛塔" },
+      { value: "2处", label: "主要栅栏" },
+      { value: "5米", label: "栅栏高度" },
+      { value: "24小时", label: "守卫制度" },
     ],
-    features: ["主体建筑全毁", "仅存地基遗址", "荒废近百年"],
+    features: ["巨型木质栅栏", "封闭式商业街区", "商户自治管理"],
   },
   {
-    year: "1057",
-    title: "辽代地震",
-    event: "寺院全毁",
-    period: "辽清宁三年",
+    year: "1750",
+    title: "地图正式标注",
+    event: "地名确立",
+    period: "清乾隆年间",
     description:
-      "幽州大地震导致寺院全毁，这是法源寺历史上第二次重大损毁。辽代皇室虽崇信佛教，但因战事频繁，仅对部分建筑进行了简单修复。寺内现存最古老的建筑遗存——辽代石经幢就是震后重建时安放的。",
-    image:
-      "https://img2.baidu.com/it/u=4153467665,1521801940&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "《乾隆京城全图》正式标注'大栅栏'地名，显示街区已发展成熟。此时大栅栏已成为北京最繁华的商业中心之一，聚集了大量老字号店铺，建筑风格融合了明清商业建筑特色。",
+    image: "https://picsum.photos/600/400?dashilar=3",
     metrics: [
-      { value: "8.0级", label: "地震强度" },
-      { value: "100%", label: "建筑损毁" },
-      { value: "20年", label: "修复时间" },
+      { value: "30+", label: "老字号" },
+      { value: "8条", label: "支巷" },
+      { value: "1000+", label: "从业人员" },
     ],
-    features: ["现存辽代石经幢", "部分建筑基础保留", "规模大幅缩减"],
+    features: ["明清商业建筑风格", "老字号聚集", "前店后宅格局"],
   },
   {
-    year: "1447",
-    title: "明代重修",
-    event: "敕令重建",
-    period: "明正统二年",
+    year: "1899",
+    title: "火灾毁栏",
+    event: "火灾重建",
+    period: "清光绪二十五年",
     description:
-      "明英宗敕令重修寺院，并赐额'崇福寺'。此次重建奠定了现存建筑群的基础格局。大雄宝殿、悯忠阁等主要建筑均按明代官式营造法式重建，采用楠木柱梁，屋顶改为黄色琉璃瓦。现存的明代风格斗拱和梁架结构大多源自此次重建。",
-    image:
-      "https://img0.baidu.com/it/u=1199122887,2021459&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "大栅栏发生重大火灾，木质栅栏被烧毁。此次火灾促使商户改进防火措施，部分建筑开始采用砖石结构，但整体仍保持传统商业街区风貌。",
+    image: "https://picsum.photos/600/400?dashilar=4",
     metrics: [
-      { value: "30年", label: "工期" },
-      { value: "48根", label: "楠木柱" },
-      { value: "5进院落", label: "新布局" },
+      { value: "50+", label: "受损店铺" },
+      { value: "3天", label: "火灾持续时间" },
+      { value: "1年", label: "重建周期" },
     ],
-    features: ["黄色琉璃瓦顶", "明代官式斗拱", "楠木梁柱结构"],
-  },
-  {
-    year: "1733",
-    title: "雍正赐名",
-    event: "法源寺定名",
-    period: "清雍正十一年",
-    description:
-      "雍正皇帝敕令全面重修，赐名'法源寺'并沿用至今。重建工程严格按照清代营造则例，大修各殿宇，增建藏经阁、戒坛等重要建筑。寺内现存主体建筑大多定型于此次重修，形成了七进六院的宏大格局。同时铸造了大量佛教文物，现存寺内重要法器大多源于此时期。",
-    image:
-      "https://img1.baidu.com/it/u=330730148,3984278631&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
-    metrics: [
-      { value: "法源寺", label: "赐名" },
-      { value: "7进6院", label: "建筑格局" },
-      { value: "300+件", label: "新增法器" },
-    ],
-    features: ["清代官式彩绘", "满汉双语匾额", "戒坛与藏经阁"],
+    features: ["砖石结构引入", "防火措施改进", "传统风貌保持"],
   },
   {
     year: "1900",
-    title: "庚子劫难",
-    event: "寺院遭破坏",
+    title: "义和团运动影响",
+    event: "战火波及",
     period: "清光绪二十六年",
     description:
-      "八国联军占领北京期间，法源寺遭严重破坏。寺内文物被掠夺，建筑被损毁，佛像法器被劫掠一空。据记载，侵略军将寺院作为马厩和军营，导致多处建筑受损。这是近代史上法源寺最严重的劫难。",
-    image:
-      "https://img1.baidu.com/it/u=2479781627,3435865456&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "义和团运动中，街区多家店铺被焚毁。灾后重建时部分商户引入西式建筑元素，形成中西合璧的商业建筑风格，体现清末民初的时代特征。",
+    image: "https://picsum.photos/600/400?dashilar=5",
     metrics: [
-      { value: "60%", label: "建筑损毁" },
-      { value: "200+件", label: "文物损失" },
-      { value: "8年", label: "修复时间" },
+      { value: "70%", label: "损毁率" },
+      { value: "5年", label: "恢复期" },
+      { value: "20+", label: "西式店铺" },
     ],
-    features: ["建筑作为马厩使用", "大量文物被掠夺", "佛像金箔被刮除"],
+    features: ["中西合璧风格", "彩色瓷砖立面", "拱形门窗设计"],
   },
   {
-    year: "1956",
-    title: "佛学院成立",
-    event: "教育新篇章",
-    period: "新中国时期",
+    year: "1902",
+    title: "重建与新发展",
+    event: "繁华再现",
+    period: "清光绪二十八年",
     description:
-      "法源寺成为中国佛学院所在地，开启佛教教育新篇章。政府拨款进行保护性修缮，修复了战争损毁的建筑部分。寺院功能从纯粹宗教场所转变为佛教教育中心，培养了大批佛教人才。1963年曾在此举办亚洲宗教会议。",
-    image:
-      "https://img0.baidu.com/it/u=1931515007,3894831794&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "各商户重建复业，大栅栏依旧繁华，随着前门火车站建成迎来新发展。商业建筑更加多样化，出现三层砖木结构商铺，立面装饰更加精美，形成民国初期商业建筑特色。",
+    image: "https://picsum.photos/600/400?dashilar=6",
     metrics: [
-      { value: "中国佛学院", label: "新功能" },
-      { value: "200+位", label: "培养学僧" },
-      { value: "40+次", label: "国际会议" },
+      { value: "300+", label: "商户数量" },
+      { value: "3层", label: "最高建筑" },
+      { value: "10万+", label: "日客流" },
     ],
-    features: ["佛教教育中心", "保护性修缮", "国际交流平台"],
+    features: ["三层砖木结构", "精美立面装饰", "民国商业风格"],
   },
   {
-    year: "2001",
-    title: "国保单位",
-    event: "重点文物保护",
+    year: "2000",
+    title: "铁艺栅栏重建",
+    event: "历史元素恢复",
     period: "现代",
     description:
-      "法源寺被列为全国重点文物保护单位，启动全面修缮工程。采用传统工艺修复了所有殿宇，重建了部分历史建筑。同时成立中国佛教图书文物馆，珍藏历代佛教文物。现今法源寺集宗教活动、文化展示、旅游观光于一体，成为北京重要的文化地标。",
-    image:
-      "https://img0.baidu.com/it/u=318203156,3842292057&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
+      "北京市政府在大栅栏街口重新修建铁艺栅栏，恢复了街名由来的历史元素。新栅栏采用现代材料但仿古设计，成为街区标志性入口，同时启动历史风貌保护工程。",
+    image: "https://picsum.photos/600/400?dashilar=7",
     metrics: [
-      { value: "全国重点", label: "文物保护" },
-      { value: "8万+件", label: "馆藏文物" },
-      { value: "30万+", label: "年访客量" },
+      { value: "12米", label: "栅栏宽度" },
+      { value: "5米", label: "拱门高度" },
+      { value: "200吨", label: "钢材用量" },
     ],
-    features: ["传统工艺修复", "佛教文物馆藏", "多元文化空间"],
+    features: ["现代铁艺栅栏", "仿古设计", "标志性入口"],
+  },
+  {
+    year: "2008",
+    title: "街区整体修缮",
+    event: "风貌重现",
+    period: "现代",
+    description:
+      "完成街区整体修缮对外开放，恢复民国初期历史风貌。采用传统工艺和材料修复老建筑，同时改善基础设施，实现历史保护与现代功能的平衡。",
+    image: "https://picsum.photos/600/400?dashilar=8",
+    metrics: [
+      { value: "1.2km", label: "修缮长度" },
+      { value: "50+", label: "修复建筑" },
+      { value: "3年", label: "工期" },
+    ],
+    features: ["民国风貌恢复", "传统工艺应用", "基础设施现代化"],
+  },
+  {
+    year: "2017",
+    title: "保护性整修",
+    event: "精细化修复",
+    period: "现代",
+    description:
+      "大栅栏区域启动保护性整修，如珠粮街区整体修缮，进一步精细还原历史风貌。采用数字化测绘技术记录建筑细节，使用传统材料修复，同时引入文创产业，活化历史街区。",
+    image: "https://picsum.photos/600/400?dashilar=9",
+    metrics: [
+      { value: "20公顷", label: "保护范围" },
+      { value: "100+", label: "测绘建筑" },
+      { value: "30+", label: "文创店铺" },
+    ],
+    features: ["数字化测绘技术", "传统材料修复", "文创产业引入"],
+  },
+  {
+    year: "2023",
+    title: "建筑风格传承",
+    event: "历史风貌维护",
+    period: "现代",
+    description:
+      "大栅栏街区建筑承袭北京传统商街风格，以灰砖灰瓦为主，辅以雕花木窗、红柱绿瓦等明清装饰元素。保护修缮中坚持'恢复原貌'原则，采用与历史相符的木料、青砖和琉璃瓦，同时保留部分中西合璧的建筑特色。",
+    image: "https://picsum.photos/600/400?dashilar=10",
+    metrics: [
+      { value: "80%", label: "传统风貌保持率" },
+      { value: "50+", label: "历史建筑" },
+      { value: "10+", label: "建筑风格类型" },
+    ],
+    features: ["灰砖灰瓦主色调", "雕花木窗装饰", "中西合璧特色"],
   },
 ]);
 

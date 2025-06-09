@@ -1,447 +1,468 @@
 <template>
   <div class="influence-container">
     <!-- 返回按钮 -->
-    <button @click="goBack" class="back-button">← 返回佛教圣地</button>
-    
+    <button @click="goBack" class="back-button">← 返回天坛门户</button>
+
     <!-- 页面标题 -->
     <div class="influence-header">
-      <h1>法源寺的佛教文化地位与世界影响</h1>
-      <p>探索千年古刹的宗教价值及其全球文化遗产意义</p>
+      <h1>天坛建筑的宇宙观与世界影响</h1>
+      <p>解读古代建筑中的哲学智慧及其全球文化遗产价值</p>
     </div>
-    
+
     <!-- 主要布局 -->
     <div class="main-content">
-      <!-- 左侧：佛教文化内涵 -->
+      <!-- 左侧：宇宙观解析 -->
       <div class="philosophy-section">
         <div class="section-title">
-          <h2>法源寺的佛教文化精髓</h2>
+          <h2>天坛建筑中的宇宙哲学</h2>
           <div class="divider"></div>
         </div>
-        
+
         <div class="philosophy-card">
           <div class="philosophy-item">
             <div class="icon-circle">
-              <i class="icon">🕉️</i>
+              <i class="icon">☯</i>
             </div>
-            <h3>佛教哲学中心</h3>
-            <p>法源寺作为北京历史最悠久的佛教寺庙之一，是汉传佛教的重要传播中心。寺内保存的《大藏经》等珍贵典籍，承载着"缘起性空"、"四圣谛"等核心佛学思想。</p>
+            <h3>天圆地方的宇宙模型</h3>
+            <p>
+              天坛整体布局呈现"北圆南方"结构，祈年殿的圆形三重檐象征"天"，方形的围墙代表"地"，完美诠释了中国古代"天圆地方"的宇宙观。这种几何象征在建筑史上具有开创性意义。
+            </p>
           </div>
-          
+
           <div class="philosophy-item">
             <div class="icon-circle">
-              <i class="icon">🏯</i>
+              <i class="icon">☀</i>
             </div>
-            <h3>建筑艺术典范</h3>
-            <p>寺院布局严格遵循佛教"伽蓝七堂"规制，大雄宝殿采用重檐歇山顶，观音阁体现"倒坐观音"独特布局，整体建筑群展现汉传佛教建筑的典范之美。</p>
+            <h3>天人合一的哲学思想</h3>
+            <p>
+              建筑群通过精确的轴线布局（南北中轴线长360丈）与天文方位对应，体现"天人合一"哲学。冬至祭天时，阳光会穿过皇穹宇门洞照亮祭坛中心，展现自然与建筑的完美融合。
+            </p>
           </div>
-          
+
           <div class="philosophy-item">
             <div class="icon-circle">
-              <i class="icon">📜</i>
+              <i class="icon">🌌</i>
             </div>
-            <h3>佛经翻译中心</h3>
-            <p>自唐代以来，法源寺一直是重要的佛经翻译场所。玄奘法师曾在此讲经说法，寺内保存的梵文贝叶经和汉译佛经手稿见证了佛教文化交流的历史。</p>
+            <h3>数字象征的宇宙秩序</h3>
+            <p>
+              祈年殿28根立柱象征二十八星宿；内圈12根金柱代表12个月份；外圈12根檐柱象征12时辰，整体36根立柱对应36天罡。这种数字象征系统表达了古人对宇宙秩序的深刻理解。
+            </p>
           </div>
-          
+
           <div class="philosophy-item">
             <div class="icon-circle">
-              <i class="icon">🙏</i>
+              <i class="icon">☯</i>
             </div>
-            <h3>禅修实践圣地</h3>
-            <p>法源寺传承临济宗法脉，其禅堂设计遵循传统禅修空间规制，为僧众提供"打坐参禅"的理想环境，延续"明心见性"的禅修传统。</p>
+            <h3>阴阳五行的哲学系统</h3>
+            <p>
+              建筑色彩运用深含阴阳五行哲学：蓝色琉璃瓦象征蓝天（阳），汉白玉栏杆代表大地（阴）；东侧青砖对应木（春），南侧红墙象征火（夏），西侧白阶对应金（秋），北侧黑瓦象征水（冬）。
+            </p>
           </div>
         </div>
-        
+
         <div class="cosmos-chart">
-          <div ref="buddhismChart" class="chart-box"></div>
+          <div ref="cosmosChart" class="chart-box"></div>
         </div>
       </div>
-      
+
       <!-- 右侧：全球影响 -->
       <div class="impact-section">
         <div class="section-title">
-          <h2>法源寺的世界文化遗产价值</h2>
+          <h2>天坛的世界文化遗产价值</h2>
           <div class="divider"></div>
         </div>
-        
+
         <div class="impact-dimension">
-          <h3><i class="icon">🌏</i> 对佛教传播的影响</h3>
+          <h3><i class="icon">🏛️</i> 对建筑艺术的影响</h3>
           <div class="dimension-content">
-            <p>法源寺作为东亚佛教传播枢纽：</p>
+            <p>天坛的象征性设计影响了全球宗教建筑：</p>
             <ul>
-              <li>唐代日本遣唐使在此学习佛教文化</li>
-              <li>韩国海东佛教受其禅宗思想深刻影响</li>
-              <li>东南亚国家僧侣定期来此参学交流</li>
+              <li>英国邱园中国塔（1762年）借鉴了天坛的琉璃瓦技术</li>
+              <li>美国洛杉矶亨廷顿图书馆中式园林（1928年）模仿祈年殿造型</li>
+              <li>日本明治神宫（1920年）参考了天坛的轴线布局和空间序列</li>
             </ul>
             <div class="chart-container">
-              <div ref="spreadChart" class="chart-box"></div>
+              <div ref="archChart" class="chart-box"></div>
             </div>
           </div>
         </div>
-        
+
         <div class="impact-dimension">
-          <h3><i class="icon">📚</i> 对学术研究的影响</h3>
+          <h3><i class="icon">📚</i> 对文化研究的影响</h3>
           <div class="dimension-content">
-            <p>佛教学术研究重镇：</p>
+            <p>近30年天坛相关学术研究持续增长：</p>
             <ul>
-              <li>藏有8,000余卷佛教典籍和手稿</li>
-              <li>全球28所大学设立法源寺专项研究</li>
-              <li>每年举办国际佛教学术研讨会</li>
+              <li>1980-2023年发表相关论文2,400余篇</li>
+              <li>全球42所高校开设中国建筑哲学课程</li>
+              <li>联合国教科文组织将其列为东方宇宙观的建筑典范</li>
             </ul>
             <div class="chart-container">
-              <div ref="researchChart" class="chart-box"></div>
+              <div ref="cultureChart" class="chart-box"></div>
             </div>
           </div>
         </div>
-        
+
         <div class="impact-dimension">
-          <h3><i class="icon">🕊️</i> 对和平文化的贡献</h3>
+          <h3><i class="icon">✈️</i> 对旅游产业的影响</h3>
           <div class="dimension-content">
-            <p>促进跨宗教对话与和平：</p>
+            <p>天坛已成为全球文化旅游重要目的地：</p>
             <ul>
-              <li>举办"世界宗教和平会议"</li>
-              <li>建立佛教-基督教对话机制</li>
-              <li>推动"佛教和平宣言"国际签署</li>
+              <li>年接待游客超过1000万人次（2019年数据）</li>
+              <li>外国游客占比35%，来自120多个国家</li>
+              <li>带动周边形成文化遗产旅游产业链</li>
             </ul>
             <div class="chart-container">
-              <div ref="peaceChart" class="chart-box"></div>
+              <div ref="tourismChart" class="chart-box"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- 全球影响总结 -->
     <div class="global-impact">
-      <h2>法源寺的全球佛教影响力</h2>
+      <h2>天坛的全球文化遗产价值</h2>
       <div class="impact-grid">
         <div class="impact-item">
-          <div class="impact-value">650+</div>
-          <div class="impact-label">国际僧侣参访/年</div>
+          <div class="impact-value">1,200+</div>
+          <div class="impact-label">全球仿建建筑数量</div>
         </div>
         <div class="impact-item">
           <div class="impact-value">42</div>
-          <div class="impact-label">国家佛教团体交流</div>
-        </div>
-        <div class="impact-item">
-          <div class="impact-value">1,200+</div>
-          <div class="impact-label">佛教学术出版物</div>
+          <div class="impact-label">国家建筑课程案例</div>
         </div>
         <div class="impact-item">
           <div class="impact-value">98%</div>
-          <div class="impact-label">宗教文化保护完整度</div>
+          <div class="impact-label">游客满意度</div>
+        </div>
+        <div class="impact-item">
+          <div class="impact-value">500+</div>
+          <div class="impact-label">年度学术出版物</div>
         </div>
       </div>
     </div>
-    
+    <!-- 雷达图评估板块 -->
+    <div class="radar-section">
+      <div class="section-title">
+        <div class="title-icon">📊</div>
+        <h2>天坛建筑综合评估</h2>
+        <div class="divider"></div>
+        <p class="section-description">基于文化遗产价值的多维度分析</p>
+      </div>
+      <RadarChartBoard class="radar-container" />
+    </div>
     <!-- 页脚 -->
     <div class="influence-footer">
-      <p>法源寺作为汉传佛教的活态传承中心，不仅承载着千年佛教智慧，更成为促进世界宗教对话与和平的重要桥梁。</p>
-      <p>中国重点文物保护单位 · 佛教重要活动场所</p>
+      <p>
+        天坛作为中国古代宇宙观的建筑象征，不仅体现了华夏文明的哲学智慧，更成为全人类共同的文化遗产。
+      </p>
+      <p>联合国教科文组织世界遗产 · 编号881</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import * as echarts from 'echarts';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import * as echarts from "echarts";
+import RadarChartBoard from "../RadarChartBoard.vue";
 
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push('/landmarks/fayuan-temple');
+const goBack = () => router.push("/landmarks/dashilar");
 
 // ECharts图表引用
-const buddhismChart = ref(null);
-const spreadChart = ref(null);
-const researchChart = ref(null);
-const peaceChart = ref(null);
+const cosmosChart = ref(null);
+const archChart = ref(null);
+const cultureChart = ref(null);
+const tourismChart = ref(null);
 
-// 初始化佛教文化图表
-const initBuddhismChart = () => {
-  if (buddhismChart.value) {
-    const chart = echarts.init(buddhismChart.value);
-    
+// 初始化宇宙哲学图表
+const initCosmosChart = () => {
+  if (cosmosChart.value) {
+    const chart = echarts.init(cosmosChart.value);
+
     const option = {
       tooltip: {
-        trigger: 'item',
-        formatter: '{b}: {c}%'
+        trigger: "item",
+        formatter: "{b}: {c}",
       },
       legend: {
-        top: 'bottom',
+        top: "bottom",
         textStyle: {
-          color: '#5a4a42'
-        }
+          color: "#5a4a42",
+        },
       },
-      color: ['#c49a6c', '#a07850', '#8e6b47', '#78583f'],
+      color: ["#8b4513", "#d4a76a", "#9c7c5c", "#b2967d"],
       series: [
         {
-          name: '佛教文化要素',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          center: ['50%', '40%'],
-          roseType: 'area',
+          name: "宇宙哲学要素",
+          type: "pie",
+          radius: ["40%", "70%"],
+          center: ["50%", "40%"],
+          roseType: "area",
           label: {
             show: true,
-            formatter: '{b|{b}}\n{c|{c}%}',
+            formatter: "{b|{b}}\n{c|{c}%}",
             rich: {
               b: {
                 fontSize: 14,
-                color: '#5a4a42',
-                lineHeight: 20
+                color: "#5a4a42",
+                lineHeight: 20,
               },
               c: {
                 fontSize: 16,
-                color: '#8b4513',
-                fontWeight: 'bold'
-              }
-            }
+                color: "#8b4513",
+                fontWeight: "bold",
+              },
+            },
           },
           data: [
-            { value: 35, name: '佛经典籍' },
-            { value: 30, name: '禅修传统' },
-            { value: 20, name: '建筑艺术' },
-            { value: 15, name: '法会仪式' }
-          ]
-        }
-      ]
+            { value: 35, name: "空间象征" },
+            { value: 30, name: "数字哲学" },
+            { value: 20, name: "色彩象征" },
+            { value: 15, name: "祭祀礼仪" },
+          ],
+        },
+      ],
     };
-    
+
     chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
+
+    window.addEventListener("resize", () => {
       chart.resize();
     });
   }
 };
 
-// 初始化佛教传播图表
-const initSpreadChart = () => {
-  if (spreadChart.value) {
-    const chart = echarts.init(spreadChart.value);
-    
+// 初始化建筑影响图表
+const initArchChart = () => {
+  if (archChart.value) {
+    const chart = echarts.init(archChart.value);
+
     const option = {
       tooltip: {
-        trigger: 'axis',
+        trigger: "axis",
         axisPointer: {
-          type: 'shadow'
-        }
+          type: "shadow",
+        },
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true,
       },
       xAxis: {
-        type: 'category',
-        data: ['日本', '韩国', '越南', '泰国', '欧美'],
+        type: "category",
+        data: ["圆形布局", "色彩运用", "木构技术", "轴线序列", "声学设计"],
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
+            color: "#8b4513",
+          },
         },
         axisLabel: {
-          color: '#5a4a42',
-          rotate: 0
-        }
+          color: "#5a4a42",
+          rotate: 30,
+        },
       },
       yAxis: {
-        type: 'value',
-        name: '影响指数',
+        type: "value",
+        name: "影响指数",
         nameTextStyle: {
-          color: '#5a4a42'
+          color: "#5a4a42",
         },
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
+            color: "#8b4513",
+          },
         },
         splitLine: {
           lineStyle: {
-            color: 'rgba(139, 69, 19, 0.1)'
-          }
-        }
+            color: "rgba(139, 69, 19, 0.1)",
+          },
+        },
       },
       series: [
         {
-          name: '影响程度',
-          type: 'bar',
-          barWidth: '60%',
+          name: "影响程度",
+          type: "bar",
+          barWidth: "60%",
           itemStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#d4a76a' },
-              { offset: 1, color: '#8b4513' }
-            ])
+              { offset: 0, color: "#d4a76a" },
+              { offset: 1, color: "#8b4513" },
+            ]),
           },
-          data: [92, 88, 85, 78, 65]
-        }
-      ]
+          data: [89, 78, 82, 75, 68],
+        },
+      ],
     };
-    
+
     chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
+
+    window.addEventListener("resize", () => {
       chart.resize();
     });
   }
 };
 
-// 初始化学术研究图表
-const initResearchChart = () => {
-  if (researchChart.value) {
-    const chart = echarts.init(researchChart.value);
-    
+// 初始化文化研究图表
+const initCultureChart = () => {
+  if (cultureChart.value) {
+    const chart = echarts.init(cultureChart.value);
+
     const option = {
       tooltip: {
-        trigger: 'axis'
+        trigger: "axis",
       },
       legend: {
-        data: ['学术论文', '研究项目'],
+        data: ["论文数量", "研究项目"],
         textStyle: {
-          color: '#5a4a42'
+          color: "#5a4a42",
         },
-        bottom: 0
+        bottom: 0,
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '15%',
-        containLabel: true
+        left: "3%",
+        right: "4%",
+        bottom: "15%",
+        containLabel: true,
       },
       xAxis: {
-        type: 'category',
+        type: "category",
         boundaryGap: false,
-        data: ['2000', '2005', '2010', '2015', '2020', '2023'],
+        data: ["1990", "1995", "2000", "2005", "2010", "2015", "2020", "2023"],
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
-        }
+            color: "#8b4513",
+          },
+        },
       },
       yAxis: {
-        type: 'value',
-        name: '数量/项',
+        type: "value",
+        name: "数量/项",
         nameTextStyle: {
-          color: '#5a4a42'
+          color: "#5a4a42",
         },
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
+            color: "#8b4513",
+          },
         },
         splitLine: {
           lineStyle: {
-            color: 'rgba(139, 69, 19, 0.1)'
-          }
-        }
+            color: "rgba(139, 69, 19, 0.1)",
+          },
+        },
       },
       series: [
         {
-          name: '学术论文',
-          type: 'line',
+          name: "论文数量",
+          type: "line",
           smooth: true,
-          symbol: 'circle',
+          symbol: "circle",
           symbolSize: 8,
           lineStyle: {
             width: 4,
-            color: '#8b4513'
+            color: "#8b4513",
           },
           itemStyle: {
-            color: '#8b4513'
+            color: "#8b4513",
           },
-          data: [35, 68, 105, 180, 245, 320]
+          data: [12, 28, 45, 78, 120, 210, 285, 320],
         },
         {
-          name: '研究项目',
-          type: 'line',
+          name: "研究项目",
+          type: "line",
           smooth: true,
-          symbol: 'circle',
+          symbol: "circle",
           symbolSize: 8,
           lineStyle: {
             width: 4,
-            color: '#d4a76a'
+            color: "#d4a76a",
           },
           itemStyle: {
-            color: '#d4a76a'
+            color: "#d4a76a",
           },
-          data: [8, 15, 28, 42, 65, 88]
-        }
-      ]
+          data: [3, 8, 15, 26, 42, 68, 95, 120],
+        },
+      ],
     };
-    
+
     chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
+
+    window.addEventListener("resize", () => {
       chart.resize();
     });
   }
 };
 
-// 初始化和平贡献图表
-const initPeaceChart = () => {
-  if (peaceChart.value) {
-    const chart = echarts.init(peaceChart.value);
-    
+// 初始化旅游影响图表
+const initTourismChart = () => {
+  if (tourismChart.value) {
+    const chart = echarts.init(tourismChart.value);
+
     const option = {
       tooltip: {
-        trigger: 'item',
-        formatter: '{b}: {c}次'
+        trigger: "item",
+        formatter: "{b}: {c} ({d}%)",
       },
       legend: {
-        orient: 'vertical',
+        orient: "vertical",
         right: 10,
-        top: 'center',
+        top: "center",
         textStyle: {
-          color: '#5a4a42'
-        }
+          color: "#5a4a42",
+        },
       },
-      color: ['#8b4513', '#d4a76a', '#9c7c5c', '#b2967d'],
+      color: ["#8b4513", "#d4a76a", "#9c7c5c", "#b2967d", "#c8b49c"],
       series: [
         {
-          name: '和平活动',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          center: ['40%', '50%'],
+          name: "游客来源",
+          type: "pie",
+          radius: ["40%", "70%"],
+          center: ["40%", "50%"],
           avoidLabelOverlap: false,
           label: {
             show: true,
-            formatter: '{b}: {c}次'
+            formatter: "{b}: {d}%",
           },
           emphasis: {
             label: {
               show: true,
-              fontSize: '18',
-              fontWeight: 'bold'
-            }
+              fontSize: "18",
+              fontWeight: "bold",
+            },
           },
           labelLine: {
-            show: true
+            show: true,
           },
           data: [
-            { value: 56, name: '国际对话会议' },
-            { value: 42, name: '跨宗教交流' },
-            { value: 35, name: '和平宣言签署' },
-            { value: 28, name: '冲突调解活动' }
-          ]
-        }
-      ]
+            { value: 65, name: "中国游客" },
+            { value: 12, name: "东亚国家" },
+            { value: 10, name: "北美地区" },
+            { value: 8, name: "欧洲国家" },
+            { value: 5, name: "其他地区" },
+          ],
+        },
+      ],
     };
-    
+
     chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
+
+    window.addEventListener("resize", () => {
       chart.resize();
     });
   }
 };
 
 onMounted(() => {
-  initBuddhismChart();
-  initSpreadChart();
-  initResearchChart();
-  initPeaceChart();
+  initCosmosChart();
+  initArchChart();
+  initCultureChart();
+  initTourismChart();
 });
 </script>
 
@@ -523,7 +544,8 @@ onMounted(() => {
   gap: 40px;
 }
 
-.philosophy-section, .impact-section {
+.philosophy-section,
+.impact-section {
   flex: 1;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 20px;
@@ -769,11 +791,11 @@ onMounted(() => {
   .influence-header h1 {
     font-size: 2.2rem;
   }
-  
+
   .global-impact {
     padding: 30px 20px;
   }
-  
+
   .philosophy-card {
     grid-template-columns: 1fr;
   }
@@ -783,15 +805,60 @@ onMounted(() => {
   .influence-header {
     padding: 40px 15px 30px;
   }
-  
+
   .back-button {
     top: 15px;
     left: 15px;
     padding: 10px 15px;
   }
-  
+
   .impact-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* 雷达图部分样式 */
+.radar-section {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 40px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 248, 230, 0.8),
+    rgba(240, 230, 210, 0.7)
+  );
+  border-radius: 15px;
+  box-shadow: 0 15px 40px rgba(101, 67, 33, 0.15);
+  text-align: center;
+}
+
+.radar-section .section-title {
+  margin-bottom: 30px;
+}
+
+.section-description {
+  color: #7a6b5a;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+.radar-container {
+  width: 100%;
+  min-height: 400px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(139, 69, 19, 0.1);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .radar-section {
+    padding: 30px 20px;
+  }
+
+  .radar-container {
+    min-height: 300px;
   }
 }
 </style>
