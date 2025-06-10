@@ -1,216 +1,216 @@
 <template>
-  <div class="influence-container">
-    <!-- 返回按钮 -->
-    <button @click="goBack" class="back-button">← 返回天坛门户</button>
-    
-    <!-- 页面标题 -->
+  <div class="dashboard-container">
+    <!-- 页面标题区 -->
     <div class="influence-header">
+      <button @click="goBack" class="back-button">← 返回天坛门户</button>
       <h1>天坛建筑的宇宙观与世界影响</h1>
       <p>解读古代建筑中的哲学智慧及其全球文化遗产价值</p>
     </div>
-    
-    <!-- 主要布局 -->
-    <div class="main-content">
-      <!-- 左侧：宇宙观解析 -->
-      <div class="philosophy-section">
-        <div class="section-title">
-          <h2>天坛建筑中的宇宙哲学</h2>
-          <div class="divider"></div>
+
+    <!-- 主内容区 -->
+    <div class="dashboard-content">
+      <!-- 左侧主要可视化区 -->
+      <div class="main-visualization">
+        <!-- 雷达图评估板块 -->
+        <div class="visualization-card radar-section">
+          <div class="section-title">
+            <h2>天坛建筑综合评估</h2>
+            <div class="divider"></div>
+            <p class="section-description">基于文化遗产价值的多维度分析</p>
+          </div>
+          <RadarChartBoard class="radar-container" />
         </div>
-        
-        <div class="philosophy-card">
-          <div class="philosophy-item">
-            <div class="icon-circle">
-              <i class="icon">☯</i>
-            </div>
-            <h3>天圆地方的宇宙模型</h3>
-            <p>天坛整体布局呈现"北圆南方"结构，祈年殿的圆形三重檐象征"天"，方形的围墙代表"地"，完美诠释了中国古代"天圆地方"的宇宙观。这种几何象征在建筑史上具有开创性意义。</p>
+
+        <!-- 宇宙哲学部分 -->
+        <div class="visualization-card philosophy-section">
+          <div class="section-title">
+            <h2>天坛建筑中的宇宙哲学</h2>
+            <div class="divider"></div>
           </div>
-          
-          <div class="philosophy-item">
-            <div class="icon-circle">
-              <i class="icon">☀</i>
+          <div class="philosophy-card">
+            <div class="philosophy-item">
+              <div class="icon-circle">
+                <i class="icon">☯☯</i>
+              </div>
+              <h3>天圆地方的宇宙模型</h3>
+              <p>
+                天坛整体布局呈现"北圆南方"结构，祈年殿的圆形三重檐象征"天"，方形的围墙代表"地"，完美诠释了中国古代"天圆地方"的宇宙观。
+              </p>
             </div>
-            <h3>天人合一的哲学思想</h3>
-            <p>建筑群通过精确的轴线布局（南北中轴线长360丈）与天文方位对应，体现"天人合一"哲学。冬至祭天时，阳光会穿过皇穹宇门洞照亮祭坛中心，展现自然与建筑的完美融合。</p>
-          </div>
-          
-          <div class="philosophy-item">
-            <div class="icon-circle">
-              <i class="icon">🌌</i>
+            <div class="philosophy-item">
+              <div class="icon-circle">
+                <i class="icon">☀☀</i>
+              </div>
+              <h3>天人合一的哲学思想</h3>
+              <p>
+                建筑群通过精确的轴线布局与天文方位对应，体现"天人合一"哲学。冬至祭天时，阳光会穿过皇穹宇门洞照亮祭坛中心。
+              </p>
             </div>
-            <h3>数字象征的宇宙秩序</h3>
-            <p>祈年殿28根立柱象征二十八星宿；内圈12根金柱代表12个月份；外圈12根檐柱象征12时辰，整体36根立柱对应36天罡。这种数字象征系统表达了古人对宇宙秩序的深刻理解。</p>
           </div>
-          
-          <div class="philosophy-item">
-            <div class="icon-circle">
-              <i class="icon">☯</i>
+          <div class="philosophy-card">
+            <div class="philosophy-item">
+              <div class="icon-circle">
+                <i class="icon">🌌🌌</i>
+              </div>
+              <h3>数字象征的宇宙秩序</h3>
+              <p>
+                祈年殿28根立柱象征二十八星宿；内圈12根金柱代表12个月份；外圈12根檐柱象征12时辰，整体36根立柱对应36天罡。
+              </p>
             </div>
-            <h3>阴阳五行的哲学系统</h3>
-            <p>建筑色彩运用深含阴阳五行哲学：蓝色琉璃瓦象征蓝天（阳），汉白玉栏杆代表大地（阴）；东侧青砖对应木（春），南侧红墙象征火（夏），西侧白阶对应金（秋），北侧黑瓦象征水（冬）。</p>
+            <div class="philosophy-item">
+              <div class="icon-circle">
+                <i class="icon">☯☯</i>
+              </div>
+              <h3>阴阳五行的哲学系统</h3>
+              <p>
+                建筑色彩运用深含阴阳五行哲学：蓝色琉璃瓦象征蓝天（阳），汉白玉栏杆代表大地（阴）；四方色彩对应四季五行。
+              </p>
+            </div>
           </div>
-        </div>
-        
-        <div class="cosmos-chart">
-          <div ref="cosmosChart" class="chart-box"></div>
+          <div class="cosmos-chart">
+            <div ref="cosmosChart" class="chart-box"></div>
+          </div>
         </div>
       </div>
-      
-      <!-- 右侧：全球影响 -->
-      <div class="impact-section">
-        <div class="section-title">
-          <h2>天坛的世界文化遗产价值</h2>
-          <div class="divider"></div>
+
+      <!-- 右侧辅助信息区 -->
+      <div class="side-panel">
+        <!-- 全球影响总结 -->
+        <div class="metrics-card global-impact">
+          <h3 class="metrics-title">天坛的全球文化遗产价值</h3>
+          <div class="impact-grid">
+            <div class="impact-item">
+              <div class="impact-value">1,200+</div>
+              <div class="impact-label">全球仿建建筑数量</div>
+            </div>
+            <div class="impact-item">
+              <div class="impact-value">42</div>
+              <div class="impact-label">国家建筑课程案例</div>
+            </div>
+            <div class="impact-item">
+              <div class="impact-value">98%</div>
+              <div class="impact-label">游客满意度</div>
+            </div>
+            <div class="impact-item">
+              <div class="impact-value">500+</div>
+              <div class="impact-label">年度学术出版物</div>
+            </div>
+          </div>
         </div>
-        
+
+        <!-- 影响维度1 -->
         <div class="impact-dimension">
-          <h3><i class="icon">🏛️</i> 对建筑艺术的影响</h3>
+          <h3><i class="icon">🏛🏛️</i> 对建筑艺术的影响</h3>
           <div class="dimension-content">
             <p>天坛的象征性设计影响了全球宗教建筑：</p>
             <ul>
-              <li>英国邱园中国塔（1762年）借鉴了天坛的琉璃瓦技术</li>
-              <li>美国洛杉矶亨廷顿图书馆中式园林（1928年）模仿祈年殿造型</li>
-              <li>日本明治神宫（1920年）参考了天坛的轴线布局和空间序列</li>
+              <li>英国邱园中国塔（1762年）</li>
+              <li>美国洛杉矶亨廷顿图书馆</li>
+              <li>日本明治神宫（1920年）</li>
             </ul>
             <div class="chart-container">
               <div ref="archChart" class="chart-box"></div>
             </div>
           </div>
         </div>
-        
+
+        <!-- 影响维度2 -->
         <div class="impact-dimension">
-          <h3><i class="icon">📚</i> 对文化研究的影响</h3>
+          <h3><i class="icon">📚📚</i> 对文化研究的影响</h3>
           <div class="dimension-content">
             <p>近30年天坛相关学术研究持续增长：</p>
             <ul>
-              <li>1980-2023年发表相关论文2,400余篇</li>
-              <li>全球42所高校开设中国建筑哲学课程</li>
-              <li>联合国教科文组织将其列为东方宇宙观的建筑典范</li>
+              <li>发表相关论文2,400余篇</li>
+              <li>全球42所高校相关课程</li>
+              <li>联合国教科文组织典范</li>
             </ul>
             <div class="chart-container">
               <div ref="cultureChart" class="chart-box"></div>
             </div>
           </div>
         </div>
-        
-        <div class="impact-dimension">
-          <h3><i class="icon">✈️</i> 对旅游产业的影响</h3>
-          <div class="dimension-content">
-            <p>天坛已成为全球文化旅游重要目的地：</p>
-            <ul>
-              <li>年接待游客超过1000万人次（2019年数据）</li>
-              <li>外国游客占比35%，来自120多个国家</li>
-              <li>带动周边形成文化遗产旅游产业链</li>
-            </ul>
-            <div class="chart-container">
-              <div ref="tourismChart" class="chart-box"></div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-    
-    <!-- 全球影响总结 -->
-    <div class="global-impact">
-      <h2>天坛的全球文化遗产价值</h2>
-      <div class="impact-grid">
-        <div class="impact-item">
-          <div class="impact-value">1,200+</div>
-          <div class="impact-label">全球仿建建筑数量</div>
-        </div>
-        <div class="impact-item">
-          <div class="impact-value">42</div>
-          <div class="impact-label">国家建筑课程案例</div>
-        </div>
-        <div class="impact-item">
-          <div class="impact-value">98%</div>
-          <div class="impact-label">游客满意度</div>
-        </div>
-        <div class="impact-item">
-          <div class="impact-value">500+</div>
-          <div class="impact-label">年度学术出版物</div>
-        </div>
-      </div>
-    </div>
-    
+
     <!-- 页脚 -->
-    <div class="influence-footer">
-      <p>天坛作为中国古代宇宙观的建筑象征，不仅体现了华夏文明的哲学智慧，更成为全人类共同的文化遗产。</p>
+    <div class="dashboard-footer">
+      <p>
+        天坛作为中国古代宇宙观的建筑象征，不仅体现了华夏文明的哲学智慧，更成为全人类共同的文化遗产。
+      </p>
       <p>联合国教科文组织世界遗产 · 编号881</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import * as echarts from 'echarts';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import * as echarts from "echarts";
+import RadarChartBoard from "../RadarChartBoard.vue";
 
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push('/landmarks/temple-of-heaven');
+const goBack = () => router.push("/landmarks/temple-of-heaven");
 
 // ECharts图表引用
 const cosmosChart = ref(null);
 const archChart = ref(null);
 const cultureChart = ref(null);
-const tourismChart = ref(null);
 
 // 初始化宇宙哲学图表
 const initCosmosChart = () => {
   if (cosmosChart.value) {
     const chart = echarts.init(cosmosChart.value);
-    
+
     const option = {
       tooltip: {
-        trigger: 'item',
-        formatter: '{b}: {c}'
+        trigger: "item",
+        formatter: "{b}: {c}",
       },
       legend: {
-        top: 'bottom',
+        top: "bottom",
         textStyle: {
-          color: '#5a4a42'
-        }
+          color: "#5a4a42",
+        },
       },
-      color: ['#8b4513', '#d4a76a', '#9c7c5c', '#b2967d'],
+      color: ["#8b4513", "#d4a76a", "#9c7c5c", "#b2967d"],
       series: [
         {
-          name: '宇宙哲学要素',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          center: ['50%', '40%'],
-          roseType: 'area',
+          name: "宇宙哲学要素",
+          type: "pie",
+          radius: ["40%", "70%"],
+          center: ["50%", "40%"],
+          roseType: "area",
           label: {
             show: true,
-            formatter: '{b|{b}}\n{c|{c}%}',
+            formatter: "{b|{b}}\n{c|{c}%}",
             rich: {
               b: {
                 fontSize: 14,
-                color: '#5a4a42',
-                lineHeight: 20
+                color: "#5a4a42",
+                lineHeight: 20,
               },
               c: {
                 fontSize: 16,
-                color: '#8b4513',
-                fontWeight: 'bold'
-              }
-            }
+                color: "#8b4513",
+                fontWeight: "bold",
+              },
+            },
           },
           data: [
-            { value: 35, name: '空间象征' },
-            { value: 30, name: '数字哲学' },
-            { value: 20, name: '色彩象征' },
-            { value: 15, name: '祭祀礼仪' }
-          ]
-        }
-      ]
+            { value: 35, name: "空间象征" },
+            { value: 30, name: "数字哲学" },
+            { value: 20, name: "色彩象征" },
+            { value: 15, name: "祭祀礼仪" },
+          ],
+        },
+      ],
     };
-    
+
     chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
+
+    window.addEventListener("resize", () => {
       chart.resize();
     });
   }
@@ -220,69 +220,69 @@ const initCosmosChart = () => {
 const initArchChart = () => {
   if (archChart.value) {
     const chart = echarts.init(archChart.value);
-    
+
     const option = {
       tooltip: {
-        trigger: 'axis',
+        trigger: "axis",
         axisPointer: {
-          type: 'shadow'
-        }
+          type: "shadow",
+        },
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true,
       },
       xAxis: {
-        type: 'category',
-        data: ['圆形布局', '色彩运用', '木构技术', '轴线序列', '声学设计'],
+        type: "category",
+        data: ["圆形布局", "色彩运用", "木构技术", "轴线序列", "声学设计"],
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
+            color: "#8b4513",
+          },
         },
         axisLabel: {
-          color: '#5a4a42',
-          rotate: 30
-        }
+          color: "#5a4a42",
+          rotate: 30,
+        },
       },
       yAxis: {
-        type: 'value',
-        name: '影响指数',
+        type: "value",
+        name: "影响指数",
         nameTextStyle: {
-          color: '#5a4a42'
+          color: "#5a4a42",
         },
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
+            color: "#8b4513",
+          },
         },
         splitLine: {
           lineStyle: {
-            color: 'rgba(139, 69, 19, 0.1)'
-          }
-        }
+            color: "rgba(139, 69, 19, 0.1)",
+          },
+        },
       },
       series: [
         {
-          name: '影响程度',
-          type: 'bar',
-          barWidth: '60%',
+          name: "影响程度",
+          type: "bar",
+          barWidth: "60%",
           itemStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#d4a76a' },
-              { offset: 1, color: '#8b4513' }
-            ])
+              { offset: 0, color: "#d4a76a" },
+              { offset: 1, color: "#8b4513" },
+            ]),
           },
-          data: [89, 78, 82, 75, 68]
-        }
-      ]
+          data: [89, 78, 82, 75, 68],
+        },
+      ],
     };
-    
+
     chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
+
+    window.addEventListener("resize", () => {
       chart.resize();
     });
   }
@@ -292,147 +292,88 @@ const initArchChart = () => {
 const initCultureChart = () => {
   if (cultureChart.value) {
     const chart = echarts.init(cultureChart.value);
-    
+
     const option = {
       tooltip: {
-        trigger: 'axis'
+        trigger: "axis",
       },
       legend: {
-        data: ['论文数量', '研究项目'],
+        data: ["论文数量", "研究项目"],
         textStyle: {
-          color: '#5a4a42'
+          color: "#5a4a42",
         },
-        bottom: 0
+        bottom: 0,
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '15%',
-        containLabel: true
+        left: "3%",
+        right: "4%",
+        bottom: "15%",
+        containLabel: true,
       },
       xAxis: {
-        type: 'category',
+        type: "category",
         boundaryGap: false,
-        data: ['1990', '1995', '2000', '2005', '2010', '2015', '2020', '2023'],
+        data: ["1990", "1995", "2000", "2005", "2010", "2015", "2020", "2023"],
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
-        }
+            color: "#8b4513",
+          },
+        },
       },
       yAxis: {
-        type: 'value',
-        name: '数量/项',
+        type: "value",
+        name: "数量/项",
         nameTextStyle: {
-          color: '#5a4a42'
+          color: "#5a4a42",
         },
         axisLine: {
           lineStyle: {
-            color: '#8b4513'
-          }
+            color: "#8b4513",
+          },
         },
         splitLine: {
           lineStyle: {
-            color: 'rgba(139, 69, 19, 0.1)'
-          }
-        }
+            color: "rgba(139, 69, 19, 0.1)",
+          },
+        },
       },
       series: [
         {
-          name: '论文数量',
-          type: 'line',
+          name: "论文数量",
+          type: "line",
           smooth: true,
-          symbol: 'circle',
+          symbol: "circle",
           symbolSize: 8,
           lineStyle: {
             width: 4,
-            color: '#8b4513'
+            color: "#8b4513",
           },
           itemStyle: {
-            color: '#8b4513'
+            color: "#8b4513",
           },
-          data: [12, 28, 45, 78, 120, 210, 285, 320]
+          data: [12, 28, 45, 78, 120, 210, 285, 320],
         },
         {
-          name: '研究项目',
-          type: 'line',
+          name: "研究项目",
+          type: "line",
           smooth: true,
-          symbol: 'circle',
+          symbol: "circle",
           symbolSize: 8,
           lineStyle: {
             width: 4,
-            color: '#d4a76a'
+            color: "#d4a76a",
           },
           itemStyle: {
-            color: '#d4a76a'
+            color: "#d4a76a",
           },
-          data: [3, 8, 15, 26, 42, 68, 95, 120]
-        }
-      ]
+          data: [3, 8, 15, 26, 42, 68, 95, 120],
+        },
+      ],
     };
-    
-    chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
-      chart.resize();
-    });
-  }
-};
 
-// 初始化旅游影响图表
-const initTourismChart = () => {
-  if (tourismChart.value) {
-    const chart = echarts.init(tourismChart.value);
-    
-    const option = {
-      tooltip: {
-        trigger: 'item',
-        formatter: '{b}: {c} ({d}%)'
-      },
-      legend: {
-        orient: 'vertical',
-        right: 10,
-        top: 'center',
-        textStyle: {
-          color: '#5a4a42'
-        }
-      },
-      color: ['#8b4513', '#d4a76a', '#9c7c5c', '#b2967d', '#c8b49c'],
-      series: [
-        {
-          name: '游客来源',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          center: ['40%', '50%'],
-          avoidLabelOverlap: false,
-          label: {
-            show: true,
-            formatter: '{b}: {d}%'
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: '18',
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: true
-          },
-          data: [
-            { value: 65, name: '中国游客' },
-            { value: 12, name: '东亚国家' },
-            { value: 10, name: '北美地区' },
-            { value: 8, name: '欧洲国家' },
-            { value: 5, name: '其他地区' }
-          ]
-        }
-      ]
-    };
-    
     chart.setOption(option);
-    
-    window.addEventListener('resize', () => {
+
+    window.addEventListener("resize", () => {
       chart.resize();
     });
   }
@@ -442,166 +383,187 @@ onMounted(() => {
   initCosmosChart();
   initArchChart();
   initCultureChart();
-  initTourismChart();
 });
 </script>
 
 <style scoped>
-.influence-container {
-  font-family: "Noto Serif SC", serif;
-  color: #333;
-  line-height: 1.6;
-  background: linear-gradient(135deg, #f5f2e9 0%, #e8d8c3 100%);
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  padding: 20px;
-  position: relative;
-  overflow-x: hidden;
-}
-
-.back-button {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  background-color: rgba(139, 69, 19, 0.7);
-  color: #fff8e1;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 1em;
-  z-index: 10;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.back-button:hover {
-  background-color: rgba(160, 82, 45, 0.9);
-  transform: translateX(-5px);
+  background: linear-gradient(135deg, #f5f2e9 0%, #e8d8c3 100%);
+  color: #e0d6c2;
+  font-family: "Noto Serif SC", serif;
 }
 
 .influence-header {
   text-align: center;
-  padding: 60px 20px 40px;
+  padding: 3rem 2rem;
   position: relative;
-  max-width: 900px;
-  margin: 0 auto;
+  background: rgba(93, 75, 75, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  margin: 1rem 2rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
 .influence-header h1 {
   font-size: 2.8rem;
   color: #8b4513;
-  margin-bottom: 15px;
-  position: relative;
-  display: inline-block;
-}
-
-.influence-header h1:after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: 3px;
-  background: linear-gradient(90deg, #d4a76a 0%, #8b4513 100%);
-  border-radius: 3px;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .influence-header p {
   font-size: 1.2rem;
   color: #5a4a42;
-  margin: 25px auto 0;
+  max-width: 800px;
+  margin: 0 auto;
   line-height: 1.8;
-  max-width: 700px;
+  opacity: 0.9;
 }
 
-/* 主要内容布局 */
-.main-content {
-  display: flex;
-  max-width: 1400px;
-  margin: 40px auto;
-  gap: 40px;
-}
-
-.philosophy-section, .impact-section {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.5);
+/* 返回按钮 */
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(94, 66, 41, 0.8);
+  color: #fff8e1;
+  border: 1px solid #5d4037;
+  padding: 8px 16px;
   border-radius: 20px;
-  padding: 30px;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 10px 30px rgba(101, 67, 33, 0.1);
-  border: 1px solid rgba(139, 69, 19, 0.1);
+  cursor: pointer;
+  font-size: 0.9em;
+  z-index: 10;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+  background-color: rgba(121, 85, 72, 0.9);
+  transform: translateX(-2px);
+}
+
+
+
+.dashboard-title {
+  margin: 0.5rem 0 0 0;
+  font-size: 2rem;
+  color: #d4b483;
+}
+
+.dashboard-subtitle {
+  margin: 0.5rem 0 0 0;
+  color: #b8a692;
+  font-size: 1.1rem;
+}
+
+.dashboard-content {
+  display: flex;
+  flex: 1;
+  padding: 1.5rem;
+  gap: 1.5rem;
+}
+
+.main-visualization {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.side-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.visualization-card {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid #5d4b4b;
+  border-radius: 6px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .section-title {
-  margin-bottom: 30px;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
 .section-title h2 {
-  font-size: 1.8rem;
-  color: #8b4513;
-  margin-bottom: 15px;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  color: #d4b483;
 }
 
 .divider {
-  height: 3px;
-  width: 100px;
+  height: 2px;
+  width: 80px;
   background: linear-gradient(90deg, #d4a76a, #8b4513);
   margin: 0 auto;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
-/* 哲学部分样式 */
+.section-description {
+  margin: 0.5rem 0 0 0;
+  color: #b8a692;
+  font-size: 0.9rem;
+}
+
+.radar-container {
+  height: 400px;
+}
+
 .philosophy-card {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  margin-bottom: 40px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .philosophy-item {
   background: rgba(255, 248, 225, 0.8);
-  border-radius: 15px;
-  padding: 25px;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(139, 69, 19, 0.1);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.philosophy-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(139, 69, 19, 0.15);
+  border-radius: 6px;
+  padding: 1rem;
+  border: 1px solid #5d4b4b;
 }
 
 .icon-circle {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   background: linear-gradient(135deg, #d4a76a, #8b4513);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 20px;
+  margin: 0 auto 1rem;
 }
 
 .icon-circle .icon {
-  font-size: 32px;
+  font-size: 1.5rem;
   color: #fff8e1;
 }
 
 .philosophy-item h3 {
-  font-size: 1.4rem;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
   color: #5a4a42;
   text-align: center;
-  margin-bottom: 15px;
 }
 
 .philosophy-item p {
+  margin: 0;
   color: #5a4a42;
-  line-height: 1.8;
-  text-align: justify;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 /* 图表容器 */
@@ -611,188 +573,128 @@ onMounted(() => {
   margin-top: 20px;
 }
 
-.cosmos-chart {
+.cosmos-chart,
+.chart-container {
   background: rgba(255, 248, 225, 0.8);
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* 影响部分样式 */
-.impact-dimension {
-  background: rgba(255, 248, 225, 0.8);
-  border-radius: 15px;
-  padding: 25px;
-  margin-bottom: 30px;
-  border: 1px solid rgba(139, 69, 19, 0.1);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+.metrics-card {
+  background: rgba(42, 34, 34, 0.7);
+  border: 1px solid #5d4b4b;
+  border-radius: 6px;
+  padding: 1.5rem;
 }
 
-.impact-dimension h3 {
-  font-size: 1.5rem;
-  color: #8b4513;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.impact-dimension h3 .icon {
-  font-size: 1.8rem;
-}
-
-.dimension-content p {
-  color: #5a4a42;
-  margin-bottom: 15px;
-  font-weight: 500;
-}
-
-.dimension-content ul {
-  padding-left: 20px;
-  margin-bottom: 20px;
-}
-
-.dimension-content li {
-  color: #5a4a42;
-  margin-bottom: 8px;
-  position: relative;
-  padding-left: 20px;
-}
-
-.dimension-content li:before {
-  content: "•";
-  color: #d4a76a;
-  font-size: 1.4rem;
-  position: absolute;
-  left: 0;
-  top: -5px;
-}
-
-.chart-container {
-  margin-top: 20px;
-  height: 250px;
-}
-
-/* 全球影响总结 */
-.global-impact {
-  max-width: 1200px;
-  margin: 60px auto;
-  padding: 40px;
-  background: linear-gradient(135deg, #ffffff 0%, #f9f5ed 100%);
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(101, 67, 33, 0.15);
+.metrics-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  color: #d4b483;
   text-align: center;
-}
-
-.global-impact h2 {
-  font-size: 2rem;
-  color: #8b4513;
-  margin-bottom: 30px;
-  position: relative;
-}
-
-.global-impact h2:after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 3px;
-  background: linear-gradient(90deg, #d4a76a 0%, #8b4513 100%);
-  border-radius: 3px;
+  border-bottom: 1px solid #5d4b4b;
+  padding-bottom: 0.5rem;
 }
 
 .impact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 30px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }
 
 .impact-item {
-  background: rgba(212, 167, 106, 0.2);
-  border-radius: 15px;
-  padding: 25px;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(139, 69, 19, 0.15);
-}
-
-.impact-item:hover {
-  transform: translateY(-5px);
-  background: rgba(212, 167, 106, 0.3);
-  box-shadow: 0 10px 25px rgba(139, 69, 19, 0.1);
+  background: rgba(93, 75, 75, 0.3);
+  border-radius: 6px;
+  padding: 1rem;
+  text-align: center;
 }
 
 .impact-value {
-  font-size: 3rem;
+  font-size: 1.8rem;
+  color: #d4a76a;
   font-weight: bold;
-  color: #8b4513;
-  margin-bottom: 10px;
 }
 
 .impact-label {
-  font-size: 1.1rem;
-  color: #5a4a42;
+  font-size: 0.9rem;
+  color: #b8a692;
 }
 
-/* 页脚 */
-.influence-footer {
+.impact-dimension {
+  background: rgba(42, 34, 34, 0.7);
+  border: 1px solid #5d4b4b;
+  border-radius: 6px;
+  padding: 1.5rem;
+}
+
+.impact-dimension h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  color: #d4b483;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.impact-dimension h3 .icon {
+  font-size: 1.2rem;
+}
+
+.dimension-content p {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.dimension-content ul {
+  margin: 0 0 1rem 0;
+  padding-left: 1.2rem;
+}
+
+.dimension-content li {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.dashboard-footer {
+  padding: 1.5rem;
   text-align: center;
-  padding: 40px 20px;
-  color: #5a4a42;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  max-width: 800px;
-  margin: 0 auto;
-  border-top: 1px solid rgba(139, 69, 19, 0.2);
+  border-top: 1px solid #5d4b4b;
+  font-size: 0.9rem;
+  color: #b8a692;
 }
 
-.influence-footer p:first-child {
+.dashboard-footer p:first-child {
+  margin-bottom: 0.5rem;
   font-style: italic;
-  margin-bottom: 15px;
 }
 
-.influence-footer p:last-child {
-  font-weight: bold;
-  color: #8b4513;
-}
-
-/* 响应式设计 */
 @media (max-width: 1200px) {
-  .main-content {
+  .dashboard-content {
     flex-direction: column;
-    gap: 40px;
+  }
+
+  .philosophy-card {
+    grid-template-columns: 1fr;
+  }
+
+  .impact-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .influence-header h1 {
-    font-size: 2.2rem;
-  }
-  
-  .global-impact {
-    padding: 30px 20px;
-  }
-  
-  .philosophy-card {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .influence-header {
-    padding: 40px 15px 30px;
-  }
-  
-  .back-button {
-    top: 15px;
-    left: 15px;
-    padding: 10px 15px;
-  }
-  
   .impact-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-header {
+    padding-top: 4rem;
+  }
+
+  .back-button {
+    top: 1rem;
+    left: 1rem;
   }
 }
 </style>
