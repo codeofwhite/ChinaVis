@@ -519,7 +519,7 @@ onMounted(() => {
 }
 
 .radar-container {
-  height: 400px;
+  height: 100%;
 }
 
 .philosophy-card {

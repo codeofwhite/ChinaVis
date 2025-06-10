@@ -134,7 +134,7 @@
         </div>
         <div class="visualization-card">
           <h3>琉璃瓦使用变迁</h3>
-          <div class="chart-container"></div>
+          <div ref="tileChart" class="chart-container"></div>
         </div>
       </div>
     </div>
@@ -181,6 +181,8 @@ const timelineData = ref([
       "严格的中轴对称布局",
       "三重殿宇与内廷宫殿",
     ],
+    relatedFigures: ["朱棣", "蒯祥", "蔡信", "阮安"],
+    relatedEvents: ["靖难之役", "永乐迁都", "郑和下西洋", "永乐大典编纂"],
   },
   {
     year: "1420",
@@ -200,6 +202,8 @@ const timelineData = ref([
       "内金水桥和太和门广场",
       "角楼与护城河的防御体系",
     ],
+    relatedFigures: ["朱棣", "夏原吉", "杨荣", "杨士奇"],
+    relatedEvents: ["北京城规划", "三大殿建设", "明长城修建", "永乐盛世"],
   },
   {
     year: "1644",
@@ -214,11 +218,9 @@ const timelineData = ref([
       { value: "数年", label: "重建时间" },
       { value: "清顺治元年", label: "重建开始" },
     ],
-    features: [
-      "太和殿宏伟重建",
-      "保留明代建筑规制",
-      "清代彩绘风格融入",
-    ],
+    features: ["太和殿宏伟重建", "保留明代建筑规制", "清代彩绘风格融入"],
+    relatedFigures: ["李自成", "崇祯帝", "多尔衮", "吴三桂"],
+    relatedEvents: ["甲申之变", "清军入关", "明朝灭亡", "大顺政权"],
   },
   {
     year: "1733",
@@ -238,6 +240,8 @@ const timelineData = ref([
       "养心殿作为皇帝理政居所",
       "倦勤斋的通景画与竹丝镶嵌",
     ],
+    relatedFigures: ["乾隆帝", "雍正帝", "傅恒", "和珅"],
+    relatedEvents: ["康乾盛世", "文字狱", "《四库全书》编纂", "西征准噶尔"],
   },
   {
     year: "1912",
@@ -252,11 +256,9 @@ const timelineData = ref([
       { value: "1925年", label: "博物院成立" },
       { value: "120万+", label: "馆藏文物" },
     ],
-    features: [
-      "文物清点与整理",
-      "部分区域对外开放",
-      "宫殿功能逐渐转型",
-    ],
+    features: ["文物清点与整理", "部分区域对外开放", "宫殿功能逐渐转型"],
+    relatedFigures: ["溥仪", "袁世凯", "隆裕太后", "孙中山"],
+    relatedEvents: ["辛亥革命", "清朝灭亡", "中华民国成立", "南北议和"],
   },
   {
     year: "1987",
@@ -271,10 +273,13 @@ const timelineData = ref([
       { value: "2000万+", label: "年游客量" },
       { value: "98%", label: "开放面积" },
     ],
-    features: [
-      "“平安故宫”工程实施",
-      "数字化展示与研究",
-      "文化创意产品开发",
+    features: ["“平安故宫”工程实施", "数字化展示与研究", "文化创意产品开发"],
+    relatedFigures: ["易培基", "李煜瀛", "庄蕴宽", "胡适"],
+    relatedEvents: [
+      "新文化运动",
+      "五四运动",
+      "故宫文物南迁",
+      "中国博物馆事业开端",
     ],
   },
 ]);
@@ -303,27 +308,48 @@ function closeModal() {
 // ECharts图表实例
 const chart = ref(null);
 const typeChart = ref(null);
+const tileChart = ref(null); // 新增ref
 let chartInstance = null;
 let typeChartInstance = null;
+let tileChartInstance = null; // 新增实例
 
-// 建筑规模变化数据
+// 宫殿建筑规模演变数据
 const chartData = ref({
-  years: timelineData.value.map((item) => item.year),
-  sizes: [85, 92, 95, 100, 87, 100], // 百分比数据
+  years: ["1406", "1420", "1644", "1733", "1912", "1925", "1987"], // 根据你的故宫 timelineData 调整年份
+  sizes: [70, 95, 40, 100, 85, 90, 98], // 估算的相对规模百分比
+  // 1406: 70% (建造中)
+  // 1420: 95% (基本建成，初期完整)
+  // 1644: 40% (三大殿等严重烧毁)
+  // 1733: 100% (乾隆时期大规模重建和增建，达到巅峰)
+  // 1912: 85% (晚清至民国初期，维护不足，略有损毁)
+  // 1925: 90% (博物院成立后开始修复，规模回升)
+  // 1987: 98% (列入世界遗产，全面保护，接近完好)
 });
 
-// 建筑类型分布数据
+// 建筑功能分布数据
 const typeData = ref({
-  years: timelineData.value.map((item) => item.year),
+  years: ["1406", "1420", "1644", "1733", "1912", "1925", "1987"], // 根据你的故宫 timelineData 调整年份
   types: [
-    { name: "祭祀建筑", data: [75, 65, 60, 60, 50, 55] },
-    { name: "附属建筑", data: [15, 20, 25, 25, 25, 25] },
-    { name: "服务设施", data: [0, 5, 5, 5, 15, 10] },
-    { name: "园林景观", data: [10, 10, 10, 10, 10, 10] },
+    { name: "礼仪/朝会", data: [30, 35, 10, 30, 25, 25, 25], color: "#d4a76a" }, // 1644年三大殿被毁，比例骤降，后重建恢复
+    { name: "居住/生活", data: [35, 30, 35, 30, 35, 35, 35], color: "#8b4513" },
+    { name: "园林/休闲", data: [10, 10, 15, 15, 15, 15, 15], color: "#9c7c5c" },
+    { name: "办公/行政", data: [15, 15, 20, 15, 15, 15, 15], color: "#5a4a42" },
+    { name: "仓储/服务", data: [10, 10, 20, 10, 10, 10, 10], color: "#7a7a7a" }, // 破坏后临时用途增多
   ],
 });
 
-// 初始化规模变化图表
+// 琉璃瓦使用变迁数据
+const tileData = ref({
+  years: ["1406", "1420", "1644", "1733", "1912", "1925", "1987"], // 根据你的故宫 timelineData 调整年份
+  tiles: [
+    { name: "黄琉璃瓦", data: [80, 85, 60, 80, 75, 78, 80], color: "#ffd700" }, // 皇帝专属，占比最高，1644年受损影响
+    { name: "绿琉璃瓦", data: [10, 10, 20, 10, 15, 12, 10], color: "#008000" }, // 亲王、郡王等，相对稳定
+    { name: "蓝琉璃瓦", data: [5, 5, 10, 5, 5, 5, 5], color: "#4169e1" }, // 祭坛、园林中少量使用
+    { name: "其他颜色", data: [5, 0, 10, 5, 5, 5, 5], color: "#a9a9a9" }, // 例如黑、灰瓦片，或混杂情况，1644年后可能比例暂时提升
+  ],
+});
+
+// 初始化宫殿建筑规模演变图表
 const initChart = () => {
   if (chart.value) {
     chartInstance = echarts.init(chart.value);
@@ -331,7 +357,7 @@ const initChart = () => {
     const option = {
       tooltip: {
         trigger: "axis",
-        formatter: "{b0}年<br/>规模：{c0}%",
+        formatter: "{b0}年<br/>建筑规模：{c0}%",
       },
       grid: {
         left: "3%",
@@ -353,8 +379,8 @@ const initChart = () => {
       },
       yAxis: {
         type: "value",
-        min: 80,
-        max: 105,
+        min: 0, // 从0开始，更直观展示损毁情况
+        max: 100,
         axisLine: {
           lineStyle: {
             color: "#8b4513",
@@ -399,7 +425,7 @@ const initChart = () => {
   }
 };
 
-// 初始化建筑类型分布图表
+// 初始化建筑功能分布图表
 const initTypeChart = () => {
   if (typeChart.value) {
     typeChartInstance = echarts.init(typeChart.value);
@@ -462,12 +488,100 @@ const initTypeChart = () => {
         },
         data: type.data,
         itemStyle: {
-          color: ["#d4a76a", "#8b4513", "#9c7c5c", "#5a4a42"][index],
+          // 使用数据中定义的颜色，如果未定义则使用默认的
+          color:
+            type.color ||
+            ["#d4a76a", "#8b4513", "#9c7c5c", "#5a4a42", "#7a7a7a"][index],
         },
       })),
     };
 
     typeChartInstance.setOption(option);
+  }
+};
+
+// 初始化琉璃瓦使用变迁图表
+const initTileChart = () => {
+  if (tileChart.value) {
+    tileChartInstance = echarts.init(tileChart.value);
+
+    const option = {
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "shadow",
+        },
+        formatter: (params) => {
+          let str = `${params[0].name}年<br/>`;
+          let total = 0;
+          params.forEach((item) => {
+            total += item.value;
+          });
+          params.forEach((item) => {
+            str += `${item.marker}${item.seriesName}: ${item.value}%<br/>`;
+          });
+          str += `总计: ${total}%`;
+          return str;
+        },
+      },
+      legend: {
+        data: tileData.value.tiles.map((item) => item.name),
+        textStyle: {
+          color: "#5a4a42",
+        },
+        bottom: 0,
+      },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "15%",
+        containLabel: true,
+      },
+      xAxis: {
+        type: "category",
+        data: tileData.value.years,
+        axisLine: {
+          lineStyle: {
+            color: "#8b4513",
+          },
+        },
+        axisLabel: {
+          color: "#5a4a42",
+        },
+      },
+      yAxis: {
+        type: "value",
+        axisLine: {
+          lineStyle: {
+            color: "#8b4513",
+          },
+        },
+        axisLabel: {
+          formatter: "{value}%",
+          color: "#5a4a42",
+        },
+        splitLine: {
+          lineStyle: {
+            color: "rgba(139, 69, 19, 0.1)",
+          },
+        },
+      },
+      series: tileData.value.tiles.map((type, index) => ({
+        name: type.name,
+        type: "bar",
+        stack: "total", // 堆叠柱状图，展示比例
+        emphasis: {
+          focus: "series",
+        },
+        data: type.data,
+        itemStyle: {
+          color:
+            type.color || ["#ffd700", "#008000", "#4169e1", "#a9a9a9"][index], // 使用数据中定义的颜色
+        },
+      })),
+    };
+
+    tileChartInstance.setOption(option);
   }
 };
 
@@ -504,11 +618,13 @@ watch(activeIndex, (newIndex) => {
 const handleResize = () => {
   if (chartInstance) chartInstance.resize();
   if (typeChartInstance) typeChartInstance.resize();
+  if (tileChartInstance) tileChartInstance.resize(); // 新增
 };
 
 onMounted(() => {
   initChart();
   initTypeChart();
+  initTileChart(); // 新增调用
   window.addEventListener("resize", handleResize);
 });
 </script>
