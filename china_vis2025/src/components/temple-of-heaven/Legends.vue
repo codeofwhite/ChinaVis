@@ -17,7 +17,6 @@
 import { ref, onMounted, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import CharacterHub from "./CharacterHub.vue";
-import InteractiveCabinet from "../InteractiveCabinet.vue";
 import Sayings from "./Sayings.vue";
 
 const router = useRouter();
