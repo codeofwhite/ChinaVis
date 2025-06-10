@@ -21,7 +21,7 @@ export default [
       },
     ],
     meta: {
-      title: "故宫",
+      title: "天坛",
       icon: "icon-temple-of-heaven",
     },
   },
