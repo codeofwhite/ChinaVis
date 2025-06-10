@@ -1,15 +1,17 @@
 <template>
-  <GugongCharacterHub ></GugongCharacterHub>
-  <palaceSayings></palaceSayings>
+  <div class="legends-container">
+    <button @click="goBack" class="back-button">← 返回故宫门户</button>
+    <GugongCharacterHub></GugongCharacterHub>
+    <palaceSayings></palaceSayings>
+  </div>
 </template>
 
 <script setup>
 import { ref, onMounted, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
-import GugongCharacterHub from '../GugongCharacterHub.vue';
-import InteractiveCabinet from '../InteractiveCabinet.vue'
-import palaceSayings from '../PalaceSayings.vue'
+import GugongCharacterHub from "./GugongCharacterHub.vue";
+import palaceSayings from "./PalaceSayings.vue";
 
 const router = useRouter();
 
@@ -325,6 +327,13 @@ onMounted(() => {
   src: url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap");
 }
 
+.legends-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f2e9 0%, #e8d8c3 100%);
+  padding: 2rem;
+  position: relative;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -362,6 +371,28 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   position: relative;
   z-index: 10;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(94, 66, 41, 0.8);
+  color: #fff8e1;
+  border: 1px solid #5d4037;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9em;
+  z-index: 10;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+  background-color: rgba(121, 85, 72, 0.9);
+  transform: translateX(-2px);
 }
 
 .nav-button {

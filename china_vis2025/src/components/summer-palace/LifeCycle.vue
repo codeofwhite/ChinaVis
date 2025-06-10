@@ -125,7 +125,7 @@
       <!-- 可视化图表区域 -->
       <div class="visualization-section">
         <div class="visualization-card">
-          <h3>核心景点分布</h3>
+          <h3>园林完整度</h3>
           <div ref="chart" class="chart-container"></div>
         </div>
         <div class="visualization-card">
@@ -134,7 +134,7 @@
         </div>
         <div class="visualization-card">
           <h3>文化遗产影响</h3>
-          <div class="chart-container"></div>
+          <div ref="impactChart" class="chart-container"></div>
         </div>
       </div>
     </div>
@@ -152,7 +152,7 @@ import { ref, onMounted, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
 import LandmarkNetwork from "../LandmarkNetwork.vue";
-import forbiddenCityData from "../../assets/forbidden-city.json";
+import forbiddenCityData from "../../assets/summer-palace.json";
 
 const router = useRouter();
 
@@ -181,6 +181,8 @@ const timelineData = ref([
       "以万寿山、昆明湖为核心",
       "佛香阁为标志性建筑",
     ],
+    relatedFigures: ["乾隆帝", "崇庆皇太后", "雷金玉", "纪晓岚"],
+    relatedEvents: ["清漪园肇建", "江南园林借鉴", "圆明园修建", "清朝盛世"],
   },
   {
     year: "1860",
@@ -196,6 +198,13 @@ const timelineData = ref([
       { value: "国耻", label: "历史印记" },
     ],
     features: ["大部分殿堂被烧毁", "仅存少量石构建筑", "湖山骨架尚存"],
+    relatedFigures: ["咸丰帝", "恭亲王奕訢", "额尔金伯爵", "巴夏礼"],
+    relatedEvents: [
+      "第二次鸦片战争",
+      "火烧圆明园",
+      "《北京条约》签订",
+      "清朝国力衰退",
+    ],
   },
   {
     year: "1888",
@@ -215,6 +224,8 @@ const timelineData = ref([
       "长廊彩绘精美绝伦",
       "谐趣园仿无锡寄畅园",
     ],
+    relatedFigures: ["慈禧太后", "光绪帝", "李鸿章", "庆亲王奕劻"],
+    relatedEvents: ["中法战争", "北洋水师建设", "甲午战争", "戊戌变法"],
   },
   {
     year: "1900",
@@ -230,6 +241,8 @@ const timelineData = ref([
       { value: "1903年", label: "开始修复" },
     ],
     features: ["部分景观受损", "西洋士兵驻扎痕迹", "后续小规模修缮"],
+    relatedFigures: ["慈禧太后", "光绪帝", "瓦德西", "义和团"],
+    relatedEvents: ["八国联军侵华", "庚子赔款", "辛丑条约", "义和团运动"],
   },
   {
     year: "1924",
@@ -245,6 +258,8 @@ const timelineData = ref([
       { value: "首批", label: "皇家园林开放" },
     ],
     features: ["管理模式改变", "文物保护意识提升", "园林景观得到维护"],
+    relatedFigures: ["溥仪", "冯玉祥", "段祺瑞", "孙中山"],
+    relatedEvents: ["北京政变", "清帝退位", "中华民国建立", "第一次国共合作"],
   },
   {
     year: "1998",
@@ -260,6 +275,13 @@ const timelineData = ref([
       { value: "千万人次", label: "年游客量" },
     ],
     features: ["“三山五园”之一", "融合南北园林艺术", "展现中国园林最高成就"],
+    relatedFigures: ["联合国教科文组织官员", "中国文物专家", "园林保护工作者"],
+    relatedEvents: [
+      "世界遗产大会",
+      "中国文物保护法",
+      "北京申奥",
+      "文化遗产数字化",
+    ],
   },
 ]);
 
@@ -287,23 +309,52 @@ function closeModal() {
 // ECharts图表实例
 const chart = ref(null);
 const typeChart = ref(null);
+const impactChart = ref(null); // 新增ref
 let chartInstance = null;
 let typeChartInstance = null;
+let impactChartInstance = null; // 新增实例
 
-// 建筑规模变化数据
+// 核心景点分布 (假设为园林完整度/开放面积的百分比变化)
 const chartData = ref({
   years: timelineData.value.map((item) => item.year),
-  sizes: [85, 92, 95, 100, 87, 100], // 百分比数据
+  sizes: [95, 20, 70, 60, 80, 98], // 基于历史事件估算的完整度/开放面积百分比
+  // 1750: 95% (建成初期，近乎完整)
+  // 1860: 20% (英法联军焚毁，严重破坏)
+  // 1888: 70% (慈禧重建，有所恢复但不及清漪园时期)
+  // 1900: 60% (八国联军再次破坏，略有下降)
+  // 1924: 80% (对外开放，逐步修复)
+  // 1998: 98% (世界遗产，全面保护和开放)
 });
 
 // 建筑类型分布数据
+// 园林景观构成 (假设为不同建筑类型的百分比构成)
 const typeData = ref({
   years: timelineData.value.map((item) => item.year),
   types: [
-    { name: "祭祀建筑", data: [75, 65, 60, 60, 50, 55] },
-    { name: "附属建筑", data: [15, 20, 25, 25, 25, 25] },
-    { name: "服务设施", data: [0, 5, 5, 5, 15, 10] },
-    { name: "园林景观", data: [10, 10, 10, 10, 10, 10] },
+    { name: "殿堂类建筑", data: [40, 10, 30, 25, 35, 35], color: "#d4a76a" }, // 颜色建议添加到数据中方便渲染
+    { name: "园林景观", data: [30, 60, 40, 45, 35, 35], color: "#8b4513" }, // 山水景观在破坏后占比可能会相对上升，因为建筑毁了
+    { name: "寺庙建筑", data: [20, 5, 15, 10, 15, 15], color: "#9c7c5c" },
+    { name: "附属/服务设施", data: [10, 25, 15, 20, 15, 15], color: "#5a4a42" },
+  ],
+  // 各年份数据总和应为100%
+  // 1750: 建成初期，各类建筑比例均衡
+  // 1860: 殿堂寺庙被毁严重，园林景观和附属设施的“相对”比例会上升（虽然实际总量下降）
+  // 1888: 重建后殿堂恢复，比例重新调整
+  // 1900: 再次破坏，比例略有浮动
+  // 1924: 开放公园，服务设施可能会增加，园林景观维护加强
+  // 1998: 世界遗产，各类建筑得到全面维护和开放，比例趋于稳定
+});
+
+// 文化遗产影响数据 (假设为关注度/游客量指数，非实际游客量)
+const impactData = ref({
+  years: timelineData.value.map((item) => item.year),
+  scores: [
+    70, // 1750: 皇家园林，内部关注度高
+    30, // 1860: 被毁，关注度下降
+    60, // 1888: 重建，关注度回升
+    50, // 1900: 再次受损，关注度略降
+    85, // 1924: 对外开放，社会关注度大幅提升
+    100, // 1998: 世界遗产，达到最高关注度/影响力
   ],
 });
 
@@ -337,7 +388,7 @@ const initChart = () => {
       },
       yAxis: {
         type: "value",
-        min: 80,
+        min: 0,
         max: 105,
         axisLine: {
           lineStyle: {
@@ -455,6 +506,72 @@ const initTypeChart = () => {
   }
 };
 
+// 初始化文化遗产影响图表
+const initImpactChart = () => {
+  if (impactChart.value) {
+    impactChartInstance = echarts.init(impactChart.value);
+
+    const option = {
+      tooltip: {
+        trigger: "axis",
+        formatter: "{b0}年<br/>文化影响力指数：{c0}",
+      },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true,
+      },
+      xAxis: {
+        type: "category",
+        data: impactData.value.years,
+        axisLine: {
+          lineStyle: {
+            color: "#8b4513",
+          },
+        },
+        axisLabel: {
+          color: "#5a4a42",
+        },
+      },
+      yAxis: {
+        type: "value",
+        min: 0,
+        max: 100, // 指数范围
+        axisLine: {
+          lineStyle: {
+            color: "#8b4513",
+          },
+        },
+        axisLabel: {
+          formatter: "{value}",
+          color: "#5a4a42",
+        },
+        splitLine: {
+          lineStyle: {
+            color: "rgba(139, 69, 19, 0.1)",
+          },
+        },
+      },
+      series: [
+        {
+          name: "文化影响力指数",
+          type: "bar", // 可以使用柱状图或者折线图
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "#a55e37" },
+              { offset: 1, color: "#d4a76a" },
+            ]),
+          },
+          data: impactData.value.scores,
+        },
+      ],
+    };
+
+    impactChartInstance.setOption(option);
+  }
+};
+
 // 监听活动索引变化
 watch(activeIndex, (newIndex) => {
   if (chartInstance) {
@@ -488,11 +605,13 @@ watch(activeIndex, (newIndex) => {
 const handleResize = () => {
   if (chartInstance) chartInstance.resize();
   if (typeChartInstance) typeChartInstance.resize();
+  if (impactChartInstance) impactChartInstance.resize();
 };
 
 onMounted(() => {
   initChart();
   initTypeChart();
+  initImpactChart(); // 新增调用
   window.addEventListener("resize", handleResize);
 });
 </script>
