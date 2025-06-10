@@ -26,8 +26,11 @@
     <!-- 地图容器 -->
     <div class="map-container">
       <div class="map-wrapper">
+        <button @click="toggleView" class="view-toggle-button">
+          {{ currentView === "map" ? "查看地标关系图" : "返回地图视图" }}
+        </button>
         <BeijingMap
-          v-if="currentLevel === 'city'"
+          v-if="currentView === 'map' && currentLevel === 'city'"
           :mapData="mapData"
           :colorScaleConfig="colorScaleConfig"
           :landmarks="landmarks"
@@ -47,6 +50,9 @@
         >
           返回北京全图
         </button>
+        <div v-if="currentView === 'relations'">
+          <LandmarkRelationsViz />
+        </div>
       </div>
     </div>
   </div>
@@ -55,11 +61,13 @@
 <script>
 import BeijingMap from "../components/BeijingMap.vue";
 import DistrictMap from "../components/DistrictMap.vue";
+import LandmarkRelationsViz from "./LandmarkRelationsViz.vue";
 
 export default {
   components: {
     BeijingMap,
     DistrictMap,
+    LandmarkRelationsViz, // 注册新组件
   },
   data() {
     return {
@@ -120,20 +128,34 @@ export default {
         range: ["#f8e5b5", "#bd6b20"], // 调整为黄昏色调
         domain: [0, 100],
       },
+      // 新增一个数据属性来控制当前视图
+      currentView: "map", // 'map' 或 'relations'
     };
   },
   methods: {
     handleAreaClick(districtName) {
       this.selectedDistrict = districtName;
       this.currentLevel = "district";
+      // 切换到行政区地图时，确保当前视图是 'map'
+      this.currentView = 'map';
     },
     goBack() {
       this.currentLevel = "city";
       this.selectedDistrict = "";
+      // 返回城市全图时，确保当前视图是 'map'
+      this.currentView = 'map';
     },
     handleLandmarkClick(landmark) {
       this.$router.push({ name: landmark.routeName });
     },
+        // 新增方法来切换视图
+    toggleView() {
+      this.currentView = this.currentView === 'map' ? 'relations' : 'map';
+      // 如果从区级地图切换到关系图，确保先回到城市级别，再切换视图
+      if (this.currentLevel === 'district' && this.currentView === 'relations') {
+        this.goBack(); // 回到城市级别地图
+      }
+    }
   },
   watch: {
     $route(to) {
@@ -163,8 +185,9 @@ export default {
 }
 
 .map-wrapper {
+  margin-top: 1%;
   width: 100%;
-  height: 100%;
+  height: 95%;
   position: relative;
 }
 
@@ -238,6 +261,28 @@ export default {
 .back-button:hover {
   background: rgba(255, 255, 255, 1);
   box-shadow: 0 0 5px rgba(210, 105, 30, 0.5);
+}
+
+.view-toggle-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 10px 18px;
+  background: #bd6b20;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.view-toggle-button:hover {
+  background-color: #a05a1a;
+  transform: translateY(-2px);
 }
 
 /* 响应式设计 */
