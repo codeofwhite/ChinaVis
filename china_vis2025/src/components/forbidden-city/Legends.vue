@@ -1,5 +1,6 @@
 <template>
   <GugongCharacterHub ></GugongCharacterHub>
+  <palaceSayings></palaceSayings>
 </template>
 
 <script setup>
@@ -7,6 +8,8 @@ import { ref, onMounted, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
 import GugongCharacterHub from '../GugongCharacterHub.vue';
+import InteractiveCabinet from '../InteractiveCabinet.vue'
+import palaceSayings from '../PalaceSayings.vue'
 
 const router = useRouter();
 
