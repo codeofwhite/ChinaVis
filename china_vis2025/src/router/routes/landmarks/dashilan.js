@@ -1,12 +1,12 @@
 // router.js
 export default [
   {
-    path: "/dashilar",
-    name: "dashilar",
+    path: "/dashilan",
+    name: "dashilan",
     component: () => import("@/views/landmarks/Dashilan.vue"),
     meta: {
       title: "大栅栏",
-      icon: "icon-dashilar",
+      icon: "icon-dashilan",
     },
     props: true,
     children: [
