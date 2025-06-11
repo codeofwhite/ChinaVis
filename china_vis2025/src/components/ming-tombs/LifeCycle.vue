@@ -101,7 +101,7 @@
               <div class="network-section" v-if="selectedEvent">
                 <h3>{{ selectedEvent.year }}年：{{ selectedEvent.event }}</h3>
                 <LandmarkNetwork
-                  :landmark="'mingThirteenTombs'"
+                  :landmark="mingThirteenTombs"
                   :event="selectedEvent"
                 />
               </div>
@@ -138,11 +138,11 @@ import { ref, computed, onMounted, onUnmounted, watch } from "vue"; // 确保导
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
 import LandmarkNetwork from "../LandmarkNetwork.vue";
-import forbiddenCityData from "../../assets/forbidden-city.json";
+import mingThirteenTombsData from "../../assets/ming-tombs.json";
 
 const router = useRouter();
 
-const forbiddenCity = ref(forbiddenCityData);
+const mingThirteenTombs = ref(mingThirteenTombsData);
 
 // 返回门户主页
 const goBack = () => router.push("/landmarks/ming-tombs");
@@ -163,6 +163,8 @@ const timelineData = ref([
       { value: "32座", label: "主要建筑" },
     ],
     features: ["黄琉璃瓦顶", "楠木梁柱结构", "前朝后寝格局"],
+    relatedFigures: ["朱棣", "蒯祥", "蔡信"],
+    relatedEvents: ["永乐迁都", "北京城规划", "郑和下西洋"],
   },
   {
     year: "1424",
@@ -177,6 +179,8 @@ const timelineData = ref([
       { value: "300米", label: "宝城直径" },
     ],
     features: ["九五之尊规制", "石像生雕刻", "三进院落布局"],
+    relatedFigures: ["朱棣", "夏原吉", "杨荣"],
+    relatedEvents: ["永乐盛世", "三大殿建设", "明长城修建"],
   },
   {
     year: "1540",
@@ -191,6 +195,8 @@ const timelineData = ref([
       { value: "11座", label: "楼阁数量" },
     ],
     features: ["汉白玉石材", "五门六柱结构", "浮雕云龙纹饰"],
+    relatedFigures: ["嘉靖帝", "严嵩", "夏言"],
+    relatedEvents: ["嘉靖革新", "壬寅宫变", "倭寇之乱"],
   },
   {
     year: "1644",
@@ -205,6 +211,8 @@ const timelineData = ref([
       { value: "235年", label: "营建历时" },
     ],
     features: ["依山而建布局", "统一规划风格", "完整陵寝体系"],
+    relatedFigures: ["崇祯帝", "李自成", "吴三桂"],
+    relatedEvents: ["明朝灭亡", "清军入关", "大顺政权"],
   },
   {
     year: "1650",
@@ -219,6 +227,8 @@ const timelineData = ref([
       { value: "100两", label: "年维护银两" },
     ],
     features: ["保持明代原貌", "增设护陵机构", "定期祭祀制度"],
+    relatedFigures: ["顺治帝", "多尔衮", "范文程"],
+    relatedEvents: ["剃发易服", "清初政策", "满汉关系"],
   },
   {
     year: "1956",
@@ -233,6 +243,8 @@ const timelineData = ref([
       { value: "1959年", label: "博物馆开放" },
     ],
     features: ["地下宫殿发掘", "丝织品保护难题", "考古技术探索"],
+    relatedFigures: ["郭沫若", "吴晗", "夏鼐"],
+    relatedEvents: ["新中国考古", "文物保护", "博物馆建设"],
   },
   {
     year: "1961",
@@ -247,6 +259,8 @@ const timelineData = ref([
       { value: "50卷", label: "测绘图纸" },
     ],
     features: ["系统性建档", "科学测绘记录", "保护规划制定"],
+    relatedFigures: ["周恩来", "郑振铎", "梁思成"],
+    relatedEvents: ["文物普查", "古建保护", "文化遗产政策"],
   },
   {
     year: "1982",
@@ -261,6 +275,8 @@ const timelineData = ref([
       { value: "1985年", label: "规划完成" },
     ],
     features: ["整体景观保护", "环境整治", "建设控制"],
+    relatedFigures: ["万里", "任质斌", "单士元"],
+    relatedEvents: ["风景名胜区制度", "环境保护法", "旅游开发规划"],
   },
   {
     year: "2003",
@@ -275,6 +291,8 @@ const timelineData = ref([
       { value: "20+", label: "监测系统" },
     ],
     features: ["国际保护标准", "数字化监测", "完整性保护"],
+    relatedFigures: ["单霁翔", "吕舟", "罗哲文"],
+    relatedEvents: ["申遗工程", "国际协作", "数字化保护"],
   },
   {
     year: "2020",
@@ -289,6 +307,8 @@ const timelineData = ref([
       { value: "30处", label: "修缮建筑" },
     ],
     features: ["传统工艺复兴", "现代技术应用", "科学保护体系"],
+    relatedFigures: ["王旭东", "柴晓明", "吕舟"],
+    relatedEvents: ["科技考古", "非遗传承", "预防性保护"],
   },
 ]);
 
@@ -1208,7 +1228,6 @@ watch(
 }
 
 .chart-container:after {
-  content: "可视化图表区域";
   position: absolute;
   font-size: 1.1em;
 }

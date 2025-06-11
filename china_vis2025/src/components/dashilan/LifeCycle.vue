@@ -101,7 +101,7 @@
               <div class="network-section" v-if="selectedEvent">
                 <h3>{{ selectedEvent.year }}年：{{ selectedEvent.event }}</h3>
                 <LandmarkNetwork
-                  :landmark="'dashilan'"
+                  :landmark="forbiddenCity"
                   :event="selectedEvent"
                 />
               </div>
@@ -138,14 +138,14 @@ import { ref, onMounted, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
 import LandmarkNetwork from "../LandmarkNetwork.vue";
-import forbiddenCityData from "../../assets/forbidden-city.json";
+import forbiddenCityData from "../../assets/dashilan.json";
 
 const router = useRouter();
 
 const forbiddenCity = ref(forbiddenCityData);
 
 // 返回门户主页
-const goBack = () => router.push("/landmarks/dashilar");
+const goBack = () => router.push("/landmarks/dashilan");
 
 // 时间轴数据 - 重点强化建筑演变内容
 const timelineData = ref([
@@ -163,6 +163,8 @@ const timelineData = ref([
       { value: "500米", label: "街道长度" },
     ],
     features: ["传统北方商铺样式", "砖木结构", "前店后坊格局"],
+    relatedFigures: ["朱棣", "夏原吉"],
+    relatedEvents: ["永乐迁都", "北京城规划"],
   },
   {
     year: "1488",
@@ -178,6 +180,8 @@ const timelineData = ref([
       { value: "24小时", label: "守卫制度" },
     ],
     features: ["巨型木质栅栏", "封闭式商业街区", "商户自治管理"],
+    relatedFigures: ["明孝宗", "刘健"],
+    relatedEvents: ["弘治中兴", "京师治安整顿"],
   },
   {
     year: "1750",
@@ -193,6 +197,8 @@ const timelineData = ref([
       { value: "1000+", label: "从业人员" },
     ],
     features: ["明清商业建筑风格", "老字号聚集", "前店后宅格局"],
+    relatedFigures: ["乾隆帝", "和珅"],
+    relatedEvents: ["康乾盛世", "北京商业发展"],
   },
   {
     year: "1899",
@@ -208,6 +214,8 @@ const timelineData = ref([
       { value: "1年", label: "重建周期" },
     ],
     features: ["砖石结构引入", "防火措施改进", "传统风貌保持"],
+    relatedFigures: ["光绪帝", "李鸿章"],
+    relatedEvents: ["戊戌变法", "清末新政"],
   },
   {
     year: "1900",
@@ -223,6 +231,8 @@ const timelineData = ref([
       { value: "20+", label: "西式店铺" },
     ],
     features: ["中西合璧风格", "彩色瓷砖立面", "拱形门窗设计"],
+    relatedFigures: ["慈禧太后", "袁世凯"],
+    relatedEvents: ["义和团运动", "八国联军侵华"],
   },
   {
     year: "1902",
@@ -238,6 +248,8 @@ const timelineData = ref([
       { value: "10万+", label: "日客流" },
     ],
     features: ["三层砖木结构", "精美立面装饰", "民国商业风格"],
+    relatedFigures: ["张之洞", "盛宣怀"],
+    relatedEvents: ["清末新政", "铁路建设"],
   },
   {
     year: "2000",
@@ -253,6 +265,8 @@ const timelineData = ref([
       { value: "200吨", label: "钢材用量" },
     ],
     features: ["现代铁艺栅栏", "仿古设计", "标志性入口"],
+    relatedFigures: ["刘淇", "王岐山"],
+    relatedEvents: ["北京旧城改造", "历史文化保护"],
   },
   {
     year: "2008",
@@ -268,6 +282,8 @@ const timelineData = ref([
       { value: "3年", label: "工期" },
     ],
     features: ["民国风貌恢复", "传统工艺应用", "基础设施现代化"],
+    relatedFigures: ["刘淇", "郭金龙"],
+    relatedEvents: ["北京奥运会", "城市更新"],
   },
   {
     year: "2017",
@@ -283,6 +299,8 @@ const timelineData = ref([
       { value: "30+", label: "文创店铺" },
     ],
     features: ["数字化测绘技术", "传统材料修复", "文创产业引入"],
+    relatedFigures: ["蔡奇", "陈吉宁"],
+    relatedEvents: ["北京城市总体规划", "文化创意产业发展"],
   },
   {
     year: "2023",
@@ -298,6 +316,8 @@ const timelineData = ref([
       { value: "10+", label: "建筑风格类型" },
     ],
     features: ["灰砖灰瓦主色调", "雕花木窗装饰", "中西合璧特色"],
+    relatedFigures: ["尹力", "殷勇"],
+    relatedEvents: ["北京中轴线申遗", "老城保护"],
   },
 ]);
 
@@ -1144,7 +1164,6 @@ onMounted(() => {
 }
 
 .chart-container:after {
-  content: "可视化图表区域";
   position: absolute;
   font-size: 1.1em;
 }

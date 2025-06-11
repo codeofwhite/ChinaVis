@@ -1,40 +1,35 @@
 <template>
   <div class="lifecycle-container">
-    <!-- 页面标题 -->
     <div class="lifecycle-header">
       <h1>法源寺建筑群演变与修缮历程</h1>
       <p class="intro-text">从唐代悯忠古刹到中国佛学院的千年佛寺变迁</p>
-      <!-- 返回按钮 -->
       <button @click="goBack" class="back-button">← 返回法源寺门户</button>
-      <!-- 新增状态概览卡片 -->
       <div class="status-overview">
         <div class="status-card">
-          <span class="status-icon">🏗️</span>
+          <span class="status-icon">🛍️</span>
           <div>
             <h3>主要殿宇</h3>
-            <p class="status-value">7进院落</p>
+            <p class="status-value">超60家</p>
           </div>
         </div>
         <div class="status-card">
           <span class="status-icon">⏳</span>
           <div>
             <h3>历史跨度</h3>
-            <p class="status-value">1400年</p>
+            <p class="status-value">600+年</p>
           </div>
         </div>
         <div class="status-card">
-          <span class="status-icon">📐</span>
+          <span class="status-icon">🚶</span>
           <div>
             <h3>占地面积</h3>
-            <p class="status-value">6700㎡</p>
+            <p class="status-value">千万+</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 主要内容区域 -->
     <div class="lifecycle-main">
-      <!-- 时间轴导航 -->
       <div class="timeline-nav">
         <div
           v-for="(item, index) in timelineData"
@@ -48,7 +43,6 @@
       </div>
 
       <div class="content-wrapper">
-        <!-- 时间轴左侧 -->
         <div class="timeline-section">
           <div class="timeline">
             <div class="timeline-line"></div>
@@ -65,22 +59,17 @@
           </div>
         </div>
 
-        <!-- 右侧内容区域 -->
         <div v-if="isModalOpen" class="modal-overlay" @click.self="closeModal">
-          <!-- 弹窗内容 -->
           <div class="modal-content">
             <button class="modal-close" @click="closeModal">×</button>
 
             <div class="modal-body">
-              <!-- 左侧文字内容 -->
               <div class="history-card">
-                <!-- 图 + 标题 -->
                 <div class="history-info">
                   <h2>{{ activeData.title }}</h2>
                   <div class="history-period">{{ activeData.period }}</div>
                   <div class="history-desc">{{ activeData.description }}</div>
 
-                  <!-- 数据指标 -->
                   <div class="history-metrics">
                     <div
                       class="metric"
@@ -92,7 +81,6 @@
                     </div>
                   </div>
 
-                  <!-- 建筑特点 -->
                   <div
                     class="architectural-features"
                     v-if="activeData.features"
@@ -110,11 +98,10 @@
                 </div>
               </div>
 
-              <!-- 右侧网络图 -->
               <div class="network-section" v-if="selectedEvent">
                 <h3>{{ selectedEvent.year }}年：{{ selectedEvent.event }}</h3>
                 <LandmarkNetwork
-                  :landmark="fayuanTemple"
+                  :landmark="'dashilan'"
                   :event="selectedEvent"
                 />
               </div>
@@ -122,7 +109,6 @@
           </div>
         </div>
       </div>
-      <!-- 可视化图表区域 -->
       <div class="visualization-section">
         <div class="visualization-card">
           <h3>寺院规模演变</h3>
@@ -134,14 +120,14 @@
         </div>
         <div class="visualization-card">
           <h3>历代佛像艺术</h3>
-          <div class="chart-container"></div>
+          <div ref="chartRef3" class="chart-container"></div>
         </div>
       </div>
     </div>
 
     <footer class="lifecycle-footer">
       <p class="copyright">
-        © {{ new Date().getFullYear() }} 北京佛教文化遗产数字中心
+        © {{ new Date().getFullYear() }} 北京历史文化遗产数字平台
       </p>
     </footer>
   </div>
