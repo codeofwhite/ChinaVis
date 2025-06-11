@@ -1,40 +1,35 @@
 <template>
   <div class="lifecycle-container">
-    <!-- 页面标题 -->
     <div class="lifecycle-header">
-      <h1>天坛建筑群演变与修缮历程</h1>
-      <p class="intro-text">从永乐敕建到世界文化遗产的六百年建筑变迁</p>
-      <!-- 返回按钮 -->
-      <button @click="goBack" class="back-button">← 返回天坛门户</button>
-      <!-- 新增状态概览卡片 -->
+      <h1>明十三陵建筑群演变与保护历程</h1>
+      <p class="intro-text">从长陵营建到世界文化遗产的六百年兴衰</p>
+      <button @click="goBack" class="back-button">← 返回明十三陵门户</button>
       <div class="status-overview">
         <div class="status-card">
-          <span class="status-icon">🏗️</span>
+          <span class="status-icon">👑</span>
           <div>
-            <h3>主要修缮</h3>
-            <p class="status-value">23次</p>
+            <h3>帝陵数量</h3>
+            <p class="status-value">13座</p>
           </div>
         </div>
         <div class="status-card">
           <span class="status-icon">⏳</span>
           <div>
             <h3>历史跨度</h3>
-            <p class="status-value">602年</p>
+            <p class="status-value">230+年</p>
           </div>
         </div>
         <div class="status-card">
-          <span class="status-icon">📐</span>
+          <span class="status-icon">🌳</span>
           <div>
-            <h3>现存面积</h3>
-            <p class="status-value">273公顷</p>
+            <h3>核心区面积</h3>
+            <p class="status-value">80+平方公里</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 主要内容区域 -->
     <div class="lifecycle-main">
-      <!-- 时间轴导航 -->
       <div class="timeline-nav">
         <div
           v-for="(item, index) in timelineData"
@@ -48,7 +43,6 @@
       </div>
 
       <div class="content-wrapper">
-        <!-- 时间轴左侧 -->
         <div class="timeline-section">
           <div class="timeline">
             <div class="timeline-line"></div>
@@ -65,22 +59,17 @@
           </div>
         </div>
 
-        <!-- 右侧内容区域 -->
         <div v-if="isModalOpen" class="modal-overlay" @click.self="closeModal">
-          <!-- 弹窗内容 -->
           <div class="modal-content">
             <button class="modal-close" @click="closeModal">×</button>
 
             <div class="modal-body">
-              <!-- 左侧文字内容 -->
               <div class="history-card">
-                <!-- 图 + 标题 -->
                 <div class="history-info">
                   <h2>{{ activeData.title }}</h2>
                   <div class="history-period">{{ activeData.period }}</div>
                   <div class="history-desc">{{ activeData.description }}</div>
 
-                  <!-- 数据指标 -->
                   <div class="history-metrics">
                     <div
                       class="metric"
@@ -92,12 +81,11 @@
                     </div>
                   </div>
 
-                  <!-- 建筑特点 -->
                   <div
                     class="architectural-features"
                     v-if="activeData.features"
                   >
-                    <h3>建筑特点</h3>
+                    <h3>陵墓建筑特点与营建事件</h3>
                     <ul>
                       <li
                         v-for="(feature, idx) in activeData.features"
@@ -110,11 +98,10 @@
                 </div>
               </div>
 
-              <!-- 右侧网络图 -->
               <div class="network-section" v-if="selectedEvent">
                 <h3>{{ selectedEvent.year }}年：{{ selectedEvent.event }}</h3>
                 <LandmarkNetwork
-                  :landmark="forbiddenCity"
+                  :landmark="'mingThirteenTombs'"
                   :event="selectedEvent"
                 />
               </div>
@@ -122,19 +109,18 @@
           </div>
         </div>
       </div>
-      <!-- 可视化图表区域 -->
       <div class="visualization-section">
         <div class="visualization-card">
-          <h3>建筑规模演变</h3>
-          <div ref="chart" class="chart-container"></div>
+          <h3>各陵墓营建年代</h3>
+          <div ref="chartRef1" class="chart-container"></div>
         </div>
         <div class="visualization-card">
-          <h3>建筑类型分布</h3>
-          <div ref="typeChart" class="chart-container"></div>
+          <h3>陵墓建筑形制演变</h3>
+          <div ref="chartRef2" class="chart-container"></div>
         </div>
         <div class="visualization-card">
-          <h3>修缮材料变化</h3>
-          <div class="chart-container"></div>
+          <h3>主要保护修缮事件</h3>
+          <div ref="chartRef3" class="chart-container"></div>
         </div>
       </div>
     </div>
@@ -148,7 +134,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, computed, onMounted, onUnmounted, watch } from "vue"; // 确保导入必要的 Vue 组合式 API
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
 import LandmarkNetwork from "../LandmarkNetwork.vue";
@@ -327,123 +313,268 @@ function closeModal() {
   isModalOpen.value = false;
 }
 
-// ECharts图表实例
-const chart = ref(null);
-const typeChart = ref(null);
-let chartInstance = null;
-let typeChartInstance = null;
+// --- ECharts 数据准备 ---
+// ECharts 图表实例引用
+const chartRef1 = ref(null); // 各陵墓营建年代 (条形图)
+const chartRef2 = ref(null); // 陵墓建筑形制变化 (多系列折线图)
+const chartRef3 = ref(null); // 主要保护修缮事件 (带事件点的折线图)
 
-// 建筑规模变化数据
-const chartData = ref({
-  years: timelineData.value.map((item) => item.year),
-  sizes: [85, 92, 95, 100, 87, 100], // 百分比数据
+let chartInstance1 = null;
+let chartInstance2 = null;
+let chartInstance3 = null;
+
+// 1. 各陵墓营建年代数据 (条形图)
+// 这里需要手动提取或模拟各陵墓的营建时间
+const tombConstructionData = computed(() => {
+  const constructionYears = [
+    { name: "长陵", start: 1409, end: 1424, emperor: "朱棣" },
+    { name: "献陵", start: 1425, end: 1425, emperor: "朱高炽" },
+    { name: "景陵", start: 1435, end: 1435, emperor: "朱瞻基" },
+    { name: "裕陵", start: 1464, end: 1464, emperor: "朱祁镇" },
+    { name: "茂陵", start: 1487, end: 1487, emperor: "朱见深" },
+    { name: "泰陵", start: 1505, end: 1505, emperor: "朱祐樘" },
+    { name: "康陵", start: 1521, end: 1521, emperor: "朱厚照" },
+    { name: "永陵", start: 1537, end: 1545, emperor: "朱厚熜" },
+    { name: "昭陵", start: 1572, end: 1572, emperor: "朱载垕" },
+    { name: "定陵", start: 1584, end: 1590, emperor: "朱翊钧" },
+    { name: "庆陵", start: 1620, end: 1620, emperor: "朱常洛" },
+    { name: "德陵", start: 1622, end: 1622, emperor: "朱由校" },
+    { name: "思陵", start: 1644, end: 1644, emperor: "朱由检" },
+  ];
+
+  // 计算工期，并准备Y轴数据和系列数据
+  const tombNames = []; // Y轴的类别名称
+  const workDurations = []; // 各陵墓的工期 (年)
+
+  constructionYears.forEach((tomb) => {
+    const duration = tomb.end - tomb.start + 1; // 工期至少为1年
+    tombNames.push(`${tomb.name} (${tomb.emperor}陵)`); // 格式化名称，包含皇帝
+    workDurations.push({
+      value: duration,
+      name: tomb.name, // 原始陵墓名
+      emperor: tomb.emperor, // 皇帝名
+      start: tomb.start, // 起始年份
+      end: tomb.end, // 结束年份
+    });
+  });
+
+  return {
+    tombNames: tombNames,
+    workDurations: workDurations,
+  };
 });
 
-// 建筑类型分布数据
-const typeData = ref({
-  years: timelineData.value.map((item) => item.year),
-  types: [
-    { name: "祭祀建筑", data: [75, 65, 60, 60, 50, 55] },
-    { name: "附属建筑", data: [15, 20, 25, 25, 25, 25] },
-    { name: "服务设施", data: [0, 5, 5, 5, 15, 10] },
-    { name: "园林景观", data: [10, 10, 10, 10, 10, 10] },
-  ],
+// 2. 陵墓建筑形制演变数据 (多系列折线图)
+const architecturalEvolutionData = computed(() => {
+  const years = timelineData.value.map((item) => item.year);
+  // 模拟不同形制在不同时期的“代表性”或“出现频率”
+  const standardImperial = [90, 85, 80, 75, 70, 65, 60, 55, 50, 45]; // 标准帝陵规制 (长陵规制)
+  const simplified = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45]; // 简化规制 (后期帝陵)
+  const undergroundPalaceFocus = [0, 0, 0, 0, 0, 70, 75, 80, 85, 90]; // 地下宫殿重要性提升 (定陵发掘后)
+
+  return {
+    years: years,
+    styles: [
+      { name: "标准帝陵规制", data: standardImperial.slice(0, years.length) },
+      { name: "规制简化趋势", data: simplified.slice(0, years.length) },
+      {
+        name: "地下玄宫重点",
+        data: undergroundPalaceFocus.slice(0, years.length),
+      },
+    ],
+  };
 });
 
-// 初始化规模变化图表
-const initChart = () => {
-  if (chart.value) {
-    chartInstance = echarts.init(chart.value);
+// 3. 主要保护修缮事件数据 (带事件点的折线图)
+const protectionEventsData = computed(() => {
+  const years = timelineData.value.map((item) => item.year);
+  const maintenanceCounts = [];
+  const eventPoints = [];
+
+  // 模拟修缮次数或保护力度
+  const simulatedCounts = [
+    1,
+    1,
+    1,
+    0, // 明初到营建终止
+    5, // 清代保护
+    10,
+    15,
+    20,
+    25,
+    30, // 现代保护
+  ];
+
+  timelineData.value.forEach((item, index) => {
+    // 使用模拟的修缮次数，或从metrics中提取“修缮”相关数据
+    const repairMetric = item.metrics?.find((m) => m.label === "大型修缮");
+    maintenanceCounts.push(
+      repairMetric ? parseInt(repairMetric.value) : simulatedCounts[index] || 0
+    );
+
+    // 提取重要保护/修缮事件的标注信息
+    if (
+      item.event &&
+      (item.event.includes("保护") ||
+        item.event.includes("修缮") ||
+        item.event.includes("发掘") ||
+        item.event.includes("单位") ||
+        item.event.includes("遗产"))
+    ) {
+      eventPoints.push({
+        xAxis: item.year,
+        yAxis: maintenanceCounts[index],
+        name: item.title, // 使用title作为事件名称更具描述性
+        value: item.year,
+        symbolSize: 15,
+        itemStyle: { color: "#4CAF50" }, // 绿色标记保护事件
+        label: {
+          formatter: "{b}", // 显示事件标题
+          position: "top",
+          color: "#333",
+          fontSize: 10,
+          offset: [0, -10],
+          show: true,
+        },
+      });
+    }
+  });
+
+  return {
+    years: years,
+    counts: maintenanceCounts,
+    events: eventPoints,
+  };
+});
+
+// --- ECharts 初始化函数 ---
+
+// 1. 初始化各陵墓营建年代图表 (条形图 / 甘特图变种)
+const initTombConstructionChart = () => {
+  if (chartRef1.value) {
+    chartInstance1 = echarts.init(chartRef1.value);
+
+    // 为了让图表显示顺序一致，这里直接使用 computed 后的数据
+    // 如果想让长陵在最上面，可以对yAxis.data和series.data进行reverse()操作
+    const yAxisData = [...tombConstructionData.value.tombNames].reverse();
+    const seriesData = [...tombConstructionData.value.workDurations].reverse();
 
     const option = {
-      tooltip: {
-        trigger: "axis",
-        formatter: "{b0}年<br/>规模：{c0}%",
-      },
-      grid: {
-        left: "3%",
-        right: "4%",
-        bottom: "3%",
-        containLabel: true,
-      },
-      xAxis: {
-        type: "category",
-        data: chartData.value.years,
-        axisLine: {
-          lineStyle: {
-            color: "#8b4513",
-          },
-        },
-        axisLabel: {
-          color: "#5a4a42",
+      title: {
+        text: "明十三陵帝陵营建工期",
+        left: "center",
+        textStyle: {
+          color: "#6d4c41",
+          fontSize: 16,
         },
       },
-      yAxis: {
-        type: "value",
-        min: 80,
-        max: 105,
-        axisLine: {
-          lineStyle: {
-            color: "#8b4513",
-          },
-        },
-        axisLabel: {
-          formatter: "{value}%",
-          color: "#5a4a42",
-        },
-        splitLine: {
-          lineStyle: {
-            color: "rgba(139, 69, 19, 0.1)",
-          },
-        },
-      },
-      series: [
-        {
-          name: "建筑规模",
-          type: "line",
-          smooth: true,
-          symbol: "circle",
-          symbolSize: 8,
-          lineStyle: {
-            width: 4,
-            color: "#d4a76a",
-          },
-          itemStyle: {
-            color: "#8b4513",
-          },
-          areaStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: "rgba(212, 167, 106, 0.3)" },
-              { offset: 1, color: "rgba(212, 167, 106, 0.05)" },
-            ]),
-          },
-          data: chartData.value.sizes,
-        },
-      ],
-    };
-
-    chartInstance.setOption(option);
-  }
-};
-
-// 初始化建筑类型分布图表
-const initTypeChart = () => {
-  if (typeChart.value) {
-    typeChartInstance = echarts.init(typeChart.value);
-
-    const option = {
       tooltip: {
         trigger: "axis",
         axisPointer: {
           type: "shadow",
         },
+        formatter: function (params) {
+          const data = params[0].data; // 获取当前柱子数据
+          return `${data.name} (${data.emperor}陵)<br/>
+                            营建时期：${data.start}年 - ${data.end}年<br/>
+                            **工期：${data.value}年**`;
+        },
+        backgroundColor: "rgba(255,255,255,0.9)",
+        borderColor: "#bcaaa4",
+        borderWidth: 1,
+        textStyle: { color: "#333" },
+      },
+      grid: {
+        left: "3%",
+        right: "4%",
+        top: "15%", // 留出标题空间
+        bottom: "3%",
+        containLabel: true,
+      },
+      xAxis: {
+        type: "value",
+        name: "工期 (年)",
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: { color: "#6d4c41" },
+        splitLine: {
+          lineStyle: { color: "rgba(161, 136, 127, 0.1)", type: "dashed" },
+        },
+      },
+      yAxis: {
+        type: "category",
+        data: yAxisData, // 陵墓名称
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: {
+          color: "#6d4c41",
+          // 解决标签过长问题，如果需要可以自行调整
+          formatter: function (value) {
+            return value.length > 10 ? value.substring(0, 10) + "..." : value;
+          },
+        },
+      },
+      series: [
+        {
+          name: "营建工期",
+          type: "bar",
+          barWidth: "70%", // 柱子宽度
+          data: seriesData.map((item) => ({
+            value: item.value,
+            // 额外数据用于tooltip，ECharts会自动合并
+            name: item.name,
+            emperor: item.emperor,
+            start: item.start,
+            end: item.end,
+            itemStyle: {
+              // 根据工期长短设置不同的颜色
+              color:
+                item.value > 5
+                  ? "#B26F4A"
+                  : item.value > 1
+                  ? "#D4A76A"
+                  : "#9C7C5C",
+              borderRadius: [0, 5, 5, 0], // 右侧圆角
+            },
+          })),
+          label: {
+            show: true,
+            position: "right", // 在柱子右侧显示数值
+            formatter: "{c}年",
+            color: "#6d4c41",
+            fontSize: 10,
+          },
+        },
+      ],
+    };
+
+    chartInstance1.setOption(option);
+  }
+};
+
+// 2. 初始化陵墓建筑形制变化图表 (多系列折线图)
+const initArchitecturalEvolutionChart = () => {
+  if (chartRef2.value) {
+    chartInstance2 = echarts.init(chartRef2.value);
+
+    const option = {
+      tooltip: {
+        trigger: "axis",
+        formatter: function (params) {
+          let str = `**${params[0].name}**<br/>`;
+          params.forEach((item) => {
+            str += `${item.marker} ${item.seriesName}: ${item.value}%<br/>`;
+          });
+          return str;
+        },
+        backgroundColor: "rgba(255,255,255,0.9)",
+        borderColor: "#bcaaa4",
+        borderWidth: 1,
+        textStyle: { color: "#333" },
       },
       legend: {
-        data: typeData.value.types.map((item) => item.name),
-        textStyle: {
-          color: "#5a4a42",
-        },
-        bottom: 0,
+        data: architecturalEvolutionData.value.styles.map((item) => item.name),
+        textStyle: { color: "#6d4c41" },
+        bottom: "0%",
+        itemGap: 10,
       },
       grid: {
         left: "3%",
@@ -453,91 +584,244 @@ const initTypeChart = () => {
       },
       xAxis: {
         type: "category",
-        data: typeData.value.years,
-        axisLine: {
-          lineStyle: {
-            color: "#8b4513",
-          },
-        },
-        axisLabel: {
-          color: "#5a4a42",
-        },
+        data: architecturalEvolutionData.value.years,
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: { color: "#6d4c41", rotate: 30, interval: 0 },
       },
       yAxis: {
         type: "value",
-        axisLine: {
-          lineStyle: {
-            color: "#8b4513",
-          },
-        },
-        axisLabel: {
-          formatter: "{value}%",
-          color: "#5a4a42",
-        },
+        name: "代表性/关注度 (%)",
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: { formatter: "{value}%", color: "#6d4c41" },
         splitLine: {
-          lineStyle: {
-            color: "rgba(139, 69, 19, 0.1)",
-          },
+          lineStyle: { color: "rgba(161, 136, 127, 0.1)", type: "dashed" },
         },
+        min: 0,
+        max: 100,
       },
-      series: typeData.value.types.map((type, index) => ({
-        name: type.name,
-        type: "bar",
-        stack: "total",
-        emphasis: {
-          focus: "series",
+      series: architecturalEvolutionData.value.styles.map((style, index) => ({
+        name: style.name,
+        type: "line",
+        smooth: true,
+        symbol: "circle",
+        symbolSize: 8,
+        lineStyle: {
+          width: 3,
+          color: [
+            "#D4A76A", // 标准帝陵 - 庄重金棕
+            "#8B4513", // 规制简化 - 深棕
+            "#5A4A42", // 地下玄宫 - 灰棕
+          ][index],
         },
-        data: type.data,
         itemStyle: {
-          color: ["#d4a76a", "#8b4513", "#9c7c5c", "#5a4a42"][index],
+          color: ["#D4A76A", "#8B4513", "#5A4A42"][index],
         },
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: [
+                "rgba(212, 167, 106, 0.2)",
+                "rgba(139, 69, 19, 0.2)",
+                "rgba(90, 74, 66, 0.2)",
+              ][index],
+            },
+            { offset: 1, color: "rgba(255, 255, 255, 0)" },
+          ]),
+        },
+        data: style.data,
       })),
     };
-
-    typeChartInstance.setOption(option);
+    chartInstance2.setOption(option);
   }
 };
 
-// 监听活动索引变化
+// 3. 初始化主要保护修缮事件图表 (带事件点的折线图)
+const initProtectionEventsChart = () => {
+  if (chartRef3.value) {
+    chartInstance3 = echarts.init(chartRef3.value);
+
+    const option = {
+      tooltip: {
+        trigger: "axis",
+        formatter: function (params) {
+          let str = `**${params[0].name}**<br/>`;
+          params.forEach((item) => {
+            if (item.seriesType === "line") {
+              str += `${item.marker} ${item.seriesName}: ${item.value}次<br/>`;
+            } else if (item.seriesType === "scatter") {
+              str += `${item.marker} ${item.name}<br/>`; // 事件名称
+            }
+          });
+          return str;
+        },
+        backgroundColor: "rgba(255,255,255,0.9)",
+        borderColor: "#bcaaa4",
+        borderWidth: 1,
+        textStyle: { color: "#333" },
+      },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true,
+      },
+      xAxis: {
+        type: "category",
+        data: protectionEventsData.value.years,
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: { color: "#6d4c41", rotate: 30, interval: 0 },
+      },
+      yAxis: {
+        type: "value",
+        name: "修缮/保护事件次数",
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: { color: "#6d4c41" },
+        splitLine: {
+          lineStyle: { color: "rgba(161, 136, 127, 0.1)", type: "dashed" },
+        },
+      },
+      series: [
+        {
+          name: "修缮/保护事件",
+          type: "line",
+          smooth: true,
+          symbol: "circle",
+          symbolSize: 8,
+          lineStyle: {
+            width: 4,
+            color: "#6A995C", // 绿色，代表保护与生机
+          },
+          itemStyle: {
+            color: "#9CCC65",
+            borderColor: "#6A995C",
+            borderWidth: 2,
+          },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "rgba(106, 153, 92, 0.3)" },
+              { offset: 1, color: "rgba(106, 153, 92, 0.05)" },
+            ]),
+          },
+          data: protectionEventsData.value.counts,
+          markPoint: {
+            data: protectionEventsData.value.events,
+            label: {
+              show: true,
+              position: "top",
+              color: "#333", // 文本颜色
+              fontSize: 10,
+              formatter: "{b}",
+              backgroundColor: "rgba(255,255,255,0.7)",
+              padding: [2, 5],
+              borderRadius: 3,
+            },
+            symbol: "pin",
+            symbolSize: 40,
+            itemStyle: {
+              // 标记点样式
+              color: "#4CAF50", // 绿色
+            },
+          },
+        },
+      ],
+    };
+    chartInstance3.setOption(option);
+  }
+};
+
+// --- 生命周期钩子和响应式监听 ---
+
+onMounted(() => {
+  initTombConstructionChart();
+  initArchitecturalEvolutionChart();
+  initProtectionEventsChart();
+
+  window.addEventListener("resize", handleResize);
+});
+
+onUnmounted(() => {
+  chartInstance1?.dispose();
+  chartInstance2?.dispose();
+  chartInstance3?.dispose();
+  window.removeEventListener("resize", handleResize);
+});
+
+const handleResize = () => {
+  chartInstance1?.resize();
+  chartInstance2?.resize();
+  chartInstance3?.resize();
+};
+
+// 监听 activeIndex 变化，高亮图表
+// 注意：对于甘特图和多系列折线图，简单的 highlight/downplay 可能不适用
+// 需要根据图表类型调整高亮逻辑
 watch(activeIndex, (newIndex) => {
-  if (chartInstance) {
-    chartInstance.dispatchAction({
+  // 对于第一个图 (各陵墓营建年代)，可能需要根据年份范围或特定陵墓高亮
+  // 这里简单地不做高亮，因为它是多个陵墓的营建时间线，高亮单个点意义不大
+  // 或者可以考虑高亮与当前时间线年份接近的陵墓
+  // if (chartInstance1) { ... }
+
+  // 对于第二个图 (陵墓建筑形制变化)，高亮对应年份的系列点
+  if (chartInstance2) {
+    // 先取消所有高亮
+    chartInstance2.dispatchAction({
+      type: "downplay",
+      seriesIndex: architecturalEvolutionData.value.styles.map((_, i) => i),
+      dataIndex: "all",
+    });
+    // 高亮当前年份的所有系列点
+    chartInstance2.dispatchAction({
+      type: "highlight",
+      seriesIndex: architecturalEvolutionData.value.styles.map((_, i) => i), // 所有系列
+      dataIndex: newIndex, // 当前年份的索引
+    });
+    // 显示当前年份的tooltip
+    chartInstance2.dispatchAction({
+      type: "showTip",
+      seriesIndex: 0, // 随便一个系列即可，目的是触发tooltip
+      dataIndex: newIndex,
+    });
+  }
+
+  // 对于第三个图 (主要保护修缮事件)，高亮对应年份的点
+  if (chartInstance3) {
+    chartInstance3.dispatchAction({
       type: "downplay",
       seriesIndex: 0,
+      dataIndex: "all",
     });
-
-    chartInstance.dispatchAction({
+    chartInstance3.dispatchAction({
       type: "highlight",
       seriesIndex: 0,
       dataIndex: newIndex,
     });
-
-    chartInstance.dispatchAction({
+    chartInstance3.dispatchAction({
       type: "showTip",
       seriesIndex: 0,
       dataIndex: newIndex,
     });
   }
-
-  if (typeChartInstance) {
-    typeChartInstance.dispatchAction({
-      type: "highlight",
-      seriesIndex: newIndex,
-    });
-  }
 });
 
-// 响应窗口大小变化
-const handleResize = () => {
-  if (chartInstance) chartInstance.resize();
-  if (typeChartInstance) typeChartInstance.resize();
-};
+// 如果 timelineData 是响应式的，且它的变化会影响图表数据，
+// 可以添加 watch 来重新渲染图表。
+// 注意：这里用 computed 属性已经实现了数据响应式，但如果 timelineData 本身可能被完全替换，
+// 可以在这里添加更彻底的重初始化
+watch(
+  timelineData,
+  () => {
+    // 强制重新初始化图表实例，确保数据和选项完全更新
+    chartInstance1?.dispose();
+    chartInstance2?.dispose();
+    chartInstance3?.dispose();
 
-onMounted(() => {
-  initChart();
-  initTypeChart();
-  window.addEventListener("resize", handleResize);
-});
+    initTombConstructionChart();
+    initArchitecturalEvolutionChart();
+    initProtectionEventsChart();
+  },
+  { deep: true }
+); // 深度监听 timelineData 的内容变化
 </script>
 
 <style scoped>

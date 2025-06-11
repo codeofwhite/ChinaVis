@@ -1,40 +1,35 @@
 <template>
   <div class="lifecycle-container">
-    <!-- 页面标题 -->
     <div class="lifecycle-header">
-      <h1>天坛建筑群演变与修缮历程</h1>
-      <p class="intro-text">从永乐敕建到世界文化遗产的六百年建筑变迁</p>
-      <!-- 返回按钮 -->
-      <button @click="goBack" class="back-button">← 返回天坛门户</button>
-      <!-- 新增状态概览卡片 -->
+      <h1>大栅栏商业街区发展历程</h1>
+      <p class="intro-text">从明清市集到京城繁华地标的数百年变迁</p>
+      <button @click="goBack" class="back-button">← 返回大栅栏门户</button>
       <div class="status-overview">
         <div class="status-card">
-          <span class="status-icon">🏗️</span>
+          <span class="status-icon">🛍️</span>
           <div>
-            <h3>主要修缮</h3>
-            <p class="status-value">23次</p>
+            <h3>知名老字号</h3>
+            <p class="status-value">超60家</p>
           </div>
         </div>
         <div class="status-card">
           <span class="status-icon">⏳</span>
           <div>
             <h3>历史跨度</h3>
-            <p class="status-value">602年</p>
+            <p class="status-value">600+年</p>
           </div>
         </div>
         <div class="status-card">
-          <span class="status-icon">📐</span>
+          <span class="status-icon">🚶</span>
           <div>
-            <h3>现存面积</h3>
-            <p class="status-value">273公顷</p>
+            <h3>年均客流</h3>
+            <p class="status-value">千万+</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 主要内容区域 -->
     <div class="lifecycle-main">
-      <!-- 时间轴导航 -->
       <div class="timeline-nav">
         <div
           v-for="(item, index) in timelineData"
@@ -48,7 +43,6 @@
       </div>
 
       <div class="content-wrapper">
-        <!-- 时间轴 -->
         <div class="timeline-section">
           <div class="timeline">
             <div class="timeline-line"></div>
@@ -65,22 +59,17 @@
           </div>
         </div>
 
-        <!-- 右侧内容区域 -->
         <div v-if="isModalOpen" class="modal-overlay" @click.self="closeModal">
-          <!-- 弹窗内容 -->
           <div class="modal-content">
             <button class="modal-close" @click="closeModal">×</button>
 
             <div class="modal-body">
-              <!-- 左侧文字内容 -->
               <div class="history-card">
-                <!-- 图 + 标题 -->
                 <div class="history-info">
                   <h2>{{ activeData.title }}</h2>
                   <div class="history-period">{{ activeData.period }}</div>
                   <div class="history-desc">{{ activeData.description }}</div>
 
-                  <!-- 数据指标 -->
                   <div class="history-metrics">
                     <div
                       class="metric"
@@ -92,12 +81,11 @@
                     </div>
                   </div>
 
-                  <!-- 建筑特点 -->
                   <div
                     class="architectural-features"
                     v-if="activeData.features"
                   >
-                    <h3>建筑特点</h3>
+                    <h3>商业特点与重要事件</h3>
                     <ul>
                       <li
                         v-for="(feature, idx) in activeData.features"
@@ -110,11 +98,10 @@
                 </div>
               </div>
 
-              <!-- 右侧网络图 -->
               <div class="network-section" v-if="selectedEvent">
                 <h3>{{ selectedEvent.year }}年：{{ selectedEvent.event }}</h3>
                 <LandmarkNetwork
-                  :landmark="forbiddenCity"
+                  :landmark="'dashilan'"
                   :event="selectedEvent"
                 />
               </div>
@@ -122,19 +109,18 @@
           </div>
         </div>
       </div>
-      <!-- 可视化图表区域 -->
       <div class="visualization-section">
         <div class="visualization-card">
-          <h3>建筑规模演变</h3>
-          <div ref="chart" class="chart-container"></div>
+          <h3>商业业态演变</h3>
+          <div ref="chartRef1" class="chart-container"></div>
         </div>
         <div class="visualization-card">
-          <h3>建筑类型分布</h3>
-          <div ref="typeChart" class="chart-container"></div>
+          <h3>知名老字号分布</h3>
+          <div ref="chartRef2" class="chart-container"></div>
         </div>
         <div class="visualization-card">
-          <h3>修缮材料变化</h3>
-          <div class="chart-container"></div>
+          <h3>客流量变化趋势</h3>
+          <div ref="chartRef3" class="chart-container"></div>
         </div>
       </div>
     </div>
@@ -337,122 +323,165 @@ function closeModal() {
 }
 
 // ECharts图表实例
-const chart = ref(null);
-const typeChart = ref(null);
-let chartInstance = null;
-let typeChartInstance = null;
+const chartRef1 = ref(null); // 商业业态演变
+const chartRef2 = ref(null); // 知名老字号数量变化
+const chartRef3 = ref(null); // 主要商铺类型分布
+let chartInstance1 = null;
+let chartInstance2 = null;
+let chartInstance3 = null;
 
-// 建筑规模变化数据
-const chartData = ref({
-  years: timelineData.value.map((item) => item.year),
-  sizes: [85, 92, 95, 100, 87, 100], // 百分比数据
+// --- ECharts 数据准备 ---
+
+// 1. 商业业态发展数据 (堆叠柱状图)
+// 根据 timelineData 提炼和模拟数据
+const businessEvolutionData = computed(() => {
+  const years = timelineData.value.map((item) => item.year);
+  // 模拟数据，需要根据实际的历史资料调整
+  const traditionalRetail = [60, 55, 45, 30, 25, 20, 18, 15, 12, 10]; // 传统零售占比
+  const cateringEntertainment = [20, 25, 30, 35, 38, 40, 42, 45, 48, 50]; // 餐饮娱乐占比
+  const serviceIndustry = [10, 10, 15, 20, 22, 25, 28, 30, 32, 35]; // 服务行业占比
+  const culturalExperience = [10, 10, 10, 15, 15, 15, 12, 10, 8, 5]; // 文化体验/其他占比
+
+  return {
+    years: years,
+    categories: [
+      { name: "传统零售", data: traditionalRetail.slice(0, years.length) },
+      { name: "餐饮娱乐", data: cateringEntertainment.slice(0, years.length) },
+      { name: "服务行业", data: serviceIndustry.slice(0, years.length) },
+      {
+        name: "文化体验/其他",
+        data: culturalExperience.slice(0, years.length),
+      },
+    ],
+  };
 });
 
-// 建筑类型分布数据
-const typeData = ref({
-  years: timelineData.value.map((item) => item.year),
-  types: [
-    { name: "祭祀建筑", data: [75, 65, 60, 60, 50, 55] },
-    { name: "附属建筑", data: [15, 20, 25, 25, 25, 25] },
-    { name: "服务设施", data: [0, 5, 5, 5, 15, 10] },
-    { name: "园林景观", data: [10, 10, 10, 10, 10, 10] },
-  ],
+// 2. 建筑风格演变数据 (折线图 - 可多系列)
+const architecturalStyleData = computed(() => {
+  const years = timelineData.value.map((item) => item.year);
+  // 模拟数据：不同建筑风格的“流行度”或“代表性”权重
+  const traditionalNorthern = [80, 75, 60, 50, 40, 35, 30, 25, 20, 18]; // 传统北方风格
+  const chineseWestern = [0, 0, 5, 15, 25, 30, 35, 30, 25, 20]; // 中西合璧风格
+  const republicEraCommercial = [0, 0, 0, 5, 10, 15, 20, 25, 30, 35]; // 民国商业风格
+  const modernPreservation = [0, 0, 0, 0, 0, 0, 15, 20, 25, 27]; // 现代保护/复古风格
+
+  return {
+    years: years,
+    styles: [
+      { name: "传统北方", data: traditionalNorthern.slice(0, years.length) },
+      { name: "中西合璧", data: chineseWestern.slice(0, years.length) },
+      { name: "民国商业", data: republicEraCommercial.slice(0, years.length) },
+      { name: "现代保护", data: modernPreservation.slice(0, years.length) },
+    ],
+  };
 });
 
-// 初始化规模变化图表
-const initChart = () => {
-  if (chart.value) {
-    chartInstance = echarts.init(chart.value);
+// 3. 老字号数量与重要事件 (带事件点的折线图)
+const oldBrandAndEventsData = computed(() => {
+  const years = timelineData.value.map((item) => item.year);
+  const oldBrandCounts = [];
+  const eventPoints = []; // 用于标注事件
 
-    const option = {
-      tooltip: {
-        trigger: "axis",
-        formatter: "{b0}年<br/>规模：{c0}%",
-      },
-      grid: {
-        left: "3%",
-        right: "4%",
-        bottom: "3%",
-        containLabel: true,
-      },
-      xAxis: {
-        type: "category",
-        data: chartData.value.years,
-        axisLine: {
-          lineStyle: {
-            color: "#8b4513",
-          },
-        },
-        axisLabel: {
-          color: "#5a4a42",
-        },
-      },
-      yAxis: {
-        type: "value",
-        min: 80,
-        max: 105,
-        axisLine: {
-          lineStyle: {
-            color: "#8b4513",
-          },
-        },
-        axisLabel: {
-          formatter: "{value}%",
-          color: "#5a4a42",
-        },
-        splitLine: {
-          lineStyle: {
-            color: "rgba(139, 69, 19, 0.1)",
-          },
-        },
-      },
-      series: [
-        {
-          name: "建筑规模",
-          type: "line",
-          smooth: true,
-          symbol: "circle",
-          symbolSize: 8,
-          lineStyle: {
-            width: 4,
-            color: "#d4a76a",
-          },
-          itemStyle: {
-            color: "#8b4513",
-          },
-          areaStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: "rgba(212, 167, 106, 0.3)" },
-              { offset: 1, color: "rgba(212, 167, 106, 0.05)" },
-            ]),
-          },
-          data: chartData.value.sizes,
-        },
-      ],
-    };
+  timelineData.value.forEach((item, index) => {
+    // 从 metrics 中提取老字号数量，如果存在且是数字
+    const oldBrandMetric = item.metrics?.find((m) => m.label === "老字号");
+    if (oldBrandMetric && oldBrandMetric.value) {
+      // 处理 "30+" "200+" 这种格式
+      oldBrandCounts.push(
+        parseInt(oldBrandMetric.value.replace("+", "")) || null
+      );
+    } else if (item.metrics?.find((m) => m.label === "商户数量")) {
+      // 如果没有明确老字号，可以用商户数量作为近似或基数
+      oldBrandCounts.push(
+        parseInt(
+          item.metrics
+            .find((m) => m.label === "商户数量")
+            .value.replace("+", "")
+        ) * 0.1 || null
+      ); // 粗略估算
+    } else {
+      oldBrandCounts.push(null); // 没有数据则为null
+    }
 
-    chartInstance.setOption(option);
+    // 提取重要事件的标注信息
+    if (
+      item.event &&
+      item.event !== "商业区创建" &&
+      item.event !== "地名确立" &&
+      item.event !== "建筑风格传承"
+    ) {
+      // 排除一些“非危机”事件
+      eventPoints.push({
+        xAxis: item.year,
+        yAxis: oldBrandCounts[index], // 标注在对应数量点
+        name: item.event,
+        value: item.year,
+        symbolSize: 15,
+        itemStyle: { color: "#dc3545" }, // 红色标记事件
+        label: {
+          formatter: "{b}",
+          position: "top",
+          color: "#dc3545",
+          fontSize: 10,
+          offset: [0, -10],
+          show: true,
+        },
+      });
+    }
+  });
+
+  // 填补空值，确保折线图连续
+  for (let i = 0; i < oldBrandCounts.length; i++) {
+    if (oldBrandCounts[i] === null) {
+      // 简单的前一个非null值填充，更复杂的可以进行插值
+      if (i > 0 && oldBrandCounts[i - 1] !== null) {
+        oldBrandCounts[i] = oldBrandCounts[i - 1];
+      } else if (
+        i < oldBrandCounts.length - 1 &&
+        oldBrandCounts[i + 1] !== null
+      ) {
+        oldBrandCounts[i] = oldBrandCounts[i + 1];
+      } else {
+        oldBrandCounts[i] = 0; // 实在没数据就设为0
+      }
+    }
   }
-};
 
-// 初始化建筑类型分布图表
-const initTypeChart = () => {
-  if (typeChart.value) {
-    typeChartInstance = echarts.init(typeChart.value);
+  return {
+    years: years,
+    counts: oldBrandCounts,
+    events: eventPoints,
+  };
+});
+
+// --- ECharts 初始化函数 ---
+
+// 1. 初始化商业业态发展图表 (堆叠柱状图)
+const initBusinessEvolutionChart = () => {
+  if (chartRef1.value) {
+    chartInstance1 = echarts.init(chartRef1.value);
 
     const option = {
       tooltip: {
         trigger: "axis",
-        axisPointer: {
-          type: "shadow",
+        axisPointer: { type: "shadow" },
+        formatter: function (params) {
+          let str = `**${params[0].name}**<br/>`;
+          params.forEach((item) => {
+            str += `${item.marker} ${item.seriesName}: ${item.value}%<br/>`;
+          });
+          return str;
         },
+        backgroundColor: "rgba(255,255,255,0.9)",
+        borderColor: "#bcaaa4",
+        borderWidth: 1,
+        textStyle: { color: "#333" },
       },
       legend: {
-        data: typeData.value.types.map((item) => item.name),
-        textStyle: {
-          color: "#5a4a42",
-        },
-        bottom: 0,
+        data: businessEvolutionData.value.categories.map((item) => item.name),
+        textStyle: { color: "#6d4c41" },
+        bottom: "0%",
+        itemGap: 10,
       },
       grid: {
         left: "3%",
@@ -462,79 +491,255 @@ const initTypeChart = () => {
       },
       xAxis: {
         type: "category",
-        data: typeData.value.years,
-        axisLine: {
-          lineStyle: {
-            color: "#8b4513",
-          },
-        },
-        axisLabel: {
-          color: "#5a4a42",
-        },
+        data: businessEvolutionData.value.years,
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: { color: "#6d4c41", rotate: 30, interval: 0 }, // 旋转标签，避免重叠
       },
       yAxis: {
         type: "value",
-        axisLine: {
-          lineStyle: {
-            color: "#8b4513",
-          },
-        },
-        axisLabel: {
-          formatter: "{value}%",
-          color: "#5a4a42",
-        },
+        name: "占比 (%)",
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: { formatter: "{value}%", color: "#6d4c41" },
         splitLine: {
-          lineStyle: {
-            color: "rgba(139, 69, 19, 0.1)",
-          },
+          lineStyle: { color: "rgba(161, 136, 127, 0.1)", type: "dashed" },
         },
+        max: 100,
       },
-      series: typeData.value.types.map((type, index) => ({
-        name: type.name,
+      series: businessEvolutionData.value.categories.map((category, index) => ({
+        name: category.name,
         type: "bar",
         stack: "total",
-        emphasis: {
-          focus: "series",
-        },
-        data: type.data,
+        emphasis: { focus: "series" },
+        data: category.data,
+        barWidth: "40%", // 调整柱子宽度
         itemStyle: {
-          color: ["#d4a76a", "#8b4513", "#9c7c5c", "#5a4a42"][index],
+          borderRadius: [5, 5, 0, 0], // 柱子顶部圆角
+          color: [
+            "#e6b8a2", // 传统零售 - 浅暖棕
+            "#c07b6b", // 餐饮娱乐 - 砖红
+            "#8d6e63", // 服务行业 - 中棕
+            "#6d4c41", // 文化体验/其他 - 深棕
+          ][index],
         },
       })),
     };
+    chartInstance1.setOption(option);
+  }
+};
 
-    typeChartInstance.setOption(option);
+// 2. 初始化建筑风格演变图表 (折线图)
+const initArchitecturalStyleChart = () => {
+  if (chartRef2.value) {
+    chartInstance2 = echarts.init(chartRef2.value);
+
+    const option = {
+      tooltip: {
+        trigger: "axis",
+        formatter:
+          "{b0}年<br/>{a0}: {c0}%<br/>{a1}: {c1}%<br/>{a2}: {c2}%<br/>{a3}: {c3}%",
+        backgroundColor: "rgba(255,255,255,0.9)",
+        borderColor: "#bcaaa4",
+        borderWidth: 1,
+        textStyle: { color: "#333" },
+      },
+      legend: {
+        data: architecturalStyleData.value.styles.map((item) => item.name),
+        textStyle: { color: "#6d4c41" },
+        bottom: "0%",
+        itemGap: 10,
+      },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "15%",
+        containLabel: true,
+      },
+      xAxis: {
+        type: "category",
+        data: architecturalStyleData.value.years,
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: { color: "#6d4c41", rotate: 30, interval: 0 },
+      },
+      yAxis: {
+        type: "value",
+        name: "代表性/占比 (%)",
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: { formatter: "{value}%", color: "#6d4c41" },
+        splitLine: {
+          lineStyle: { color: "rgba(161, 136, 127, 0.1)", type: "dashed" },
+        },
+        min: 0,
+        max: 100,
+      },
+      series: architecturalStyleData.value.styles.map((style, index) => ({
+        name: style.name,
+        type: "line",
+        smooth: true,
+        symbol: "circle",
+        symbolSize: 8,
+        lineStyle: {
+          width: 3,
+          color: [
+            "#4CAF50", // 传统北方 - 绿色
+            "#2196F3", // 中西合璧 - 蓝色
+            "#FF9800", // 民国商业 - 橙色
+            "#9C27B0", // 现代保护 - 紫色
+          ][index],
+        },
+        itemStyle: {
+          color: ["#4CAF50", "#2196F3", "#FF9800", "#9C27B0"][index],
+        },
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: [
+                "rgba(76, 175, 80, 0.2)",
+                "rgba(33, 150, 243, 0.2)",
+                "rgba(255, 152, 0, 0.2)",
+                "rgba(156, 39, 176, 0.2)",
+              ][index],
+            },
+            { offset: 1, color: "rgba(255, 255, 255, 0)" },
+          ]),
+        },
+        data: style.data,
+      })),
+    };
+    chartInstance2.setOption(option);
+  }
+};
+
+// 3. 初始化老字号数量与重要事件图表 (带事件点的折线图)
+const initOldBrandAndEventsChart = () => {
+  if (chartRef3.value) {
+    chartInstance3 = echarts.init(chartRef3.value);
+
+    const option = {
+      tooltip: {
+        trigger: "axis",
+        formatter: function (params) {
+          let str = `**${params[0].name}**<br/>`;
+          params.forEach((item) => {
+            if (item.seriesType === "line") {
+              str += `${item.marker} ${item.seriesName}: ${item.value}家<br/>`;
+            } else if (item.seriesType === "scatter") {
+              str += `${item.marker} ${item.name}<br/>`; // 事件名称
+            }
+          });
+          return str;
+        },
+        backgroundColor: "rgba(255,255,255,0.9)",
+        borderColor: "#bcaaa4",
+        borderWidth: 1,
+        textStyle: { color: "#333" },
+      },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true,
+      },
+      xAxis: {
+        type: "category",
+        data: oldBrandAndEventsData.value.years,
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: { color: "#6d4c41", rotate: 30, interval: 0 },
+      },
+      yAxis: {
+        type: "value",
+        name: "老字号数量 (家)",
+        axisLine: { lineStyle: { color: "#a1887f" } },
+        axisLabel: { color: "#6d4c41" },
+        splitLine: {
+          lineStyle: { color: "rgba(161, 136, 127, 0.1)", type: "dashed" },
+        },
+      },
+      series: [
+        {
+          name: "老字号数量",
+          type: "line",
+          smooth: true,
+          symbol: "circle",
+          symbolSize: 8,
+          lineStyle: {
+            width: 4,
+            color: "#c07b6b", // 砖红色
+          },
+          itemStyle: {
+            color: "#e6b8a2",
+            borderColor: "#c07b6b",
+            borderWidth: 2,
+          },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "rgba(192, 123, 107, 0.3)" },
+              { offset: 1, color: "rgba(192, 123, 107, 0.05)" },
+            ]),
+          },
+          data: oldBrandAndEventsData.value.counts,
+          markPoint: {
+            data: oldBrandAndEventsData.value.events,
+            label: {
+              show: true,
+              position: "top",
+              color: "#dc3545",
+              fontSize: 10,
+              formatter: "{b}",
+            },
+            symbol: "pin",
+            symbolSize: 40,
+          },
+        },
+      ],
+    };
+    chartInstance3.setOption(option);
   }
 };
 
 // 监听活动索引变化
-watch(activeIndex, (newIndex) => {
-  if (chartInstance) {
-    chartInstance.dispatchAction({
-      type: "downplay",
-      seriesIndex: 0,
-    });
+// 可以添加 watch 来重新渲染图表。
+watch(
+  timelineData,
+  () => {
+    // 更新图表数据
+    businessEvolutionData.value.years = timelineData.value.map(
+      (item) => item.year
+    );
+    brandCountData.value.years = timelineData.value.map((item) => item.year);
 
-    chartInstance.dispatchAction({
-      type: "highlight",
-      seriesIndex: 0,
-      dataIndex: newIndex,
+    // 重新设置图表选项
+    chartInstance1?.setOption({
+      xAxis: { data: businessEvolutionData.value.years },
+      series: businessEvolutionData.value.categories.map((c) => ({
+        name: c.name,
+        data: c.data,
+      })),
     });
+    chartInstance2?.setOption({
+      xAxis: { data: brandCountData.value.years },
+      series: [{ data: brandCountData.value.counts }],
+    });
+    // 饼图通常不需要根据timelineData变化而变化，除非你的设计是这样
+  },
+  { deep: true }
+);
 
-    chartInstance.dispatchAction({
-      type: "showTip",
-      seriesIndex: 0,
-      dataIndex: newIndex,
-    });
-  }
+watch(
+  timelineData,
+  () => {
+    // 强制重新初始化图表实例，确保数据和选项完全更新
+    // 销毁旧实例并创建新实例是一种更彻底的更新方式
+    chartInstance1?.dispose();
+    chartInstance2?.dispose();
+    chartInstance3?.dispose();
 
-  if (typeChartInstance) {
-    typeChartInstance.dispatchAction({
-      type: "highlight",
-      seriesIndex: newIndex,
-    });
-  }
-});
+    initBusinessEvolutionChart();
+    initArchitecturalStyleChart();
+    initOldBrandAndEventsChart();
+  },
+  { deep: true }
+);
 
 // 响应窗口大小变化
 const handleResize = () => {
@@ -542,10 +747,16 @@ const handleResize = () => {
   if (typeChartInstance) typeChartInstance.resize();
 };
 
+// --- 生命周期钩子和响应式监听 ---
 onMounted(() => {
-  initChart();
-  initTypeChart();
-  window.addEventListener("resize", handleResize);
+  initBusinessEvolutionChart();
+  initArchitecturalStyleChart();
+  initOldBrandAndEventsChart();
+  window.addEventListener("resize", () => {
+    chartInstance1?.resize();
+    chartInstance2?.resize();
+    chartInstance3?.resize();
+  });
 });
 </script>
 

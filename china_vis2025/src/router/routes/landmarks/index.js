@@ -3,7 +3,7 @@ import summerPalace from "./summerPalace";
 import templeOfHeaven from "./templeOfHeaven";
 import fayuanTemple from "./fayuanTemple";
 import mingTombs from "./mingTombs";
-import dashilar from "./dashilar";
+import dashilan from "./dashilan";
 import beihaiPark from "./beihaiPark";
 import greatWall from "./greatWall";
 
@@ -13,7 +13,7 @@ const landmarkRoutes = [
   ...templeOfHeaven,
   ...fayuanTemple,
   ...mingTombs,
-  ...dashilar,
+  ...dashilan,
   ...beihaiPark,
   ...greatWall,
 ];

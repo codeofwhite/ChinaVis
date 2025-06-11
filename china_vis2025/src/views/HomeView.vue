@@ -147,7 +147,7 @@ export default {
           id: "dashilan",
           name: "大栅栏",
           position: [116.399, 39.899],
-          routeName: "dashilar",
+          routeName: "dashilan",
           image:
             "https://th.bing.com/th/id/OIP.IwJi2yNYtDsb5PiANk70RwHaE7?w=273&h=182&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
           description:

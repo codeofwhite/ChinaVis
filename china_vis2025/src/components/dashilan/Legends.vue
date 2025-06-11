@@ -1,158 +1,8 @@
 <template>
-  <div class="dashboard-container">
-    <!-- 导航区 -->
-    <div class="dashboard-nav">
-      <button @click="goBack" class="nav-button">
-        <i class="icon-back"></i> 返回天坛门户
-      </button>
-      <div class="nav-title">
-        <h1>天坛六百年皇家秘事</h1>
-        <p class="subtitle">
-          从嘉靖帝雷击事件到光绪帝祈雨传奇，感受圣坛背后的历史风云
-        </p>
-      </div>
-      <div class="time-indicator">
-        <span class="current-year">{{ activeData.year }}</span>
-        <span class="era">{{ activeData.period }}</span>
-      </div>
-    </div>
-
-    <!-- 主仪表盘 -->
-    <div class="dashboard-main">
-      <!-- 左侧面板 -->
-      <div class="dashboard-sidepanel">
-        <div class="timeline-widget">
-          <h3 class="widget-title">历史时间轴</h3>
-          <div class="timeline-container">
-            <div class="timeline-line"></div>
-            <div
-              v-for="(item, index) in legendsData"
-              :key="index"
-              :class="['timeline-event', { active: activeIndex === index }]"
-              @click="setActiveIndex(index)"
-            >
-              <div class="event-marker" :style="{ borderColor: item.color }">
-                <div
-                  class="event-dot"
-                  :style="{ backgroundColor: item.color }"
-                ></div>
-              </div>
-              <div class="event-info">
-                <div class="event-year">{{ item.year }}</div>
-                <div class="event-title">{{ item.title }}</div>
-                <div
-                  class="event-type-tag"
-                  :style="{ backgroundColor: item.color }"
-                >
-                  {{ item.type }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="stats-widget">
-          <h3 class="widget-title">事件统计</h3>
-          <div class="stats-grid">
-            <div class="stat-item">
-              <div class="stat-value">{{ legendsData.length }}</div>
-              <div class="stat-label">总事件数</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-value">1420-1918</div>
-              <div class="stat-label">时间跨度</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-value">12</div>
-              <div class="stat-label">涉及皇帝</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-value">4</div>
-              <div class="stat-label">事件类型</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 中央内容区 -->
-      <div class="dashboard-content">
-        <div class="main-card">
-          <div class="card-header">
-            <h2>{{ activeData.title }}</h2>
-            <div class="card-meta">
-              <span class="meta-item">{{ activeData.period }}</span>
-              <span class="meta-item">{{ activeData.type }}</span>
-              <span class="meta-item">{{ activeData.year }}年</span>
-            </div>
-          </div>
-
-          <div class="card-body">
-            <div
-              class="media-panel"
-              :style="{ backgroundImage: `url(${activeData.image})` }"
-            >
-              <div class="media-overlay"></div>
-              <div class="media-caption">
-                <i class="icon-image"></i>
-                {{ activeData.imageCaption || "天坛历史资料图" }}
-              </div>
-            </div>
-
-            <div class="content-panel">
-              <div class="description-section">
-                <h3 class="section-title">事件描述</h3>
-                <p>{{ activeData.description }}</p>
-              </div>
-
-              <div class="significance-section">
-                <h3 class="section-title">
-                  历史意义 <i class="icon-importance"></i>
-                </h3>
-                <p>{{ activeData.significance }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 右侧面板 -->
-      <div class="dashboard-sidepanel right">
-        <div class="type-chart-widget">
-          <h3 class="widget-title">事件类型分布</h3>
-          <div ref="typeChart" class="chart-container"></div>
-          <div class="chart-legend">
-            <div
-              v-for="(type, index) in eventTypes"
-              :key="index"
-              class="legend-item"
-            >
-              <span
-                class="legend-color"
-                :style="{ backgroundColor: type.color }"
-              ></span>
-              <span class="legend-label">{{ type.name }}</span>
-              <span class="legend-value">{{ type.percentage }}%</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-chart-widget">
-          <h3 class="widget-title">事件时间分布 (1420-1918)</h3>
-          <div ref="timelineChart" class="chart-container"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 底部信息栏 -->
-    <div class="dashboard-footer">
-      <div class="footer-note">
-        <i class="icon-info"></i>
-        天坛作为明清两代皇家祭坛，见证了无数历史风云变幻，这些传奇故事至今仍为人们所传颂。
-      </div>
-      <div class="footer-credits">
-        数据来源：中国第一历史档案馆 · 设计：天坛文化研究中心
-      </div>
-    </div>
+  <div class="legends-container">
+    <button @click="goBack" class="back-button">← 返回故宫门户</button>
+    <GugongCharacterHub></GugongCharacterHub>
+    <palaceSayings></palaceSayings>
   </div>
 </template>
 
@@ -160,11 +10,13 @@
 import { ref, onMounted, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
+import GugongCharacterHub from "./GugongCharacterHub.vue";
+import palaceSayings from "./PalaceSayings.vue";
 
 const router = useRouter();
 
 // 返回门户主页
-const goBack = () => router.push("/landmarks/dashilar");
+const goBack = () => router.push("/landmarks/dashilan");
 
 // 传奇事件数据
 const legendsData = ref([
@@ -475,6 +327,13 @@ onMounted(() => {
   src: url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap");
 }
 
+.legends-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f2e9 0%, #e8d8c3 100%);
+  padding: 2rem;
+  position: relative;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -512,6 +371,28 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   position: relative;
   z-index: 10;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(94, 66, 41, 0.8);
+  color: #fff8e1;
+  border: 1px solid #5d4037;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9em;
+  z-index: 10;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+  background-color: rgba(121, 85, 72, 0.9);
+  transform: translateX(-2px);
 }
 
 .nav-button {
