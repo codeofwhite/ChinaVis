@@ -119,7 +119,7 @@
           <div ref="chartRef2" class="chart-container"></div>
         </div>
         <div class="visualization-card">
-          <h3>客流量变化趋势</h3>
+          <h3>老字号数量变化趋势</h3>
           <div ref="chartRef3" class="chart-container"></div>
         </div>
       </div>

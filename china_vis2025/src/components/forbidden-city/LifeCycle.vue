@@ -439,10 +439,17 @@ const initTypeChart = () => {
       },
       legend: {
         data: typeData.value.types.map((item) => item.name),
+        type: "scroll",
+        orient: "horizontal",
+        bottom: 10,
+        itemGap: 20,
+        padding: [5, 50],
+        pageIconColor: "#8b4513",
+        pageTextStyle: { color: "#5a4a42" },
         textStyle: {
           color: "#5a4a42",
+          fontSize: 12,
         },
-        bottom: 0,
       },
       grid: {
         left: "3%",
