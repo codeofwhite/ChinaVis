@@ -880,7 +880,6 @@ onMounted(() => {
 }
 
 .chart-container:after {
-  content: "可视化图表区域";
   position: absolute;
   font-size: 1.1em;
 }
