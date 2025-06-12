@@ -1,234 +1,140 @@
 <template>
-  <div class="lifecycle-container">
+  <div class="legends-container">
     <button @click="goBack" class="back-button">← 返回长城门户</button>
-    <div class="graph-layout">
-      <div ref="graphChart" class="chart-box"></div>
-      <div class="info-panel" v-if="selectedPerson">
-        <h2>{{ selectedPerson.name }}</h2>
-        <div v-for="(paragraph, index) in selectedPerson.detail" :key="index">
-          <p>{{ paragraph }}</p>
-        </div>
-      </div>
+    
+    <!-- 页面标题 -->
+    <div class="legends-header">
+      <h1>长城千年传奇秘闻</h1>
+      <p>从秦汉筑城到明清防御，探寻长城背后的历史故事与民族神话</p>
     </div>
-    <div class="chart-desc">
-      展示长城历史上重要人物及其关联事件，了解帝王、将领、文人、修缮者等与长城的故事。
-    </div>
+    
+    <CharacterHub></CharacterHub>
+    <Sayings></Sayings>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import * as echarts from 'echarts'
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
+import CharacterHub from "./CharacterHub.vue";
+import Sayings from "./Sayings.vue";
 
-const router = useRouter()
-function goBack() {
-  router.push('/great-wall')
-}
+const router = useRouter();
 
-const graphChart = ref(null)
-const selectedPerson = ref(null)
-
-// 长城相关历史人物与事件
-const peopleData = {
-  '秦始皇': [
-    '嬴政，秦朝开国皇帝，首次实现中国大一统。',
-    '下令连接和修筑北方旧有防御墙，形成“万里长城”雏形。',
-    '动员数十万民夫、士兵、囚徒参与修筑，留下“筑长城”的千古传说。'
-  ],
-  '蒙恬': [
-    '秦朝著名将领，被誉为“长城之父”。',
-    '奉秦始皇之命主持修筑西起临洮、东至辽东的长城，抵御匈奴南侵。',
-    '善于用兵，守边十余年，巩固了北疆安全。'
-  ],
-  '汉武帝': [
-    '西汉第七位皇帝，积极北击匈奴，巩固边防。',
-    '多次修缮和加固长城，设置“九边重镇”，加强西北防御体系。',
-    '派卫青、霍去病等将领出击匈奴，长城成为汉匈对峙的重要屏障。'
-  ],
-  '卫青': [
-    '西汉名将，汉武帝时期北击匈奴的主帅。',
-    '多次率军出塞，收复河套，保障长城沿线安全。',
-    '其军事行动极大提升了长城的战略地位。'
-  ],
-  '明成祖朱棣': [
-    '明朝第三位皇帝，迁都北京后高度重视北方防御。',
-    '大规模修缮和扩建长城，采用砖石结构，形成今日所见的明长城。',
-    '设立九边重镇，完善烽燧、关隘体系。'
-  ],
-  '戚继光': [
-    '明代著名抗倭名将，后镇守蓟州（今北京东北）。',
-    '主持修筑蓟镇长城，创新“敌台”结构，加强防御。',
-    '训练戚家军，极大提升长城北段的战斗力。'
-  ],
-  '徐达': [
-    '明初开国大将，参与北方长城修筑与防御体系建设。',
-    '镇守北平，负责边防，巩固明初北疆安全。'
-  ],
-  '长城修缮': [
-    '明清以来，长城多次因战乱、自然灾害受损。',
-    '20世纪80年代起，中国政府启动大规模修缮工程，重点保护八达岭、山海关等段落。',
-    '长城成为世界文化遗产，修缮与保护持续进行。'
-  ],
-  '八达岭保卫战': [
-    '1933年，长城抗战爆发，国民革命军在八达岭、古北口等地英勇抗击日军。',
-    '八达岭保卫战成为中国近代史上著名的民族抗战象征。'
-  ],
-  '世界遗产申报': [
-    '1987年，长城被联合国教科文组织列为世界文化遗产。',
-    '成为中国首批世界遗产之一，标志着长城的国际影响力和保护价值。'
-  ]
-}
-
-onMounted(() => {
-  const myChart = echarts.init(graphChart.value)
-  const option = {
-    tooltip: {
-      formatter: function (params) {
-        return params.data.name
-      }
-    },
-    legend: [
-      {
-        data: ['帝王', '将领', '修缮者', '历史事件'],
-        orient: 'vertical',
-        left: 'left'
-      }
-    ],
-    series: [
-      {
-        type: 'graph',
-        layout: 'force',
-        symbolSize: 60,
-        roam: true,
-        label: {
-          show: true
-        },
-        force: {
-          repulsion: 300,
-          edgeLength: 120
-        },
-        categories: [
-          { name: '帝王', itemStyle: { color: '#d4a76a' } },
-          { name: '将领', itemStyle: { color: '#8b4513' } },
-          { name: '修缮者', itemStyle: { color: '#5a9bd5' } },
-          { name: '历史事件', itemStyle: { color: '#d94e5d' } }
-        ],
-        data: [
-          { name: '长城', category: 0, symbolSize: 80, draggable: true },
-          { name: '秦始皇', category: 0 },
-          { name: '汉武帝', category: 0 },
-          { name: '明成祖朱棣', category: 0 },
-          { name: '蒙恬', category: 1 },
-          { name: '卫青', category: 1 },
-          { name: '戚继光', category: 1 },
-          { name: '徐达', category: 1 },
-          { name: '长城修缮', category: 2 },
-          { name: '八达岭保卫战', category: 3 },
-          { name: '世界遗产申报', category: 3 }
-        ],
-        links: [
-          { source: '长城', target: '秦始皇' },
-          { source: '长城', target: '汉武帝' },
-          { source: '长城', target: '明成祖朱棣' },
-          { source: '长城', target: '蒙恬' },
-          { source: '长城', target: '卫青' },
-          { source: '长城', target: '戚继光' },
-          { source: '长城', target: '徐达' },
-          { source: '长城', target: '长城修缮' },
-          { source: '长城', target: '八达岭保卫战' },
-          { source: '长城', target: '世界遗产申报' },
-          { source: '秦始皇', target: '蒙恬' },
-          { source: '汉武帝', target: '卫青' },
-          { source: '明成祖朱棣', target: '戚继光' },
-          { source: '明成祖朱棣', target: '徐达' },
-          { source: '长城修缮', target: '世界遗产申报' },
-          { source: '八达岭保卫战', target: '长城修缮' }
-        ],
-        lineStyle: {
-          color: 'source',
-          curveness: 0.2
-        },
-        emphasis: {
-          focus: 'adjacency',
-          lineStyle: {
-            width: 5
-          }
-        },
-        roam: true,
-        draggable: true,
-        zoom: 1.2,
-        edgeSymbol: ['circle', 'arrow']
-      }
-    ]
-  }
-  myChart.setOption(option)
-  myChart.on('click', function (params) {
-    if (peopleData[params.data.name]) {
-      selectedPerson.value = {
-        name: params.data.name,
-        detail: peopleData[params.data.name]
-      }
-    } else {
-      selectedPerson.value = null
-    }
-  })
-})
+// 返回长城门户主页
+const goBack = () => router.push("/landmarks/great-wall");
 </script>
 
 <style scoped>
-.lifecycle-container {
-  padding: 30px 10px 60px 10px;
-  max-width: 1400px;
-  margin: 0 auto;
+:root {
+  --primary-color: #3a6c4f;
+  --secondary-color: #b3cbb9;
+  --accent-color: #5e8c6a;
+  --text-dark: #2d3a2e;
+  --text-medium: #4e5d4a;
+  --text-light: #7a8c7a;
+  --bg-light: #eaf3ec;
+  --bg-lighter: #f6fbf7;
+  --bg-dark: #254032;
+  --border-radius: 12px;
+  --box-shadow: 0 8px 30px rgba(58, 108, 79, 0.12);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
+
+@font-face {
+  font-family: "Noto Serif SC";
+  src: url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap");
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #b3cbb9;
+}
+
+.legends-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eaf3ec 0%, #d1e3d6 100%);
+  padding: 2rem;
+  position: relative;
+  font-family: "Noto Serif SC", serif;
+  color: var(--text-dark);
+}
+
 .back-button {
-  margin-bottom: 20px;
-  background: #8b4513;
-  color: #fff8e1;
-  border: none;
-  padding: 10px 22px;
-  border-radius: 30px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(58, 108, 79, 0.85);
+  color: #f6fbf7;
+  border: 1px solid #3a6c4f;
+  padding: 8px 16px;
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 1em;
-  transition: all 0.3s;
+  font-size: 0.9em;
+  z-index: 10;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
 }
+
 .back-button:hover {
-  background: #a67c52;
+  background-color: rgba(94, 140, 106, 0.95);
+  transform: translateX(-2px);
 }
-.graph-layout {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-}
-.chart-box {
-  flex: 1;
-  height: 600px;
-  min-height: 400px;
-  margin-bottom: 20px;
-}
-.info-panel {
-  width: 320px;
-  background: linear-gradient(to bottom, #fffaf3, #f9f3e8);
-  border-left: 2px solid #d4a76a;
-  padding: 20px;
-  color: #4a3d2f;
-  font-size: 1em;
-  line-height: 1.6;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
-  overflow-y: auto;
-  max-height: 600px;
-}
-.info-panel h2 {
-  font-size: 1.25em;
-  margin-bottom: 10px;
-  color: #8b4513;
-}
-.chart-desc {
-  color: #5a4a42;
-  font-size: 1em;
+
+.legends-header {
   text-align: center;
-  margin-top: 20px;
+  padding: 4rem 2rem 2rem;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.legends-header h1 {
+  font-size: 2.8rem;
+  color: #3a6c4f;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);
+  font-family: "Noto Serif SC", serif;
+}
+
+.legends-header p {
+  font-size: 1.2rem;
+  color: #4e5d4a;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.8;
+  opacity: 0.92;
+}
+
+@media (max-width: 768px) {
+  .legends-container {
+    padding: 1rem;
+  }
+
+  .back-button {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .legends-header {
+    padding: 3rem 1rem 1.5rem;
+  }
+
+  .legends-header h1 {
+    font-size: 2rem;
+  }
+
+  .legends-header p {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
 }
 </style>
