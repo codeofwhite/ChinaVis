@@ -31,27 +31,28 @@
           <span class="legend-icon scholar"></span>
           <span>维新人士</span>
         </div>
+        <div class="legend-item">
+          <span class="legend-icon concubine"></span>
+          <span>妃嫔</span>
+        </div>
       </div>
 
       <div class="relation-legend">
         <div class="legend-item">
-          <span class="relation-line creation"></span>
-          <span>创建/重建</span>
+          <span class="relation-line palace-event"></span>
+          <span>园林事务</span>
         </div>
         <div class="legend-item">
-          <span class="relation-line power-control"></span>
-          <span>权力/控制</span>
+          <span class="relation-line power-struggle"></span>
+          <span>权力斗争</span>
         </div>
         <div class="legend-item">
-          <span class="relation-line family"></span>
-          <span>家族/宠爱</span>
-        </div>
-        <div class="legend-item">
-          <span class="relation-line event"></span>
-          <span>事件关联</span>
+          <span class="relation-line personal-ties"></span>
+          <span>个人关联</span>
         </div>
       </div>
     </div>
+    <p class="legend-hint">更多关系类型请点击人物节点查看详情</p>
 
     <div class="graph-wrapper" ref="graphContainerRef"></div>
 
@@ -347,10 +348,9 @@ const originalGraphData = {
       color: "#7CB342",
       width: 2,
       curvature: 0.2,
-    }
+    },
   ],
 };
-
 
 const graphContainerRef = ref(null);
 let forceGraphInstance = null;
@@ -583,97 +583,108 @@ const graphData = ref({
       color: "#7CB342",
       width: 2,
       curvature: 0.2,
-    }
+    },
   ],
 });
 
 const characterInfos = {
-  "颐和园": {
-    story: "颐和园，作为清朝皇家园林，见证了多位帝后的生活、决策与时代变迁，尤其是晚清时期重要的政治舞台。",
+  颐和园: {
+    story:
+      "颐和园，作为清朝皇家园林，见证了多位帝后的生活、决策与时代变迁，尤其是晚清时期重要的政治舞台。",
     details: [
       "始建于乾隆年间，原名清漪园",
       "咸丰十年（1860年）被焚毁",
-      "光绪十四年（1888年）慈禧挪用海军经费重建并改名颐和园"
+      "光绪十四年（1888年）慈禧挪用海军经费重建并改名颐和园",
     ],
   },
-  "乾隆皇帝": {
-    story: "清朝第六位皇帝，对颐和园前身清漪园的创建和完善投入巨大，奠定了其宏大的园林格局。",
+  乾隆皇帝: {
+    story:
+      "清朝第六位皇帝，对颐和园前身清漪园的创建和完善投入巨大，奠定了其宏大的园林格局。",
     details: [
       "在位60年，多次南巡，借鉴江南园林风格",
       "以其母祝寿之名修建清漪园",
-      "对皇家园林建设有深远影响"
+      "对皇家园林建设有深远影响",
     ],
   },
-  "慈禧太后": {
-    story: "晚清实际统治者，颐和园重建的主要推动者和长期居住者。她在园中处理政务，接见外国使节，是晚清重要的政治中心。",
+  慈禧太后: {
+    story:
+      "晚清实际统治者，颐和园重建的主要推动者和长期居住者。她在园中处理政务，接见外国使节，是晚清重要的政治中心。",
     details: [
       "挪用海军经费重建颐和园，引发争议",
       "在园内“垂帘听政”长达数十年",
-      "是晚清政治、外交和生活的重要见证者和参与者"
+      "是晚清政治、外交和生活的重要见证者和参与者",
     ],
   },
-  "光绪皇帝": {
-    story: "清朝第十一位皇帝，在颐和园玉澜堂等地被慈禧太后软禁，在此度过了他人生中最后、也是最压抑的十年。",
+  光绪皇帝: {
+    story:
+      "清朝第十一位皇帝，在颐和园玉澜堂等地被慈禧太后软禁，在此度过了他人生中最后、也是最压抑的十年。",
     details: [
       "甲午战争、戊戌变法的主要决策者",
       "因变法失败在颐和园遭受幽禁",
-      "其遭遇是晚清政治斗争的缩影"
+      "其遭遇是晚清政治斗争的缩影",
     ],
   },
-  "咸丰皇帝": {
-    story: "清朝第九位皇帝，在位期间遭遇第二次鸦片战争，清漪园（颐和园前身）在此时期被英法联军焚毁，对其打击巨大。",
+  咸丰皇帝: {
+    story:
+      "清朝第九位皇帝，在位期间遭遇第二次鸦片战争，清漪园（颐和园前身）在此时期被英法联军焚毁，对其打击巨大。",
     details: [
       "清朝由盛转衰的关键时期",
       "未能有效阻止西方列强入侵",
-      "在位期间圆明园和清漪园被焚"
+      "在位期间圆明园和清漪园被焚",
     ],
   },
   "奕䜣(恭亲王)": {
-    story: "晚清重要的政治家和洋务运动领袖，在慈禧重建颐和园的过程中，曾协助筹款和管理工程。",
+    story:
+      "晚清重要的政治家和洋务运动领袖，在慈禧重建颐和园的过程中，曾协助筹款和管理工程。",
     details: [
       "咸丰帝异母弟，主导晚清外交和洋务运动",
       "与慈禧太后在政治上既合作又斗争",
-      "参与了同治中兴的改革"
+      "参与了同治中兴的改革",
     ],
   },
-  "隆裕太后": {
-    story: "光绪皇帝的皇后，慈禧太后的内侄女。她在颐和园中伴随光绪度过被囚禁的岁月，也是清王朝的最后一位太后。",
+  隆裕太后: {
+    story:
+      "光绪皇帝的皇后，慈禧太后的内侄女。她在颐和园中伴随光绪度过被囚禁的岁月，也是清王朝的最后一位太后。",
     details: [
       "光绪帝的皇后，政治婚姻的牺牲品",
       "在清朝灭亡后签署了《清帝逊位诏书》",
-      "在颐和园的日子反映了她的压抑和无奈"
+      "在颐和园的日子反映了她的压抑和无奈",
     ],
   },
-  "李莲英": {
-    story: "晚清慈禧太后最宠信的太监，常伴慈禧左右，在颐和园内外势力庞大，参与多项宫廷事务。",
+  李莲英: {
+    story:
+      "晚清慈禧太后最宠信的太监，常伴慈禧左右，在颐和园内外势力庞大，参与多项宫廷事务。",
     details: [
       "慈禧太后的大总管，权力仅次于军机大臣",
       "对颐和园的日常管理和慈禧生活有很大影响",
-      "其权势与财富反映了晚清宦官专政的特点"
+      "其权势与财富反映了晚清宦官专政的特点",
     ],
   },
-  "康有为": {
-    story: "戊戌变法的主要领导人之一，曾上书光绪皇帝，主张效仿西方进行变法维新，他的思想在颐和园内（光绪被囚之地）曾激起希望。",
+  康有为: {
+    story:
+      "戊戌变法的主要领导人之一，曾上书光绪皇帝，主张效仿西方进行变法维新，他的思想在颐和园内（光绪被囚之地）曾激起希望。",
     details: [
       "公车上书的发起者",
       "戊戌变法失败后流亡海外",
-      "中国近代思想启蒙的重要人物"
+      "中国近代思想启蒙的重要人物",
     ],
   },
-  "梁启超": {
-    story: "戊戌变法的重要参与者，康有为的学生。他与光绪皇帝、康有为的变法思想在颐和园内激荡，尽管最终失败。",
+  梁启超: {
+    story:
+      "戊戌变法的重要参与者，康有为的学生。他与光绪皇帝、康有为的变法思想在颐和园内激荡，尽管最终失败。",
     details: [
       "戊戌变法失败后流亡日本",
       "著名的思想家、史学家、文学家",
-      "对中国近代思想文化产生深远影响"
+      "对中国近代思想文化产生深远影响",
     ],
   },
-  "光绪珍妃": {
-    story: "光绪皇帝的宠妃，因支持光绪变法而得罪慈禧太后，最终在八国联军侵华时，被慈禧太后命人推入颐和园东北角的井中溺死。",
+  光绪珍妃: {
+    story:
+      "光绪皇帝的宠妃，因支持光绪变法而得罪慈禧太后，最终在八国联军侵华时，被慈禧太后命人推入颐和园东北角的井中溺死。",
     details: [
       "光绪帝最宠爱的妃子",
       "支持光绪的维新思想",
-      "其悲惨结局是晚清宫廷政治残酷的写照"
+      "其悲惨结局是晚清宫廷政治残酷的写照",
     ],
   },
 };
@@ -1084,16 +1095,25 @@ h1 {
 }
 
 .legend-icon.location {
-  background-color: #d4af37;
+  background-color: #6A996A; /* 颐和园自己的颜色 */
 }
 .legend-icon.emperor {
-  background-color: #8b0000;
+  background-color: #388E3C; /* 沿用光绪的绿色系 */
 }
 .legend-icon.empress {
-  background-color: #6a0dad;
+  background-color: #4CAF50; /* 沿用慈禧的绿色系 */
 }
 .legend-icon.official {
-  background-color: #2f4f4f;
+  background-color: #7CB342; /* 沿用恭亲王的绿色系 */
+}
+.legend-icon.eunuch {
+  background-color: #6D4C41; /* 沿用李莲英的棕色 */
+}
+.legend-icon.scholar {
+  background-color: #FFEB3B; /* 沿用康有为的黄色 */
+}
+.legend-icon.concubine {
+  background-color: #D8BFD8; /* 沿用珍妃的浅紫色 */
 }
 
 .relation-line {
@@ -1101,6 +1121,13 @@ h1 {
   width: 24px;
   height: 2px;
   position: relative;
+}
+
+.legend-hint {
+  font-size: 0.85rem;
+  color: #777;
+  text-align: right;
+  margin-top: 10px;
 }
 
 .relation-line:after {
@@ -1116,23 +1143,24 @@ h1 {
   transform: rotate(-90deg);
 }
 
-.relation-line.construction {
-  background-color: #ffa500;
+/* 新的关系图例颜色 */
+.relation-line.palace-event {
+  background-color: #D2691E; /* 巧克力色/棕橙色 */
 }
-.relation-line.construction:after {
-  border-top-color: #ffa500;
+.relation-line.palace-event:after {
+  border-top-color: #D2691E;
 }
-.relation-line.governance {
-  background-color: #b22222;
+.relation-line.power-struggle {
+  background-color: #8B0000; /* 深红色 */
 }
-.relation-line.governance:after {
-  border-top-color: #b22222;
+.relation-line.power-struggle:after {
+  border-top-color: #8B0000;
 }
-.relation-line.family {
-  background-color: #daa520;
+.relation-line.personal-ties {
+  background-color: #4682B4; /* 钢蓝色 */
 }
-.relation-line.family:after {
-  border-top-color: #daa520;
+.relation-line.personal-ties:after {
+  border-top-color: #4682B4;
 }
 
 .graph-wrapper {

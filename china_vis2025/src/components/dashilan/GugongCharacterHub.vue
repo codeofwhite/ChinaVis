@@ -1,5 +1,5 @@
 <template>
-  <div class="dazhalan-network-container">
+  <div class="palace-network-container">
     <div class="header">
       <h1>大栅栏历史人物关系网络</h1>
       <p class="subtitle">明清民国时期与大栅栏相关的历史人物图谱</p>
@@ -40,6 +40,7 @@
         </div>
       </div>
     </div>
+    <p class="legend-hint">更多关系类型请点击人物节点查看详情。</p>
 
     <div class="graph-wrapper" ref="graphContainerRef"></div>
 
@@ -1104,6 +1105,13 @@ onBeforeUnmount(() => {
   background-color: #faf5eb;
 }
 
+.legend-hint {
+  font-size: 0.85rem;
+  color: #777;
+  text-align: right;
+  margin-top: 10px;
+}
+
 .header {
   text-align: center;
   margin-bottom: 30px;
@@ -1162,10 +1170,10 @@ h1 {
 .legend-icon.location {
   background-color: #d4af37;
 }
-.legend-icon.merchant {
+.legend-icon.emperor {
   background-color: #8b0000;
 }
-.legend-icon.artist {
+.legend-icon.empress {
   background-color: #6a0dad;
 }
 .legend-icon.official {
@@ -1192,22 +1200,22 @@ h1 {
   transform: rotate(-90deg);
 }
 
-.relation-line.business {
+.relation-line.construction {
   background-color: #ffa500;
 }
-.relation-line.business:after {
+.relation-line.construction:after {
   border-top-color: #ffa500;
 }
-.relation-line.cultural {
+.relation-line.governance {
   background-color: #b22222;
 }
-.relation-line.cultural:after {
+.relation-line.governance:after {
   border-top-color: #b22222;
 }
-.relation-line.social {
+.relation-line.family {
   background-color: #daa520;
 }
-.relation-line.social:after {
+.relation-line.family:after {
   border-top-color: #daa520;
 }
 

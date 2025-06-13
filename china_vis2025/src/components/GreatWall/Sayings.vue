@@ -178,15 +178,18 @@ onUnmounted(() => {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap');
 
 .greatwall-sayings-wrapper {
-  background: linear-gradient(to bottom, #f6fbf7 0%, #eaf3ec 100%);
+  /* 调整背景渐变色，使其与新的主题色系保持一致 */
+  background: linear-gradient(to bottom, #fcf8f0 0%, #e8dfd1 100%);
   padding: 2.5rem 1.5rem;
   width: 100%;
   max-width: 1200px;
   margin: 2rem auto;
   border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(58, 108, 79, 0.15);
+  /* 调整阴影颜色 */
+  box-shadow: 0 12px 30px rgba(101, 67, 33, 0.15);
   font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  border: 1px solid #b3cbb9;
+  /* 调整边框颜色 */
+  border: 1px solid #d4b595;
   position: relative;
   overflow: hidden;
 }
@@ -198,13 +201,15 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   height: 5px;
-  background: linear-gradient(to right, #3a6c4f, #b3cbb9, #3a6c4f);
+  /* 调整顶部装饰线的渐变色 */
+  background: linear-gradient(to right, #b78a56, #d4b595, #b78a56);
   z-index: 1;
 }
 
 .greatwall-sayings-wrapper h2 {
   font-size: 2.8rem;
-  color: #3a6c4f;
+  /* 调整标题颜色 */
+  color: #8b4513; /* 更深的棕色，作为主标题色 */
   text-align: center;
   margin-bottom: 0.8rem;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
@@ -222,13 +227,15 @@ onUnmounted(() => {
   transform: translateX(-50%);
   width: 120px;
   height: 3px;
-  background: linear-gradient(to right, #b3cbb9, #3a6c4f, #b3cbb9);
+  /* 调整标题下划线的渐变色 */
+  background: linear-gradient(to right, #d4b595, #b78a56, #d4b595);
   border-radius: 3px;
 }
 
 .subtitle {
   text-align: center;
-  color: #4e5d4a;
+  /* 调整副标题颜色 */
+  color: #7a6b64; /* 稍浅的棕灰色 */
   margin-bottom: 3.5rem;
   font-size: 1.25rem;
   font-style: italic;
@@ -246,17 +253,21 @@ onUnmounted(() => {
   justify-content: center;
   align-items: center;
   margin-bottom: 2.5rem;
-  background-color: #f6fbf7;
+  /* 调整背景色 */
+  background-color: #fcf8f0;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(58, 108, 79, 0.1);
-  border: 1px solid #b3cbb9;
+  /* 调整阴影颜色 */
+  box-shadow: 0 6px 20px rgba(101, 67, 33, 0.1);
+  /* 调整边框颜色 */
+  border: 1px solid #d4b595;
   position: relative;
   overflow: hidden;
   transition: all 0.4s ease;
 }
 
 .sayings-wordcloud-container:hover {
-  box-shadow: 0 8px 25px rgba(58, 108, 79, 0.2);
+  /* 调整 hover 状态的阴影颜色 */
+  box-shadow: 0 8px 25px rgba(101, 67, 33, 0.2);
   transform: translateY(-5px);
 }
 
@@ -285,15 +296,17 @@ onUnmounted(() => {
 .spinner {
   width: 60px;
   height: 60px;
-  border: 5px solid rgba(58, 108, 79, 0.2);
-  border-top: 5px solid #3a6c4f;
+  /* 调整 spinner 颜色 */
+  border: 5px solid rgba(183, 138, 86, 0.2);
+  border-top: 5px solid #b78a56;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 20px;
 }
 
 .loading-indicator p {
-  color: #4e5d4a;
+  /* 调整加载文字颜色 */
+  color: #7a6b64;
   font-size: 1.2rem;
   text-align: center;
   font-weight: 500;
@@ -320,13 +333,16 @@ onUnmounted(() => {
 
 .modal-content {
   position: relative;
-  background: #f6fbf7;
+  /* 调整模态框背景色 */
+  background: #fcf8f0;
   padding: 3.5rem;
   border-radius: 16px;
   width: 90%;
   max-width: 750px;
-  box-shadow: 0 15px 50px rgba(58, 108, 79, 0.18);
-  border: 2px solid #b3cbb9;
+  /* 调整阴影颜色 */
+  box-shadow: 0 15px 50px rgba(101, 67, 33, 0.18);
+  /* 调整边框颜色 */
+  border: 2px solid #d4b595;
   max-height: 90vh;
   overflow: hidden;
   display: flex;
@@ -337,10 +353,12 @@ onUnmounted(() => {
   position: absolute;
   top: 20px;
   right: 20px;
-  background: rgba(179, 203, 185, 0.2);
-  border: 1px solid #b3cbb9;
+  /* 调整关闭按钮背景色和边框颜色 */
+  background: rgba(212, 181, 149, 0.2);
+  border: 1px solid #d4b595;
   font-size: 2.2rem;
-  color: #3a6c4f;
+  /* 调整关闭按钮文字颜色 */
+  color: #b78a56;
   cursor: pointer;
   transition: all 0.4s ease;
   width: 50px;
@@ -354,13 +372,15 @@ onUnmounted(() => {
 
 .close-button:hover {
   color: #fff;
-  background-color: #3a6c4f;
+  /* 调整 hover 状态的背景色 */
+  background-color: #b78a56;
   transform: rotate(90deg) scale(1.1);
 }
 
 .modal-title {
   font-size: 2.4rem;
-  color: #3a6c4f;
+  /* 调整模态框标题颜色 */
+  color: #8b4513;
   text-align: center;
   margin-top: 0;
   margin-bottom: 2rem;
@@ -372,11 +392,13 @@ onUnmounted(() => {
 .modal-story-title {
   font-size: 1.6rem;
   font-weight: 600;
-  color: #4e5d4a;
+  /* 调整故事标题颜色 */
+  color: #7a6b64;
   text-align: center;
   margin-bottom: 2.5rem;
   padding-bottom: 1.8rem;
-  border-bottom: 2px solid #b3cbb9;
+  /* 调整下划线颜色 */
+  border-bottom: 2px solid #d4b595;
   position: relative;
 }
 
@@ -387,23 +409,28 @@ onUnmounted(() => {
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.8rem;
-  color: #b3cbb9;
-  background: #f6fbf7;
+  /* 调整装饰符颜色 */
+  color: #d4b595;
+  /* 调整装饰符背景色 */
+  background: #fcf8f0;
   padding: 0 15px;
 }
 
 .modal-story-content {
   font-size: 1.25rem;
   line-height: 1.9;
-  color: #2d3a2e;
+  /* 调整内容文字颜色 */
+  color: #5a4a42;
   text-align: justify;
   padding: 10px 20px;
   flex-grow: 1;
   overflow-y: auto;
-  background: #eaf3ec;
+  /* 调整内容背景色 */
+  background: #e8dfd1;
   border-radius: 8px;
   padding: 25px;
-  box-shadow: inset 0 0 10px rgba(58, 108, 79, 0.08);
+  /* 调整阴影颜色 */
+  box-shadow: inset 0 0 10px rgba(101, 67, 33, 0.08);
 }
 
 /* 滚动条美化 */
@@ -412,14 +439,17 @@ onUnmounted(() => {
 }
 
 .modal-story-content::-webkit-scrollbar-track {
-  background: #eaf3ec;
+  /* 调整滚动条轨道颜色 */
+  background: #e8dfd1;
   border-radius: 4px;
 }
 
 .modal-story-content::-webkit-scrollbar-thumb {
-  background-color: #b3cbb9;
+  /* 调整滚动条滑块颜色 */
+  background-color: #d4b595;
   border-radius: 6px;
-  border: 2px solid #eaf3ec;
+  /* 调整滚动条滑块边框颜色 */
+  border: 2px solid #e8dfd1;
 }
 
 /* 过渡动画 */
