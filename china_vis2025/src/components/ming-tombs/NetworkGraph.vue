@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import * as echarts from 'echarts';
+import * as echarts from "echarts";
 
 export default {
-  name: 'NetworkGraph',
+  name: "NetworkGraph",
   props: {
     nodes: { type: Array, required: true },
     links: { type: Array, required: true },
@@ -38,10 +38,10 @@ export default {
   methods: {
     initChart() {
       this.chartInstance = echarts.init(this.$refs.chart);
-      this.chartInstance.on('click', (params) => {
-        if (params.dataType === 'node') {
+      this.chartInstance.on("click", (params) => {
+        if (params.dataType === "node") {
           // 当节点被点击时，触发一个事件并传递节点数据给父组件
-          this.$emit('node-click', params.data);
+          this.$emit("node-click", params.data);
         }
       });
       this.updateChart();
@@ -50,48 +50,52 @@ export default {
       if (!this.chartInstance) return;
       const option = {
         tooltip: {
-            formatter: (params) => {
-                if (params.dataType === 'node') {
-                    return `${params.name}<br/>类型: ${params.data.category}`;
-                }
+          formatter: (params) => {
+            if (params.dataType === "node") {
+              return `${params.name}<br/>类型: ${params.data.category}`;
             }
+          },
         },
-        legend: [{
-            data: this.categories.map(a => a.name),
-            textStyle: { color: '#333' }
-        }],
-        series: [{
-            type: 'graph',
-            layout: 'force',
+        legend: [
+          {
+            data: this.categories.map((a) => a.name),
+            textStyle: { color: "#333" },
+          },
+        ],
+        series: [
+          {
+            type: "graph",
+            layout: "force",
             data: this.nodes,
             links: this.links,
             categories: this.categories,
             roam: true,
             label: {
-                show: true,
-                position: 'right',
-                formatter: '{b}'
+              show: true,
+              position: "right",
+              formatter: "{b}",
             },
             force: {
-                repulsion: 150, // 节点间的斥力因子
-                edgeLength: 80 // 边的长度
+              repulsion: 150, // 节点间的斥力因子
+              edgeLength: 80, // 边的长度
             },
             emphasis: {
-                focus: 'adjacency',
-                label: {
-                    position: 'right',
-                    show: true
-                }
+              focus: "adjacency",
+              label: {
+                position: "right",
+                show: true,
+              },
             },
             lineStyle: {
-                color: 'source',
-                curveness: 0.1
-            }
-        }]
+              color: "source",
+              curveness: 0.1,
+            },
+          },
+        ],
       };
       this.chartInstance.setOption(option);
-    }
-  }
+    },
+  },
 };
 </script>
 

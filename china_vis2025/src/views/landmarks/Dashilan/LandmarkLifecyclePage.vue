@@ -6,33 +6,72 @@
       </button>
       <h1>{{ landmarkName }} - {{ pageTitle }}</h1>
       <p class="intro-text">{{ pageIntro }}</p>
-    </header>
 
-    <main class="timeline-section">
-      <div v-if="timelineEvents.length" class="timeline-wrapper">
-        <div
-          class="timeline-event"
-          v-for="(event, index) in sortedTimelineEvents"
-          :key="index"
-        >
-          <div class="timeline-date">{{ event.date }}</div>
-          <div class="timeline-milestone"></div>
-          <div class="timeline-content-wrapper">
-            <div class="timeline-title">{{ event.title }}</div>
-            <p
-              class="timeline-description"
-              v-html="formatDescription(event.description)"
-            ></p>
-            <img
-              v-if="event.image"
-              :src="getImagePath(event.image)"
-              :alt="event.title"
-              class="timeline-event-image"
-            />
+      <!-- 新增：状态概览卡片 -->
+      <div class="status-overview">
+        <div class="status-card">
+          <span class="status-icon">🔄</span>
+          <div>
+            <h3>修缮次数</h3>
+            <p class="status-value">12次</p>
+          </div>
+        </div>
+        <div class="status-card">
+          <span class="status-icon">⚠️</span>
+          <div>
+            <h3>损毁记录</h3>
+            <p class="status-value">5次</p>
+          </div>
+        </div>
+        <div class="status-card">
+          <span class="status-icon">🏛️</span>
+          <div>
+            <h3>现存状态</h3>
+            <p class="status-value">良好</p>
           </div>
         </div>
       </div>
-      <p v-else class="no-data">暂无生命历程数据。</p>
+    </header>
+
+    <main class="lifecycle-main">
+      <div class="timeline-section">
+        <div v-if="timelineEvents.length" class="timeline-wrapper">
+          <div
+            class="timeline-event"
+            v-for="(event, index) in sortedTimelineEvents"
+            :key="index"
+          >
+            <div class="timeline-date">{{ event.date }}</div>
+            <div class="timeline-milestone"></div>
+            <div class="timeline-content-wrapper">
+              <div class="timeline-title">{{ event.title }}</div>
+              <p
+                class="timeline-description"
+                v-html="formatDescription(event.description)"
+              ></p>
+              <img
+                v-if="event.image"
+                :src="getImagePath(event.image)"
+                :alt="event.title"
+                class="timeline-event-image"
+              />
+            </div>
+          </div>
+        </div>
+        <p v-else class="no-data">暂无生命历程数据。</p>
+      </div>
+
+      <!-- 新增：可视化组件区域 -->
+      <div class="visualization-section">
+        <div class="visualization-card">
+          <h2>修缮材料变化</h2>
+          <div class="chart-placeholder material-chart"></div>
+        </div>
+        <div class="visualization-card">
+          <h2>损毁原因分析</h2>
+          <div class="chart-placeholder damage-chart"></div>
+        </div>
+      </div>
     </main>
 
     <footer class="lifecycle-footer">
@@ -51,10 +90,6 @@ export default {
       type: String,
       required: true,
     },
-    // direction prop 不再是必需的，因为此组件只处理生命历程
-    // direction: {
-    //   type: String,
-    // }
   },
   data() {
     return {
@@ -331,46 +366,49 @@ export default {
 </script>
 
 <style scoped>
-/* 使用您之前提供的垂直时间轴的 CSS 样式 */
 .lifecycle-container {
-  font-family: "Noto Serif SC", serif;
-  color: #333;
-  background-color: #f9f5ed; /* Simplified background */
+  font-family: "Noto Serif SC", "SimSun", serif;
+  color: #5a4a42;
+  background: linear-gradient(to bottom, #f9f5ed, #e8dfd1);
   min-height: 100vh;
-  padding: 20px;
+  padding: 0;
   display: flex;
   flex-direction: column;
 }
 
 .lifecycle-header {
   text-align: center;
-  margin-bottom: 30px; /* Reduced margin */
-  padding-top: 20px;
+  padding: 40px 20px 30px;
+  background: linear-gradient(to right, #d4b483, #c19a6b);
   position: relative;
+  box-shadow: 0 4px 12px rgba(101, 67, 33, 0.2);
+  margin-bottom: 30px;
 }
 
 .lifecycle-header h1 {
-  font-size: 2.5em; /* Slightly reduced */
-  color: #8b4513;
+  font-size: 2.5em;
+  color: #fff8e1;
   margin-bottom: 8px;
   font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .lifecycle-header .intro-text {
-  font-size: 1em; /* Slightly reduced */
-  color: #5a4a42;
+  font-size: 1.1em;
+  color: #fff8e1;
   max-width: 700px;
   margin: 0 auto 15px;
   line-height: 1.6;
+  opacity: 0.9;
 }
 
 .back-button {
   position: absolute;
-  top: 15px; /* Adjusted */
-  left: 15px; /* Adjusted */
-  background-color: rgba(139, 69, 19, 0.65);
+  top: 20px;
+  left: 20px;
+  background-color: rgba(94, 66, 41, 0.8);
   color: #fff8e1;
-  border: none;
+  border: 1px solid #5d4037;
   padding: 8px 16px;
   border-radius: 20px;
   cursor: pointer;
@@ -382,57 +420,60 @@ export default {
 }
 
 .back-button:hover {
-  background-color: rgba(160, 82, 45, 0.85);
+  background-color: rgba(121, 85, 72, 0.9);
   transform: translateX(-2px);
 }
 
+.lifecycle-main {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  gap: 30px;
+}
+
 .timeline-section {
-  width: 100%;
-  max-width: 900px; /* 控制时间轴最大宽度 */
-  margin: 0 auto; /* 居中 */
-  background-color: rgba(255, 255, 255, 0.6); /* 半透明背景，增加可读性 */
+  flex: 2;
+  min-width: 0;
+  background-color: rgba(255, 255, 255, 0.7);
   padding: 30px 40px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(101, 67, 33, 0.15);
-  flex-grow: 1;
+  box-shadow: 0 10px 30px rgba(101, 67, 33, 0.1);
+  border: 1px solid rgba(139, 69, 19, 0.1);
 }
 
 .timeline-wrapper {
-  /* 垂直时间轴的包裹容器 */
   position: relative;
-  padding-left: 50px; /* 为时间轴线和里程碑留出空间 */
+  padding-left: 50px;
 }
 
-/* 绘制中间的垂直时间轴线 */
 .timeline-wrapper::before {
   content: "";
   position: absolute;
-  left: 20px; /* 控制线的水平位置 */
+  left: 20px;
   top: 0;
   bottom: 0;
   width: 4px;
-  background: linear-gradient(
-    to bottom,
-    #d4a76a,
-    #8b4513
-  ); /* 与二级页面按钮颜色呼应 */
+  background: linear-gradient(to bottom, #d4a76a, #8b4513);
   border-radius: 2px;
 }
 
 .timeline-event {
   margin-bottom: 30px;
   position: relative;
-  /* cursor: pointer;  如果不需要点击事件，可以移除 */
-  padding: 15px;
-  background-color: #fdfaf3;
+  padding: 20px;
+  background-color: #fffdf8;
   border-radius: 10px;
-  border: 1px solid rgba(139, 69, 19, 0.2);
+  border: 1px solid rgba(139, 69, 19, 0.15);
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.05);
 }
+
 .timeline-event:hover {
-  /* 悬停效果可以保留或调整 */
-  transform: translateX(5px) scale(1.01);
+  transform: translateX(5px);
   box-shadow: 0 6px 20px rgba(101, 67, 33, 0.15);
+  background-color: #fff8e8;
 }
 
 .timeline-date {
@@ -442,45 +483,44 @@ export default {
   margin-bottom: 8px;
   background-color: rgba(255, 248, 225, 0.8);
   display: inline-block;
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 5px;
+  border: 1px solid rgba(139, 69, 19, 0.2);
 }
 
-/* 时间轴上的里程碑圆点 */
 .timeline-milestone {
   position: absolute;
-  left: -39px; /* (50px padding-left - 20px line-left - 10px/2 width) -> (50 - 20 - 9) */
-  top: 20px; /* 大致与日期对齐或第一个元素顶部 */
+  left: -39px;
+  top: 25px;
   width: 18px;
   height: 18px;
-  background-color: #fff; /* 白色圆点 */
-  border: 4px solid #d4a76a; /* 金色边框 */
+  background-color: #fff;
+  border: 4px solid #d4a76a;
   border-radius: 50%;
   z-index: 1;
-}
-.timeline-content-wrapper {
-  /* 包裹标题和描述 */
-  /* 无需特殊样式，除非需要额外控制 */
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);
 }
 
 .timeline-title {
   font-size: 1.3em;
   font-weight: 600;
   color: #5a2c0b;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #d4b483;
+  padding-bottom: 5px;
 }
 
 .timeline-description {
   font-size: 1em;
   color: #5a4a42;
   line-height: 1.7;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
-/* 为v-html中的sup标签（引用）添加样式 */
+
 .timeline-description :deep(sup) {
   font-size: 0.7em;
   color: #8b4513;
-  cursor: default; /* 或者 pointer 如果有悬停提示 */
+  cursor: default;
   margin-left: 2px;
   padding: 0 2px;
   border: 1px solid #e0b87a;
@@ -491,24 +531,155 @@ export default {
 .timeline-event-image {
   max-width: 100%;
   height: auto;
+  max-height: 300px;
   border-radius: 8px;
-  margin-top: 10px;
+  margin-top: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(139, 69, 19, 0.1);
 }
 
 .no-data {
   text-align: center;
   font-size: 1.1em;
-  color: #777;
+  color: #8b8b8b;
   padding: 50px 0;
+}
+
+/* 新增：状态概览卡片 */
+.status-overview {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.status-card {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  padding: 15px 20px;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.status-icon {
+  font-size: 1.8em;
+}
+
+.status-card h3 {
+  font-size: 0.9em;
+  color: #fff8e1;
+  margin: 0 0 5px;
+  font-weight: normal;
+}
+
+.status-value {
+  font-size: 1.4em;
+  color: white;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* 新增：可视化区域 */
+.visualization-section {
+  flex: 1;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.visualization-card {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(101, 67, 33, 0.1);
+  border: 1px solid rgba(139, 69, 19, 0.1);
+}
+
+.visualization-card h2 {
+  color: #5d4037;
+  font-size: 1.3em;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d4b483;
+}
+
+.chart-placeholder {
+  height: 250px;
+  background-color: rgba(255, 253, 245, 0.5);
+  border: 1px dashed #8d6e63;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8d6e63;
+  position: relative;
+}
+
+.chart-placeholder:after {
+  content: "可视化图表区域";
+  position: absolute;
+  font-size: 1.1em;
+}
+
+.material-chart:after {
+  content: "修缮材料变化图表";
+}
+
+.damage-chart:after {
+  content: "损毁原因分析图表";
 }
 
 .lifecycle-footer {
   text-align: center;
   padding: 25px 20px;
-  margin-top: auto;
+  margin-top: 50px;
   color: #5a4a42;
   font-size: 0.9em;
   border-top: 1px solid rgba(139, 69, 19, 0.15);
+  background-color: rgba(255, 253, 245, 0.7);
+}
+
+@media (max-width: 1200px) {
+  .lifecycle-main {
+    flex-direction: column;
+  }
+
+  .timeline-section,
+  .visualization-section {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .lifecycle-header h1 {
+    font-size: 2em;
+    padding-top: 10px;
+  }
+
+  .status-overview {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .status-card {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .timeline-section {
+    padding: 20px;
+  }
+
+  .visualization-card {
+    padding: 15px;
+  }
 }
 </style>

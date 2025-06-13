@@ -124,7 +124,7 @@ export default {
       };
       if (direction === "lifeCycle") {
         this.$router.push({
-          name: "landmark-lifecycle-dashilar",
+          name: "DashilanLifeCycle",
           params: {
             ...params,
             direction: direction,
@@ -132,12 +132,12 @@ export default {
         });
       } else if (direction === "influence") {
         this.$router.push({
-          name: "landmark-radar-dashilar",
+          name: "DashilanInfluence",
           params,
         });
       } else if (direction === "legends") {
         this.$router.push({
-          name: "landmark-detail-dashilar",
+          name: "DashilanLegends",
           params,
           query: { landmarkId: this.landmarkId }, // 通过 query 传递
         });
