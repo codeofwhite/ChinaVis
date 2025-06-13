@@ -227,13 +227,6 @@ export default {
   position: relative;
 }
 
-.district-wrapper{
-  margin-left: 25%;
-  margin-top: 12%;
-    width: 100%;
-  height: 100%;
-}
-
 /* 关键样式：确保所有核心组件都能填充 map-wrapper */
 .map-wrapper > :deep(.beijing-map-container), /* BeijingMap 根元素的类名 */
 .map-wrapper > :deep(.district-map-container), /* DistrictMap 根元素的类名 */
