@@ -6,9 +6,9 @@
     <!-- 上方展示区：SVG建筑分布地图 + 时代信息 -->
     <div class="display-section">
       <div class="svg-map-container">
-        <svg viewBox="0 0 800 600" style="width:600px;height:400px;">
+        <svg viewBox="0 0 800 600" style="width: 600px; height: 400px">
           <!-- 注意这里用 :href 绑定图片地址 -->
-          <image :href="mapUrl" x="0" y="0" width="800" height="600"/>
+          <image :href="mapUrl" x="0" y="0" width="800" height="600" />
           <g>
             <path
               v-for="b in currentBuildings"
@@ -42,10 +42,10 @@
 
     <!-- 下方横向时间轴 -->
     <div class="timeline-nav-horizontal">
-      <div 
-        v-for="(item, index) in timelineData" 
-        :key="index" 
-        :class="['timeline-point', { 'active': activeIndex === index }]"
+      <div
+        v-for="(item, index) in timelineData"
+        :key="index"
+        :class="['timeline-point', { active: activeIndex === index }]"
         @click="setActiveIndex(index)"
       >
         <div class="timeline-marker"></div>
@@ -56,14 +56,14 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
-const goBack = () => router.push('/landmarks/beihai-park'); // 修改为正确路径
+const goBack = () => router.push("/landmarks/beihai-park"); // 修改为正确路径
 
 // 地图底图地址（请替换为你自己的图片或SVG地址）
-const mapUrl = 'https://your-domain.com/beihai-base.png'; // 或 .svg
+const mapUrl = "https://your-domain.com/beihai-base.png"; // 或 .svg
 
 // 每个时期的建筑分布数据（SVG path 仅为示例，请用真实数据替换）
 const timelineData = ref([
@@ -71,92 +71,98 @@ const timelineData = ref([
     year: "金代",
     title: "北海园林初建",
     period: "金代",
-    description: "北海园林始建于金大定六年（1166年），形成了“一池三山”的基本格局，成为皇家园林的雏形。",
+    description:
+      "北海园林始建于金大定六年（1166年），形成了“一池三山”的基本格局，成为皇家园林的雏形。",
     buildings: [
       {
         id: "yaoyu",
         name: "瑶屿行宫",
         path: "M100,100 L120,100 L120,120 L100,120 Z",
         status: "new",
-        description: "金代时期建造的瑶屿行宫，位于琼华岛上，是北海公园的前身。"
-      }
-    ]
+        description: "金代时期建造的瑶屿行宫，位于琼华岛上，是北海公园的前身。",
+      },
+    ],
   },
   {
     year: "元代",
     title: "纳入大都中轴线",
     period: "元代",
-    description: "元代将北海纳入大都中轴线体系，完善了湖岛格局，成为元大都的重要景观核心。",
+    description:
+      "元代将北海纳入大都中轴线体系，完善了湖岛格局，成为元大都的重要景观核心。",
     buildings: [
       {
         id: "guanghan",
         name: "广寒殿",
         path: "M130,130 L150,130 L150,150 L130,150 Z",
         status: "new",
-        description: "元代时期在瑶屿行宫基础上建造的广寒殿，湖泊称为‘西华潭’。"
-      }
-    ]
+        description: "元代时期在瑶屿行宫基础上建造的广寒殿，湖泊称为‘西华潭’。",
+      },
+    ],
   },
   {
     year: "明代",
     title: "皇家园林扩建",
     period: "明代",
-    description: "明成祖朱棣永乐十八年（1420年），明王朝定都北京后，在太液池以东建造了皇宫紫禁城，并向南拓展水系，形成中海、南海，与北海一起合称“西苑”，划入皇城的范围。",
+    description:
+      "明成祖朱棣永乐十八年（1420年），明王朝定都北京后，在太液池以东建造了皇宫紫禁城，并向南拓展水系，形成中海、南海，与北海一起合称“西苑”，划入皇城的范围。",
     buildings: [
       {
         id: "baita",
         name: "白塔",
         path: "M160,160 L180,160 L180,180 L160,180 Z",
         status: "new",
-        description: "明代时期增建的白塔，成为北海公园的标志性建筑。"
-      }
-    ]
+        description: "明代时期增建的白塔，成为北海公园的标志性建筑。",
+      },
+    ],
   },
   {
     year: "清代",
     title: "园林鼎盛时期",
     period: "清代",
-    description: "清代乾隆六年（1741年）起，北海开始了长达三十年的扩建，建起了许多亭、台、楼、阁，园林艺术达到鼎盛。",
+    description:
+      "清代乾隆六年（1741年）起，北海开始了长达三十年的扩建，建起了许多亭、台、楼、阁，园林艺术达到鼎盛。",
     buildings: [
       {
         id: "jiulongbi",
         name: "九龙壁",
         path: "M200,200 L240,200 L240,220 L200,220 Z",
         status: "change",
-        description: "清代时期修建的九龙壁，园林艺术的代表。"
-      }
-    ]
+        description: "清代时期修建的九龙壁，园林艺术的代表。",
+      },
+    ],
   },
   {
     year: "民国时期",
     title: "对外开放",
     period: "民国时期",
-    description: "北海公园结束皇家专属，1925年正式对公众开放，增设服务设施，成为市民休闲游览的重要场所。",
+    description:
+      "北海公园结束皇家专属，1925年正式对公众开放，增设服务设施，成为市民休闲游览的重要场所。",
     buildings: [
       {
         id: "wulongting",
         name: "五龙亭",
         path: "M300,300 L340,300 L340,320 L300,320 Z",
         status: "remove",
-        description: "民国时期部分建筑功能发生变化，五龙亭成为市民游览热点。"
-      }
-    ]
+        description: "民国时期部分建筑功能发生变化，五龙亭成为市民游览热点。",
+      },
+    ],
   },
   {
     year: "现代",
     title: "遗产保护与修缮",
     period: "现代",
-    description: "新中国成立后，北海公园多次进行大规模修缮与保护，成为国家重点文物保护单位和世界文化遗产的重要组成部分。",
+    description:
+      "新中国成立后，北海公园多次进行大规模修缮与保护，成为国家重点文物保护单位和世界文化遗产的重要组成部分。",
     buildings: [
       {
         id: "baita",
         name: "白塔",
         path: "M160,160 L180,160 L180,180 L160,180 Z",
         status: "change",
-        description: "现代对白塔等古建进行修缮与保护。"
-      }
-    ]
-  }
+        description: "现代对白塔等古建进行修缮与保护。",
+      },
+    ],
+  },
 ]);
 
 const activeIndex = ref(0);
@@ -171,10 +177,10 @@ const activeBuilding = ref(null);
 const selectedBuilding = ref(null);
 
 function getBuildingColor(b) {
-  if (b.status === 'new') return '#4caf50';
-  if (b.status === 'change') return '#ff9800';
-  if (b.status === 'remove') return '#f44336';
-  return '#90caf9';
+  if (b.status === "new") return "#4caf50";
+  if (b.status === "change") return "#ff9800";
+  if (b.status === "remove") return "#f44336";
+  return "#90caf9";
 }
 function showBuildingInfo(building) {
   selectedBuilding.value = building;
