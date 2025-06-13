@@ -27,8 +27,9 @@
       </div>
     </header>
 
-    <section class="exploration-cards-section">
-      <div class="exploration-card" @click="explore('lifeCycle')">
+    <!-- 只有在没有三级子路由时才显示卡片 -->
+    <section class="exploration-cards-section" v-if="!isChildRoute">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">生命年轮</h2>
           <div class="card-preview-media">
@@ -39,15 +40,13 @@
             />
           </div>
           <p class="card-description">
-            从兴建到重生的时光之旅，探索{{
-              landmark.name
-            }}的建筑更迭与功能演变。
+            从兴建到重生的时光之旅，探索{{ landmark.name }}的建筑更迭与功能演变。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click="explore('lifeCycle')">立即探索 →</button>
         </div>
       </div>
 
-      <div class="exploration-card" @click="explore('influence')">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">影响力光环</h2>
           <div class="card-preview-media">
@@ -58,15 +57,13 @@
             />
           </div>
           <p class="card-description">
-            解析{{
-              landmark.name
-            }}如何融入当代生活，评估其在全球范围内的文化影响力与认知度。
+            解析{{ landmark.name }}如何融入当代生活，评估其在全球范围内的文化影响力与认知度。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click="explore('influence')">立即探索 →</button>
         </div>
       </div>
 
-      <div class="exploration-card" @click="explore('legends')">
+      <div class="exploration-card">
         <div class="card-content">
           <h2 class="card-title">传奇故事</h2>
           <div class="card-preview-media">
@@ -77,14 +74,15 @@
             />
           </div>
           <p class="card-description">
-            聆听{{
-              landmark.name
-            }}背后那些引人入胜的帝王轶事、民间传说与文人墨客的动人篇章。
+            聆听{{ landmark.name }}背后那些引人入胜的帝王轶事、民间传说与文人墨客的动人篇章。
           </p>
-          <button class="explore-button">立即探索 →</button>
+          <button class="explore-button" @click="explore('legends')">立即探索 →</button>
         </div>
       </div>
     </section>
+
+    <!-- 三级页面内容渲染区 -->
+    <router-view />
 
     <footer class="portal-footer">
       <p>发现更多：<a href="#">推荐探索路线</a> | <a href="#">更多发现</a></p>
@@ -93,41 +91,41 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "GreatWall",
-  props: {
-    landmarkId: {
-      type: String,
-      required: false,
-    },
-  },
-  data() {
-    return {
-      landmark: {
-        name: "长城",
-        summary:
-          "世界最长的古代防御工程，中华民族的重要象征，1987年被列入世界文化遗产名录。",
-        image:
-          "https://x0.ifengimg.com/ucms/2021_12/9D96B9B87AEAED9CB42CED7849A4F6CA71591D16_size119_w1024_h643.jpg",
-        metrics: [
-          { icon: "📅", value: "战国-明代", label: "修建时期" },
-          { icon: "📏", value: "2万+", label: "公里总长" },
-          { icon: "🏯", value: "八达岭等", label: "著名段落" },
-          { icon: "🌍", value: "百万＋", label: "游客量" },
-        ],
-      },
-    };
-  },
-  methods: {
-    goBack() {
-      this.$router.push("/");
-    },
-    explore(direction) {
-      alert(`探索：${direction}`);
-    },
-  },
-};
+<script setup>
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+const route = useRoute()
+const router = useRouter()
+
+// 判断当前是否为三级页面（即不是 great-wall 本身）
+const isChildRoute = computed(() => route.name !== 'great-wall')
+
+const landmark = {
+  name: "长城",
+  summary:
+    "世界最长的古代防御工程，中华民族的重要象征，1987年被列入世界文化遗产名录。",
+  image:
+    "https://x0.ifengimg.com/ucms/2021_12/9D96B9B87AEAED9CB42CED7849A4F6CA71591D16_size119_w1024_h643.jpg",
+  metrics: [
+    { icon: "📅", value: "战国-明代", label: "修建时期" },
+    { icon: "📏", value: "2万+", label: "公里总长" },
+    { icon: "🏯", value: "八达岭等", label: "著名段落" },
+    { icon: "🌍", value: "百万＋", label: "游客量" },
+  ],
+}
+
+function goBack() {
+  router.push("/")
+}
+function explore(direction) {
+  if (direction === "lifeCycle") {
+    router.push({ name: "GreatWallLifeCycle" })
+  } else if (direction === "influence") {
+    router.push({ name: "GreatWallInfluence" })
+  } else if (direction === "legends") {
+    router.push({ name: "GreatWallLegends" })
+  }
+}
 </script>
 
 <style scoped>

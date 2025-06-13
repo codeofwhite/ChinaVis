@@ -10,10 +10,9 @@ export default [
     props: true,
     children: [
       {
-        path: "detail",
-        name: "landmark-detail-ming",
-        component: () =>
-          import("@/views/landmarks/MingTombs/LandmarkDetailView.vue"),
+        path: "life-cycle",
+        name: "MingTombsLifeCycle",
+        component: () => import("@/components/ming-tombs/LifeCycle.vue"),
         props: true,
         meta: {
           title: "景区详情",
@@ -22,9 +21,8 @@ export default [
       },
       {
         path: "influence",
-        name: "landmark-radar-ming",
-        component: () =>
-          import("@/views/landmarks/MingTombs/LandmarkRadarDisplayPage.vue"),
+        name: "MingTombsInfluence",
+        component: () => import("@/components/ming-tombs/Influence.vue"),
         props: true,
         meta: {
           title: "影响力雷达图",
@@ -32,10 +30,9 @@ export default [
         },
       },
       {
-        path: ":direction",
-        name: "landmark-lifecycle-ming",
-        component: () =>
-          import("@/views/landmarks/MingTombs/LandmarkLifecycle.vue"),
+        path: "legends",
+        name: "MingTombsLegends",
+        component: () => import("@/components/ming-tombs/Legends.vue"),
         props: true,
         meta: {
           title: "生命周期分析",

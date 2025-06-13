@@ -136,7 +136,7 @@ h1 {
 .dimensions-info {
   margin-top: 30px;
   padding: 15px;
-  background-color: #f0f8ff;
+  background-color: #fffcf0;
   border-radius: 5px;
 }
 
@@ -151,5 +151,7 @@ h1 {
 
 .dimensions-info li {
   margin-bottom: 8px;
+  color: #877325;
+  font-size: larger;
 }
 </style>
