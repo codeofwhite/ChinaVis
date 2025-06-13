@@ -12,10 +12,21 @@
     <!-- 两列主内容 -->
     <div class="main-columns">
       <!-- 左侧：雷达图和其他图表 -->
-      <div class="charts-section" style="flex:2; min-width:340px;">
-        <div class="chart-card" style="height:100%;">
+      <div class="charts-section" style="flex: 2; min-width: 340px">
+        <div class="chart-card" style="height: 100%">
           <h3 class="chart-title">北京历史地标评估雷达图</h3>
-           <RadarChartBoard class="radar-container" />
+          <RadarChart
+            :selectedLandmarks="[
+              '故宫',
+              '天坛',
+              '长城',
+              '明十三陵',
+              '北海公园',
+              '法源寺',
+              '颐和园',
+              '大栅栏',
+            ]"
+          />
         </div>
         <div class="charts-grid">
           <div class="chart-card">
@@ -37,7 +48,10 @@
         </div>
       </div>
       <!-- 右侧：文字紧凑排列 -->
-      <div class="text-section" style="flex:1; min-width:220px; padding:16px 10px;">
+      <div
+        class="text-section"
+        style="flex: 1; min-width: 220px; padding: 16px 10px"
+      >
         <div class="section-title">
           <h2>世界文化遗产价值</h2>
           <div class="divider"></div>
@@ -119,20 +133,22 @@
 
   <!-- 页脚 -->
   <div class="influence-footer">
-    <p>长城作为中华民族的象征，不仅展现了古代中国的军事智慧与民族融合，更成为全人类共同的文化遗产。</p>
+    <p>
+      长城作为中华民族的象征，不仅展现了古代中国的军事智慧与民族融合，更成为全人类共同的文化遗产。
+    </p>
     <p>全国重点文物保护单位 · 世界文化遗产</p>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import * as echarts from 'echarts';
-import RadarChart from '../RadarChart.vue';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import * as echarts from "echarts";
+import RadarChart from "../RadarChart.vue";
 import RadarChartBoard from "../RadarChartBoard.vue";
 
 const router = useRouter();
-const goBack = () => router.push('/landmarks/great-wall');
+const goBack = () => router.push("/landmarks/great-wall");
 
 const provinceChart = ref(null);
 const structureChart = ref(null);
@@ -143,32 +159,44 @@ const initProvinceChart = () => {
   if (provinceChart.value) {
     const chart = echarts.init(provinceChart.value);
     chart.setOption({
-      tooltip: { trigger: 'item', formatter: '{b}: {c}公里' },
+      tooltip: { trigger: "item", formatter: "{b}: {c}公里" },
       xAxis: {
-        type: 'category',
-        data: ['河北', '北京', '山西', '陕西', '甘肃', '辽宁', '内蒙古', '宁夏', '天津'],
-        axisLabel: { color: '#5a4a42', rotate: 30 }
+        type: "category",
+        data: [
+          "河北",
+          "北京",
+          "山西",
+          "陕西",
+          "甘肃",
+          "辽宁",
+          "内蒙古",
+          "宁夏",
+          "天津",
+        ],
+        axisLabel: { color: "#5a4a42", rotate: 30 },
       },
       yAxis: {
-        type: 'value',
-        name: '长度（公里）',
-        nameTextStyle: { color: '#5a4a42' },
-        axisLabel: { color: '#5a4a42' },
-        splitLine: { lineStyle: { color: 'rgba(139, 69, 19, 0.1)' } }
+        type: "value",
+        name: "长度（公里）",
+        nameTextStyle: { color: "#5a4a42" },
+        axisLabel: { color: "#5a4a42" },
+        splitLine: { lineStyle: { color: "rgba(139, 69, 19, 0.1)" } },
       },
-      series: [{
-        name: '长城长度',
-        type: 'bar',
-        itemStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: '#bfa46f' },
-            { offset: 1, color: '#8b4513' }
-          ])
+      series: [
+        {
+          name: "长城长度",
+          type: "bar",
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "#bfa46f" },
+              { offset: 1, color: "#8b4513" },
+            ]),
+          },
+          data: [2000, 629, 1300, 1800, 1500, 900, 2500, 400, 60],
         },
-        data: [2000, 629, 1300, 1800, 1500, 900, 2500, 400, 60]
-      }]
+      ],
     });
-    window.addEventListener('resize', () => chart.resize());
+    window.addEventListener("resize", () => chart.resize());
   }
 };
 
@@ -176,33 +204,35 @@ const initStructureChart = () => {
   if (structureChart.value) {
     const chart = echarts.init(structureChart.value);
     chart.setOption({
-      tooltip: { trigger: 'item', formatter: '{b}: {d}%' },
-      legend: { top: 'bottom', textStyle: { color: '#5a4a42' } },
-      color: ['#8b4513', '#d4a76a', '#9c7c5c', '#b2967d'],
-      series: [{
-        name: '防御体系结构',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        center: ['50%', '40%'],
-        roseType: 'area',
-        label: {
-          show: true,
-          formatter: '{b|{b}}\n{c|{c}%}',
-          rich: {
-            b: { fontSize: 14, color: '#5a4a42', lineHeight: 20 },
-            c: { fontSize: 16, color: '#8b4513', fontWeight: 'bold' }
-          }
+      tooltip: { trigger: "item", formatter: "{b}: {d}%" },
+      legend: { top: "bottom", textStyle: { color: "#5a4a42" } },
+      color: ["#8b4513", "#d4a76a", "#9c7c5c", "#b2967d"],
+      series: [
+        {
+          name: "防御体系结构",
+          type: "pie",
+          radius: ["40%", "70%"],
+          center: ["50%", "40%"],
+          roseType: "area",
+          label: {
+            show: true,
+            formatter: "{b|{b}}\n{c|{c}%}",
+            rich: {
+              b: { fontSize: 14, color: "#5a4a42", lineHeight: 20 },
+              c: { fontSize: 16, color: "#8b4513", fontWeight: "bold" },
+            },
+          },
+          data: [
+            { value: 35, name: "墙体" },
+            { value: 25, name: "敌楼" },
+            { value: 20, name: "烽火台" },
+            { value: 12, name: "关隘" },
+            { value: 8, name: "壕堑" },
+          ],
         },
-        data: [
-          { value: 35, name: '墙体' },
-          { value: 25, name: '敌楼' },
-          { value: 20, name: '烽火台' },
-          { value: 12, name: '关隘' },
-          { value: 8, name: '壕堑' }
-        ]
-      }]
+      ],
     });
-    window.addEventListener('resize', () => chart.resize());
+    window.addEventListener("resize", () => chart.resize());
   }
 };
 
@@ -210,50 +240,50 @@ const initCultureChart = () => {
   if (cultureChart.value) {
     const chart = echarts.init(cultureChart.value);
     chart.setOption({
-      tooltip: { trigger: 'axis' },
+      tooltip: { trigger: "axis" },
       legend: {
-        data: ['论文数量', '研究项目'],
-        textStyle: { color: '#5a4a42' },
-        bottom: 0
+        data: ["论文数量", "研究项目"],
+        textStyle: { color: "#5a4a42" },
+        bottom: 0,
       },
-      grid: { left: '3%', right: '4%', bottom: '15%', containLabel: true },
+      grid: { left: "3%", right: "4%", bottom: "15%", containLabel: true },
       xAxis: {
-        type: 'category',
+        type: "category",
         boundaryGap: false,
-        data: ['1990', '1995', '2000', '2005', '2010', '2015', '2020', '2023'],
-        axisLine: { lineStyle: { color: '#8b4513' } }
+        data: ["1990", "1995", "2000", "2005", "2010", "2015", "2020", "2023"],
+        axisLine: { lineStyle: { color: "#8b4513" } },
       },
       yAxis: {
-        type: 'value',
-        name: '数量/项',
-        nameTextStyle: { color: '#5a4a42' },
-        axisLine: { lineStyle: { color: '#8b4513' } },
-        splitLine: { lineStyle: { color: 'rgba(139, 69, 19, 0.1)' } }
+        type: "value",
+        name: "数量/项",
+        nameTextStyle: { color: "#5a4a42" },
+        axisLine: { lineStyle: { color: "#8b4513" } },
+        splitLine: { lineStyle: { color: "rgba(139, 69, 19, 0.1)" } },
       },
       series: [
         {
-          name: '论文数量',
-          type: 'line',
+          name: "论文数量",
+          type: "line",
           smooth: true,
-          symbol: 'circle',
+          symbol: "circle",
           symbolSize: 8,
-          lineStyle: { width: 4, color: '#8b4513' },
-          itemStyle: { color: '#8b4513' },
-          data: [12, 28, 55, 90, 130, 200, 260, 320]
+          lineStyle: { width: 4, color: "#8b4513" },
+          itemStyle: { color: "#8b4513" },
+          data: [12, 28, 55, 90, 130, 200, 260, 320],
         },
         {
-          name: '研究项目',
-          type: 'line',
+          name: "研究项目",
+          type: "line",
           smooth: true,
-          symbol: 'circle',
+          symbol: "circle",
           symbolSize: 8,
-          lineStyle: { width: 4, color: '#d4a76a' },
-          itemStyle: { color: '#d4a76a' },
-          data: [3, 8, 18, 30, 45, 70, 90, 120]
-        }
-      ]
+          lineStyle: { width: 4, color: "#d4a76a" },
+          itemStyle: { color: "#d4a76a" },
+          data: [3, 8, 18, 30, 45, 70, 90, 120],
+        },
+      ],
     });
-    window.addEventListener('resize', () => chart.resize());
+    window.addEventListener("resize", () => chart.resize());
   }
 };
 
@@ -261,38 +291,50 @@ const initTourismChart = () => {
   if (tourismChart.value) {
     const chart = echarts.init(tourismChart.value);
     chart.setOption({
-      tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
+      tooltip: { trigger: "item", formatter: "{b}: {c} ({d}%)" },
       legend: {
-        orient: 'vertical',
+        orient: "vertical",
         right: 10,
-        top: 'center',
-        textStyle: { color: '#5a4a42' }
+        top: "center",
+        textStyle: { color: "#5a4a42" },
       },
-      color: ['#8b4513', '#d4a76a', '#9c7c5c', '#b2967d', '#c8b49c', '#f6c177', '#e6b800', '#bfa46f', '#a67c52'],
-      series: [{
-        name: '游客来源',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        center: ['40%', '50%'],
-        avoidLabelOverlap: false,
-        label: { show: true, formatter: '{b}: {d}%' },
-        emphasis: {
-          label: { show: true, fontSize: '18', fontWeight: 'bold' }
+      color: [
+        "#8b4513",
+        "#d4a76a",
+        "#9c7c5c",
+        "#b2967d",
+        "#c8b49c",
+        "#f6c177",
+        "#e6b800",
+        "#bfa46f",
+        "#a67c52",
+      ],
+      series: [
+        {
+          name: "游客来源",
+          type: "pie",
+          radius: ["40%", "70%"],
+          center: ["40%", "50%"],
+          avoidLabelOverlap: false,
+          label: { show: true, formatter: "{b}: {d}%" },
+          emphasis: {
+            label: { show: true, fontSize: "18", fontWeight: "bold" },
+          },
+          labelLine: { show: true },
+          data: [
+            { value: 25, name: "北京" },
+            { value: 18, name: "河北" },
+            { value: 12, name: "陕西" },
+            { value: 10, name: "山西" },
+            { value: 8, name: "甘肃" },
+            { value: 10, name: "海外" },
+            { value: 9, name: "其他省份" },
+            { value: 8, name: "东南亚及其他" },
+          ],
         },
-        labelLine: { show: true },
-        data: [
-          { value: 25, name: '北京' },
-          { value: 18, name: '河北' },
-          { value: 12, name: '陕西' },
-          { value: 10, name: '山西' },
-          { value: 8, name: '甘肃' },
-          { value: 10, name: '海外' },
-          { value: 9, name: '其他省份' },
-          { value: 8, name: '东南亚及其他' }
-        ]
-      }]
+      ],
     });
-    window.addEventListener('resize', () => chart.resize());
+    window.addEventListener("resize", () => chart.resize());
   }
 };
 
@@ -362,10 +404,10 @@ onMounted(() => {
 }
 .text-section {
   flex: 1.2;
-  background:rgba(255, 248, 225, 0.8);
+  background: rgba(255, 248, 225, 0.8);
   border-radius: 16px;
   padding: 32px 28px;
-  box-shadow: 0 4px 16px rgba(139,69,19,0.06); /* 恢复轻微阴影 */
+  box-shadow: 0 4px 16px rgba(139, 69, 19, 0.06); /* 恢复轻微阴影 */
   min-width: 340px;
   display: flex;
   flex-direction: column;
@@ -393,7 +435,7 @@ onMounted(() => {
   padding: 18px 16px;
   margin-bottom: 18px;
   color: #4a2c13;
-  box-shadow: 0 2px 8px rgba(74,44,19,0.04);
+  box-shadow: 0 2px 8px rgba(74, 44, 19, 0.04);
   border: 1px solid #f1e0c2;
 }
 .philosophy-item:last-child {
@@ -404,7 +446,8 @@ onMounted(() => {
   color: #8b4513;
   margin-bottom: 6px;
 }
-.philosophy-item p, .philosophy-item ul {
+.philosophy-item p,
+.philosophy-item ul {
   color: #4a2c13;
   font-size: 1em;
   margin: 0 0 0 0;
@@ -472,10 +515,10 @@ onMounted(() => {
 .impact-item {
   background: rgba(212, 167, 106, 0.2);
   border-radius: 15px;
-  padding: 20px 16px;      /* 调小内边距 */
-  min-width: 220px;        /* 调小最小宽度 */
-  max-width: 260px;        /* 调小最大宽度 */
-  flex: 1 1 200px;         /* 允许更小宽度自动换行 */
+  padding: 20px 16px; /* 调小内边距 */
+  min-width: 220px; /* 调小最小宽度 */
+  max-width: 260px; /* 调小最大宽度 */
+  flex: 1 1 200px; /* 允许更小宽度自动换行 */
   transition: all 0.3s ease;
   border: 1px solid rgba(139, 69, 19, 0.15);
 }
@@ -485,13 +528,13 @@ onMounted(() => {
   box-shadow: 0 10px 25px rgba(139, 69, 19, 0.1);
 }
 .impact-value {
-  font-size: 1.3rem;       /* 调小字体 */
+  font-size: 1.3rem; /* 调小字体 */
   font-weight: bold;
   color: #8b4513;
   margin-bottom: 8px;
 }
 .impact-label {
-  font-size: 0.95em;       /* 调小字体 */
+  font-size: 0.95em; /* 调小字体 */
   color: #5a4a42;
 }
 .influence-footer {
@@ -522,7 +565,7 @@ onMounted(() => {
 .network-section .chart-card {
   background: rgba(255, 248, 225, 0.9);
   border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(139,69,19,0.10);
+  box-shadow: 0 4px 24px rgba(139, 69, 19, 0.1);
   padding: 24px 24px 12px 24px;
   margin: 0 auto;
   max-width: 1200px;
