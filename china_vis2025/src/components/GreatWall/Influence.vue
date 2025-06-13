@@ -24,7 +24,8 @@
         <h3>媒体报道热度</h3>
         <div ref="mediaLine" class="chart-box"></div>
         <div class="chart-desc">
-          统计2015-2023年国内外主流媒体关于长城的报道数量。数据来源：百度新闻、Google News。
+          统计2015-2023年国内外主流媒体关于长城的报道数量。数据来源：百度新闻、Google
+          News。
         </div>
       </div>
       <!-- 4. 文化活动与国际交流桑基图 -->
@@ -40,115 +41,145 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import * as echarts from 'echarts'
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import * as echarts from "echarts";
 
-const visitorsLine = ref(null)
-const originPie = ref(null)
-const mediaLine = ref(null)
-const sankeyChart = ref(null)
-const router = useRouter()
+const visitorsLine = ref(null);
+const originPie = ref(null);
+const mediaLine = ref(null);
+const sankeyChart = ref(null);
+const router = useRouter();
 
 function goBack() {
-  router.push('/landmarks/great-wall')
+  router.push("/landmarks/great-wall");
 }
 
 onMounted(() => {
   // 1. 年度游客量折线图（单位：万人）
   echarts.init(visitorsLine.value).setOption({
-    tooltip: { trigger: 'axis' },
-    xAxis: { type: 'category', data: ['2015','2016','2017','2018','2019','2020','2021','2022','2023'] },
-    yAxis: { type: 'value', name: '万人' },
-    series: [{
-      data: [900, 950, 1000, 1100, 1200, 400, 600, 850, 1100],
-      type: 'line',
-      smooth: true,
-      name: '游客量'
-    }]
-  })
+    tooltip: { trigger: "axis" },
+    xAxis: {
+      type: "category",
+      data: [
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+      ],
+    },
+    yAxis: { type: "value", name: "万人" },
+    series: [
+      {
+        data: [900, 950, 1000, 1100, 1200, 400, 600, 850, 1100],
+        type: "line",
+        smooth: true,
+        name: "游客量",
+      },
+    ],
+  });
 
   // 2. 游客来源地占比饼图（省份+其他）
   echarts.init(originPie.value).setOption({
-    tooltip: { trigger: 'item' },
-    legend: { top: 'bottom' },
-    series: [{
-      type: 'pie',
-      radius: '60%',
-      data: [
-        { value: 300, name: '北京' },
-        { value: 120, name: '河北' },
-        { value: 80, name: '山东' },
-        { value: 60, name: '河南' },
-        { value: 50, name: '江苏' },
-        { value: 40, name: '广东' },
-        { value: 35, name: '上海' },
-        { value: 30, name: '浙江' },
-        { value: 25, name: '四川' },
-        { value: 20, name: '辽宁' },
-        { value: 40, name: '其他' } // 其他省份、港澳台及国外
-      ]
-    }]
-  })
+    tooltip: { trigger: "item" },
+    legend: { top: "bottom" },
+    series: [
+      {
+        type: "pie",
+        radius: "60%",
+        data: [
+          { value: 300, name: "北京" },
+          { value: 120, name: "河北" },
+          { value: 80, name: "山东" },
+          { value: 60, name: "河南" },
+          { value: 50, name: "江苏" },
+          { value: 40, name: "广东" },
+          { value: 35, name: "上海" },
+          { value: 30, name: "浙江" },
+          { value: 25, name: "四川" },
+          { value: 20, name: "辽宁" },
+          { value: 40, name: "其他" }, // 其他省份、港澳台及国外
+        ],
+      },
+    ],
+  });
 
   // 3. 媒体报道热度趋势图
   echarts.init(mediaLine.value).setOption({
-    tooltip: { trigger: 'axis' },
-    legend: { data: ['国内媒体', '国际媒体'] },
-    xAxis: { type: 'category', data: ['2015','2016','2017','2018','2019','2020','2021','2022','2023'] },
-    yAxis: { type: 'value', name: '报道数' },
+    tooltip: { trigger: "axis" },
+    legend: { data: ["国内媒体", "国际媒体"] },
+    xAxis: {
+      type: "category",
+      data: [
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+      ],
+    },
+    yAxis: { type: "value", name: "报道数" },
     series: [
       {
-        name: '国内媒体',
-        type: 'line',
-        data: [1200, 1300, 1400, 1600, 1800, 900, 1100, 1500, 1700]
+        name: "国内媒体",
+        type: "line",
+        data: [1200, 1300, 1400, 1600, 1800, 900, 1100, 1500, 1700],
       },
       {
-        name: '国际媒体',
-        type: 'line',
-        data: [300, 320, 350, 400, 420, 200, 250, 350, 400]
-      }
-    ]
-  })
+        name: "国际媒体",
+        type: "line",
+        data: [300, 320, 350, 400, 420, 200, 250, 350, 400],
+      },
+    ],
+  });
 
   // 4. 文化活动与国际交流桑基图
   echarts.init(sankeyChart.value).setOption({
-    tooltip: { trigger: 'item', triggerOn: 'mousemove' },
+    tooltip: { trigger: "item", triggerOn: "mousemove" },
     series: [
       {
-        type: 'sankey',
-        layout: 'none',
+        type: "sankey",
+        layout: "none",
         data: [
-          { name: '长城' },
-          { name: '长城马拉松' },
-          { name: '国际修缮合作' },
-          { name: '世界遗产大会' },
-          { name: '美国' },
-          { name: '法国' },
-          { name: '澳大利亚' },
-          { name: '联合国教科文' }
+          { name: "长城" },
+          { name: "长城马拉松" },
+          { name: "国际修缮合作" },
+          { name: "世界遗产大会" },
+          { name: "美国" },
+          { name: "法国" },
+          { name: "澳大利亚" },
+          { name: "联合国教科文" },
         ],
         links: [
-          { source: '长城', target: '长城马拉松', value: 10 },
-          { source: '长城', target: '国际修缮合作', value: 8 },
-          { source: '长城', target: '世界遗产大会', value: 6 },
-          { source: '长城马拉松', target: '美国', value: 4 },
-          { source: '长城马拉松', target: '澳大利亚', value: 3 },
-          { source: '国际修缮合作', target: '法国', value: 3 },
-          { source: '国际修缮合作', target: '美国', value: 2 },
-          { source: '世界遗产大会', target: '联合国教科文', value: 6 }
+          { source: "长城", target: "长城马拉松", value: 10 },
+          { source: "长城", target: "国际修缮合作", value: 8 },
+          { source: "长城", target: "世界遗产大会", value: 6 },
+          { source: "长城马拉松", target: "美国", value: 4 },
+          { source: "长城马拉松", target: "澳大利亚", value: 3 },
+          { source: "国际修缮合作", target: "法国", value: 3 },
+          { source: "国际修缮合作", target: "美国", value: 2 },
+          { source: "世界遗产大会", target: "联合国教科文", value: 6 },
         ],
         lineStyle: {
-          color: 'gradient',
-          curveness: 0.5
+          color: "gradient",
+          curveness: 0.5,
         },
         label: {
-          color: '#8b4513'
-        }
-      }
-    ]
-  })
-})
+          color: "#8b4513",
+        },
+      },
+    ],
+  });
+});
 </script>
 
 <style scoped>
@@ -171,7 +202,7 @@ onMounted(() => {
 .chart-card {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(139,69,19,0.08);
+  box-shadow: 0 2px 12px rgba(139, 69, 19, 0.08);
   padding: 18px 18px 12px 18px;
   display: flex;
   flex-direction: column;

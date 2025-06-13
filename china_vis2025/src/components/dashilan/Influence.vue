@@ -147,6 +147,7 @@
 import { ref, onMounted, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import * as echarts from "echarts";
+import RadarChartBoard from "../RadarChartBoard.vue";
 
 // ECharts图表引用 (保持原名称，但内容已是大栅栏主题)
 const imperialPhilosophyChart = ref(null); // 对应 HTML 中的 cosmosChart (现为大栅栏商业构成环形图)
