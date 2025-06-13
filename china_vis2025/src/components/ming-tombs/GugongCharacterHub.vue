@@ -1,5 +1,5 @@
 <template>
-  <div class="mausoleum-network-container">
+  <div class="palace-network-container">
     <div class="header">
       <h1>明十三陵人物关系网络</h1>
       <p class="subtitle">明朝皇帝、后妃与重要大臣的关联图谱</p>
@@ -768,6 +768,16 @@ const characterInfos = {
       "擅长书画，宣德炉闻名于世",
       "延续仁宗政策，国力强盛",
       "葬于景陵",
+    ],
+  },
+  明世宗朱厚熜: {
+    story: "明朝第十一位皇帝，在位期间推行改革，但晚年沉迷道教。",
+    details: [
+      "年号嘉靖 (1522-1566)",
+      "大礼议事件",
+      "重用严嵩，后期政治腐败",
+      "痴迷修道，二十余年不理朝政",
+      "倭寇侵扰东南沿海",
     ],
   },
   明英宗朱祁镇: {

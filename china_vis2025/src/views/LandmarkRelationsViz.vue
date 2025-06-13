@@ -42,7 +42,7 @@
     </div>
 
     <p class="viz-description">
-      此图展示了北京地标的建成与消失历史，以及它们之间的各种联系，包括历史、地理和功能上的关联。
+      这些图展示了北京地标的建成与消失历史，以及它们之间的各种联系，包括历史、地理和功能上的关联。
       切换图表类型以探索不同维度的地标关系。
     </p>
   </div>
@@ -1858,51 +1858,159 @@ export default {
   align-items: center;
   padding: 30px; /* 增加内边距，让内容不贴边 */
   box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 0.95); /* 稍微不那么透明，更显眼 */
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  /* 调整背景色，用更温暖的日落色调，并增加深度 */
+  background: linear-gradient(
+    145deg,
+    #fefbf5 0%,
+    #f9f3e6 100%
+  ); /* 浅米色渐变 */
+  border-radius: 12px; /* 稍微增大圆角 */
+  box-shadow: 0 8px 25px rgba(139, 69, 19, 0.15); /* 更柔和的日落色阴影 */
+  border: 1px solid #d4a76a; /* 增加边框，与主题色系统一 */
+  position: relative; /* 用于背景元素 */
+  overflow: hidden; /* 隐藏溢出内容 */
+}
+
+/* 增加一些背景装饰来体现惊喜感 */
+.relations-viz-container::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 150px;
+  height: 150px;
+  background-color: rgba(209, 155, 97, 0.1); /* 柔和的日落黄圆点 */
+  border-radius: 50%;
+  filter: blur(40px); /* 模糊效果 */
+  z-index: 0;
+  animation: float1 10s infinite ease-in-out alternate;
+}
+
+.relations-viz-container::after {
+  content: "";
+  position: absolute;
+  bottom: -70px;
+  right: -70px;
+  width: 180px;
+  height: 180px;
+  background-color: rgba(183, 138, 86, 0.1); /* 另一个柔和的日落黄圆点 */
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: 0;
+  animation: float2 12s infinite ease-in-out alternate-reverse;
+}
+
+@keyframes float1 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(20px, 30px) rotate(10deg);
+  }
+}
+
+@keyframes float2 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(-20px, -20px) rotate(-10deg);
+  }
 }
 
 .relations-viz-container h2 {
+  /* 标题颜色调整为日落主题的深棕色 */
   color: #8b4513;
   margin-bottom: 25px; /* 增加标题下边距 */
-  font-size: 30px; /* 标题更大一些 */
+  font-size: 32px; /* 标题更大一些 */
   text-align: center;
   font-weight: bold;
+  letter-spacing: 1px; /* 增加字间距 */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* 增加一点阴影 */
+  position: relative;
+  z-index: 1; /* 确保在背景装饰之上 */
+}
+
+/* 标题下划线，增加日落渐变效果 */
+.relations-viz-container h2::after {
+  content: "";
+  position: absolute;
+  bottom: -5px; /* 调整位置 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px; /* 宽度适中 */
+  height: 4px; /* 粗细 */
+  background: linear-gradient(
+    to right,
+    #d4a76a,
+    #bd6b20,
+    #d4a76a
+  ); /* 日落渐变 */
+  border-radius: 2px;
 }
 
 .chart-controls {
   margin-bottom: 30px; /* 增加按钮组下边距 */
   display: flex;
-  gap: 20px; /* 按钮之间间距增大 */
+  gap: 18px; /* 按钮之间间距增大 */
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap; /* 允许换行，适应小屏幕 */
+  z-index: 1; /* 确保在背景装饰之上 */
 }
 
 .chart-controls button {
   padding: 12px 25px; /* 按钮更大一些 */
   font-size: 17px; /* 字体更大 */
-  border: 2px solid #d4a76a; /* 边框更明显 */
-  border-radius: 8px; /* 圆角更大 */
-  background-color: #fcf8f0; /* 更亮的背景色 */
-  color: #8b4513;
+  border: 2px solid #d4a76a; /* 边框颜色与主题一致 */
+  border-radius: 25px; /* 按钮更圆润 */
+  background-color: #fef8f0; /* 浅米色背景，柔和 */
+  color: #8b4513; /* 文字颜色 */
   cursor: pointer;
   transition: all 0.3s ease;
   min-width: 140px; /* 统一按钮宽度 */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08); /* 柔和阴影 */
+  font-weight: 500; /* 字体适中 */
+  position: relative; /* 用于 active 状态的惊喜效果 */
+  overflow: hidden; /* 隐藏溢出效果 */
 }
 
 .chart-controls button:hover {
-  background-color: #f0e8d5;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  background-color: #f5eedf; /* 浅米色 hover */
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15); /* 阴影更明显 */
+  transform: translateY(-2px);
 }
 
+/* 惊喜效果：按钮点击或激活时，光晕或流光效果 */
 .chart-controls button.active {
-  background-color: #bd6b20;
+  background: linear-gradient(45deg, #bd6b20, #d19b61); /* 激活按钮的日落渐变 */
   color: #fff;
   border-color: #bd6b20;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-  transform: translateY(-3px); /* 悬浮效果更明显 */
+  box-shadow: 0 8px 20px rgba(189, 107, 32, 0.4); /* 更明显的激活阴影 */
+  transform: translateY(-5px); /* 悬浮效果更明显 */
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-controls button.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3); /* 流光效果 */
+  transform: skewX(-30deg);
+  animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 /* 新增的图表显示区域 */
@@ -1913,53 +2021,84 @@ export default {
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
   position: relative; /* 内部图表如果需要绝对定位则会相对于此 */
-  min-height: 400px; /* 确保有足够高度 */
+  min-height: 450px; /* 确保有足够高度，比之前更高 */
   overflow: hidden; /* 防止图表溢出 */
+  border-radius: 12px; /* 与容器圆角一致 */
+  background-color: #fefcf7; /* 图表区域的背景色，更干净 */
+  box-shadow: inset 0 2px 10px rgba(139, 69, 19, 0.05); /* 内部阴影，增加层次感 */
+  border: 1px solid #e8dfd1; /* 边框 */
 }
 
 .chart-instance {
   position: absolute; /* 让图表实例相互覆盖 */
   width: 100%;
   height: 100%;
-  border-radius: 8px;
+  border-radius: 8px; /* 保持图表实例的圆角 */
+  background-color: transparent; /* 确保图表背景透明，以便看到 charts-display-area 的背景 */
 }
 
 .viz-description {
   font-size: 16px; /* 描述文字大一点 */
-  color: #666; /* 颜色深一点 */
+  color: #7a6b64; /* 颜色调整为中等棕灰色 */
   text-align: center;
   max-width: 800px;
   line-height: 1.7; /* 行高增加 */
-  margin-top: 30px; /* 与图表有更大间距 */
+  margin-top: 35px; /* 与图表有更大间距 */
   margin-bottom: 0; /* 底部无外边距 */
+  opacity: 0.9; /* 稍微透明一点 */
+  position: relative;
+  z-index: 1; /* 确保在背景装饰之上 */
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
   .relations-viz-container {
     padding: 20px 15px;
+    border-radius: 8px;
   }
   .relations-viz-container h2 {
-    font-size: 24px;
+    font-size: 26px; /* 小屏幕标题更小 */
     margin-bottom: 20px;
   }
   .chart-controls {
     flex-direction: column; /* 按钮垂直排列 */
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 12px; /* 调整间距 */
+    margin-bottom: 25px;
   }
   .chart-controls button {
     padding: 10px 20px;
-    font-size: 15px;
+    font-size: 16px;
     min-width: unset; /* 取消最小宽度限制 */
-    width: 80%; /* 按钮宽度占大部分 */
+    width: 85%; /* 按钮宽度占大部分 */
+    border-radius: 20px;
   }
-  .chart-area,
   .charts-display-area {
-    min-height: 300px; /* 减小移动端图表高度 */
+    min-height: 350px; /* 减小移动端图表高度 */
+    border-radius: 10px;
   }
   .viz-description {
     font-size: 14px;
+    margin-top: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .relations-viz-container {
+    padding: 15px 10px;
+  }
+  .relations-viz-container h2 {
+    font-size: 22px;
+  }
+  .chart-controls button {
+    font-size: 14px;
+    padding: 8px 15px;
+    width: 90%;
+  }
+  .charts-display-area {
+    min-height: 300px;
+  }
+  .viz-description {
+    font-size: 13px;
     margin-top: 20px;
   }
 }

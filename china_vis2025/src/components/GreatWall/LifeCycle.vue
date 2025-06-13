@@ -489,18 +489,18 @@ onMounted(() => {
 .lifecycle-header {
   text-align: center;
   padding: 60px 20px 30px;
-  background: linear-gradient(to right, #b3cbb9, #4caf50);
+  background: linear-gradient(to right, #c19a6b, #b78a56);
   position: relative;
-  box-shadow: 0 4px 12px rgba(101, 67, 33, 0.15);
+  box-shadow: 0 4px 12px rgba(101, 67, 33, 0.2);
   margin-bottom: 30px;
 }
 
 .lifecycle-header h1 {
-  font-size: 2.3em;
+  font-size: 2.5em;
   color: #fff8e1;
   margin-bottom: 8px;
   font-weight: 700;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .intro-text {
@@ -517,9 +517,9 @@ onMounted(() => {
   position: absolute;
   top: 20px;
   left: 20px;
-  background-color: rgba(76,175,80,0.8);
+  background-color: rgba(94, 66, 41, 0.8);
   color: #fff8e1;
-  border: 1px solid #388e3c;
+  border: 1px solid #5d4037;
   padding: 8px 16px;
   border-radius: 20px;
   cursor: pointer;
@@ -527,11 +527,11 @@ onMounted(() => {
   z-index: 10;
   transition: all 0.3s ease;
   backdrop-filter: blur(4px);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
 }
 
 .back-button:hover {
-  background-color: #388e3c;
+  background-color: rgba(121, 85, 72, 0.9);
   transform: translateX(-2px);
 }
 
@@ -549,12 +549,12 @@ onMounted(() => {
   backdrop-filter: blur(5px);
   border-radius: 10px;
   padding: 15px 20px;
-  min-width: 160px;
+  min-width: 180px;
   display: flex;
   align-items: center;
   gap: 15px;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .status-icon {
@@ -569,7 +569,7 @@ onMounted(() => {
 }
 
 .status-value {
-  font-size: 1.3em;
+  font-size: 1.4em;
   color: white;
   margin: 0;
   font-weight: bold;
@@ -604,7 +604,7 @@ onMounted(() => {
 }
 
 .timeline-point.active .timeline-year {
-  color: #388e3c;
+  color: #8b4513;
   font-weight: bold;
   transform: scale(1.1);
 }
@@ -613,20 +613,20 @@ onMounted(() => {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: #b3cbb9;
+  background-color: #d4a76a;
   margin-bottom: 8px;
   transition: all 0.3s ease;
 }
 
 .timeline-point.active .timeline-marker {
-  background-color: #388e3c;
+  background-color: #8b4513;
   transform: scale(1.3);
-  box-shadow: 0 0 0 4px rgba(56, 142, 60, 0.18);
+  box-shadow: 0 0 0 4px rgba(139, 69, 19, 0.2);
 }
 
 .timeline-year {
   font-size: 1rem;
-  color: #4caf50;
+  color: #9c7c5c;
   transition: all 0.3s ease;
   white-space: nowrap;
 }
@@ -641,18 +641,19 @@ onMounted(() => {
 .timeline-section {
   width: 100%;
   overflow-x: auto;
-  padding-bottom: 20px;
+  padding-bottom: 20px; /* Space for scrollbar */
 }
 
 .timeline {
   position: relative;
-  display: inline-flex;
+  display: inline-flex; /* Changed from flex to inline-flex */
   align-items: center;
-  padding: 40px 60px;
+  padding: 40px 60px; /* Increased horizontal padding */
   height: auto;
   min-height: 120px;
-  min-width: 100%;
-  white-space: nowrap;
+  /* Add these: */
+  min-width: 100%; /* Ensure it takes full width */
+  white-space: nowrap; /* Prevent items from wrapping */
 }
 
 .timeline-line {
@@ -661,11 +662,12 @@ onMounted(() => {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(to right, #b3cbb9, #4caf50);
+  background: linear-gradient(to right, #d4a76a, #8b4513);
   border-radius: 2px;
   z-index: 1;
 }
 
+/* 时间轴项横向排列 */
 .timeline-item {
   position: relative;
   min-width: 180px;
@@ -675,20 +677,20 @@ onMounted(() => {
   cursor: pointer;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(5px);
-  border: 1px solid rgba(56, 142, 60, 0.08);
+  border: 1px solid rgba(139, 69, 19, 0.1);
   border-radius: 12px;
   z-index: 2;
   transition: all 0.4s ease;
 }
 
 .timeline-item:hover {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 248, 225, 0.8);
   transform: translateY(-5px);
 }
 
 .timeline-item.active {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 10px 30px rgba(56, 142, 60, 0.10);
+  background: rgba(255, 248, 225, 0.95);
+  box-shadow: 0 10px 30px rgba(139, 69, 19, 0.15);
   transform: translateY(-10px);
 }
 
@@ -700,24 +702,24 @@ onMounted(() => {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background-color: #b3cbb9;
+  background-color: #d4a76a;
   border: 3px solid #f5f2e9;
-  box-shadow: 0 0 0 4px rgba(179, 203, 185, 0.18);
+  box-shadow: 0 0 0 4px rgba(212, 167, 106, 0.3);
   transition: all 0.4s ease;
   z-index: 3;
 }
 
 .timeline-item.active .timeline-dot {
-  background-color: #388e3c;
+  background-color: #8b4513;
   width: 22px;
   height: 22px;
-  box-shadow: 0 0 0 6px rgba(56, 142, 60, 0.18);
+  box-shadow: 0 0 0 6px rgba(139, 69, 19, 0.3);
 }
 
 .timeline-year {
   font-size: 1.1rem;
   font-weight: bold;
-  color: #388e3c;
+  color: #8b4513;
   margin-bottom: 5px;
 }
 
@@ -737,12 +739,22 @@ onMounted(() => {
 .history-info h2 {
   font-size: 28px;
   margin-bottom: 8px;
-  color: #388e3c;
+  color: #6c4f2c;
+}
+
+.history-info h2:after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, #d4a76a 0%, #8b4513 100%);
 }
 
 .history-period {
   font-size: 16px;
-  color: #7cb342;
+  color: #9c805a;
   margin-bottom: 12px;
 }
 
@@ -761,7 +773,7 @@ onMounted(() => {
 }
 
 .metric {
-  background-color: #e8f5e9;
+  background-color: #e8dbc2;
   padding: 12px;
   border-radius: 10px;
   text-align: center;
@@ -771,17 +783,17 @@ onMounted(() => {
 .metric-value {
   font-size: 18px;
   font-weight: bold;
-  color: #388e3c;
+  color: #5e4123;
 }
 
 .metric-label {
   font-size: 14px;
-  color: #7cb342;
+  color: #7e6b4e;
 }
 
 .architectural-features h3 {
   margin-bottom: 8px;
-  color: #388e3c;
+  color: #5e4123;
 }
 
 .architectural-features ul {
@@ -791,24 +803,18 @@ onMounted(() => {
 
 .network-section {
   flex: 1;
-  background-color: #f2fbe1;
+  background-color: #f2ebd8;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: inset 0 0 12px rgba(56, 142, 60, 0.08);
+  box-shadow: inset 0 0 12px rgba(100, 80, 40, 0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.network-section img {
-  max-width: 100%;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(56, 142, 60, 0.08);
-}
-
 .network-section h3 {
   font-size: 20px;
-  color: #388e3c;
+  color: #6a5030;
   margin-bottom: 12px;
 }
 
@@ -824,24 +830,24 @@ onMounted(() => {
   background: linear-gradient(135deg, #ffffff 0%, #f9f5ed 100%);
   border-radius: 15px;
   padding: 25px;
-  box-shadow: 0 10px 30px rgba(101, 67, 33, 0.08);
-  border: 1px solid rgba(56, 142, 60, 0.08);
+  box-shadow: 0 10px 30px rgba(101, 67, 33, 0.1);
+  border: 1px solid rgba(139, 69, 19, 0.1);
 }
 
 .visualization-card h3 {
-  color: #388e3c;
+  color: #5d4037;
   font-size: 1.2em;
   margin-top: 0;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #b3cbb9;
+  border-bottom: 1px solid #d4b483;
   text-align: center;
 }
 
 .chart-container {
   height: 250px;
   background-color: rgba(255, 253, 245, 0.5);
-  border: 1px dashed #b3cbb9;
+  border: 1px dashed #8d6e63;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -851,7 +857,8 @@ onMounted(() => {
 }
 
 .chart-container:after {
-  content: "";
+  position: absolute;
+  font-size: 1.1em;
 }
 
 /* 页脚 */
@@ -861,7 +868,7 @@ onMounted(() => {
   margin-top: 50px;
   color: #5a4a42;
   font-size: 0.9em;
-  border-top: 1px solid rgba(56, 142, 60, 0.08);
+  border-top: 1px solid rgba(139, 69, 19, 0.15);
   background-color: rgba(255, 253, 245, 0.7);
 }
 
@@ -870,21 +877,26 @@ onMounted(() => {
   .content-wrapper {
     flex-direction: column;
   }
+
   .timeline-section {
     margin-bottom: 40px;
   }
+
   .timeline {
     display: flex;
     flex-direction: column;
     padding: 0;
   }
+
   .timeline-line {
     display: none;
   }
+
   .timeline-item {
     padding: 15px;
     margin-bottom: 10px;
   }
+
   .timeline-dot {
     display: none;
   }
@@ -895,14 +907,17 @@ onMounted(() => {
     font-size: 2em;
     padding-top: 10px;
   }
+
   .status-overview {
     flex-direction: column;
     align-items: center;
   }
+
   .status-card {
     width: 100%;
     max-width: 250px;
   }
+
   .visualization-section {
     grid-template-columns: 1fr;
   }
@@ -912,18 +927,22 @@ onMounted(() => {
   .lifecycle-header {
     padding: 40px 15px 30px;
   }
+
   .back-button {
     top: 15px;
     left: 15px;
     padding: 10px 15px;
   }
+
   .history-metrics {
     flex-direction: column;
     gap: 15px;
   }
+
   .history-info {
     padding: 20px;
   }
+
   .chart-container {
     height: 200px;
   }
@@ -943,12 +962,12 @@ onMounted(() => {
 }
 
 .modal-content {
-  background-color: #f4fbe1;
+  background-color: #f4f1e1; /* 米黄色底 */
   border-radius: 16px;
   padding: 24px;
   max-width: 1200px;
   margin: 0 auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   font-family: "Serif", "Songti SC", serif;
   color: #3c2f1e;
 }

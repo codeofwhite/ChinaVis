@@ -40,6 +40,7 @@
         </div>
       </div>
     </div>
+    <p class="legend-hint">更多关系类型请点击人物节点查看详情。</p>
 
     <div class="graph-wrapper" ref="graphContainerRef"></div>
 
@@ -1361,6 +1362,13 @@ h1 {
 }
 .relation-line.family:after {
   border-top-color: #daa520;
+}
+
+.legend-hint {
+  font-size: 0.85rem;
+  color: #777;
+  text-align: right;
+  margin-top: 10px;
 }
 
 .graph-wrapper {

@@ -26,17 +26,18 @@ const goBack = () => router.push("/landmarks/great-wall");
 
 <style scoped>
 :root {
-  --primary-color: #3a6c4f;
-  --secondary-color: #b3cbb9;
-  --accent-color: #5e8c6a;
-  --text-dark: #2d3a2e;
-  --text-medium: #4e5d4a;
-  --text-light: #7a8c7a;
-  --bg-light: #eaf3ec;
-  --bg-lighter: #f6fbf7;
-  --bg-dark: #254032;
+  /* 定义新的棕褐色系颜色变量 */
+  --primary-color: #8b4513; /* 深棕色，作为主色 */
+  --secondary-color: #d4a76a; /* 中棕色，作为辅助色 */
+  --accent-color: #a0522d; /* 强调色，略带红的棕色 */
+  --text-dark: #3e2723; /* 最深文字色 */
+  --text-medium: #5a4a42; /* 中等文字色 */
+  --text-light: #7a6b64; /* 浅文字色 */
+  --bg-light: #f9f5ed; /* 浅背景色 */
+  --bg-lighter: #fff8e1; /* 更浅背景色 */
+  --bg-dark: #33211a; /* 最深背景色 */
   --border-radius: 12px;
-  --box-shadow: 0 8px 30px rgba(58, 108, 79, 0.12);
+  --box-shadow: 0 8px 30px rgba(101, 67, 33, 0.12); /* 阴影颜色 */
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -52,12 +53,14 @@ const goBack = () => router.push("/landmarks/great-wall");
 }
 
 body {
-  background-color: #b3cbb9;
+  /* 调整 body 背景色 */
+  background-color: #e8d8c3; /* 对应新的 --secondary-color 附近 */
 }
 
 .legends-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #eaf3ec 0%, #d1e3d6 100%);
+  /* 调整背景渐变色 */
+  background: linear-gradient(135deg, #f9f5ed 0%, #e8d8c3 100%);
   padding: 2rem;
   position: relative;
   font-family: "Noto Serif SC", serif;
@@ -68,9 +71,11 @@ body {
   position: absolute;
   top: 20px;
   left: 20px;
-  background-color: rgba(58, 108, 79, 0.85);
-  color: #f6fbf7;
-  border: 1px solid #3a6c4f;
+  /* 调整按钮背景色 */
+  background-color: rgba(139, 69, 19, 0.85); /* 对应 --primary-color 的透明度 */
+  color: var(--bg-lighter); /* 使用浅背景色作为文字色 */
+  /* 调整边框颜色 */
+  border: 1px solid var(--primary-color);
   padding: 8px 16px;
   border-radius: 20px;
   cursor: pointer;
@@ -82,7 +87,8 @@ body {
 }
 
 .back-button:hover {
-  background-color: rgba(94, 140, 106, 0.95);
+  /* 调整 hover 状态的背景色 */
+  background-color: rgba(160, 82, 45, 0.95); /* 对应 --accent-color 的透明度 */
   transform: translateX(-2px);
 }
 
@@ -95,7 +101,8 @@ body {
 
 .legends-header h1 {
   font-size: 2.8rem;
-  color: #3a6c4f;
+  /* 调整标题颜色 */
+  color: var(--primary-color);
   margin-bottom: 1rem;
   font-weight: bold;
   letter-spacing: 0.1em;
@@ -105,7 +112,8 @@ body {
 
 .legends-header p {
   font-size: 1.2rem;
-  color: #4e5d4a;
+  /* 调整段落文字颜色 */
+  color: var(--text-medium);
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.8;

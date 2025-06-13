@@ -15,7 +15,7 @@
       <div class="charts-section" style="flex:2; min-width:340px;">
         <div class="chart-card" style="height:100%;">
           <h3 class="chart-title">北京历史地标评估雷达图</h3>
-          <RadarChart :selectedLandmarks="['故宫','天坛','长城','明十三陵','北海公园','法源寺','颐和园','大栅栏']" />
+           <RadarChartBoard class="radar-container" />
         </div>
         <div class="charts-grid">
           <div class="chart-card">
@@ -129,6 +129,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import * as echarts from 'echarts';
 import RadarChart from '../RadarChart.vue';
+import RadarChartBoard from "../RadarChartBoard.vue";
 
 const router = useRouter();
 const goBack = () => router.push('/landmarks/great-wall');
