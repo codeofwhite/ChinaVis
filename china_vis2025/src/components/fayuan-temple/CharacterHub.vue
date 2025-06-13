@@ -1,42 +1,42 @@
 <template>
-  <div class="tiantan-network-container">
+  <div class="fayuan-network-container">
     <div class="header">
-      <h1>天坛人物关系网络</h1>
-      <p class="subtitle">明清时期重要人物与天坛的关联图谱</p>
+      <h1>法源寺人物关系网络</h1>
+      <p class="subtitle">历代高僧、文人及历史人物与法源寺的关联图谱</p>
     </div>
 
     <div class="legend-container">
       <div class="legend">
         <div class="legend-item">
           <span class="legend-icon location"></span>
-          <span>天坛</span>
+          <span>法源寺</span>
         </div>
         <div class="legend-item">
-          <span class="legend-icon emperor"></span>
-          <span>皇帝</span>
+          <span class="legend-icon abbot"></span>
+          <span>住持/高僧</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-icon literati"></span>
+          <span>文人</span>
         </div>
         <div class="legend-item">
           <span class="legend-icon official"></span>
-          <span>大臣</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-icon ritual"></span>
-          <span>祭祀官</span>
+          <span>官员</span>
         </div>
       </div>
 
       <div class="relation-legend">
         <div class="legend-item">
-          <span class="relation-line ritual"></span>
-          <span>祭祀关系</span>
+          <span class="relation-line dharma"></span>
+          <span>法脉传承</span>
         </div>
         <div class="legend-item">
-          <span class="relation-line construction"></span>
-          <span>营建关系</span>
+          <span class="relation-line culture"></span>
+          <span>文化交流</span>
         </div>
         <div class="legend-item">
-          <span class="relation-line governance"></span>
-          <span>政治关系</span>
+          <span class="relation-line event"></span>
+          <span>历史事件</span>
         </div>
       </div>
     </div>
@@ -110,328 +110,376 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import ForceGraph3D from "3d-force-graph";
 import * as THREE from "three";
 import SpriteText from "three-spritetext";
 import * as d3 from "d3";
 
+
 const originalGraphData = {
   nodes: [
     {
-      id: "天坛",
-      name: "天坛",
+      id: "法源寺",
+      name: "法源寺",
       val: 60,
-      color: "#d4a76a",
+      color: "#b85c00",
       type: "location",
       symbolSize: 30,
     },
     {
-      id: "明永乐帝",
-      name: "永乐",
-      val: 25,
-      color: "#8B4513",
-      type: "emperor",
-      symbolSize: 26,
-    },
-    {
-      id: "明嘉靖帝",
-      name: "嘉靖",
+      id: "道宣",
+      name: "道宣",
       val: 22,
-      color: "#8B4513",
-      type: "emperor",
+      color: "#e6b800",
+      type: "abbot",
       symbolSize: 24,
     },
     {
-      id: "清康熙帝",
-      name: "康熙",
+      id: "鉴真",
+      name: "鉴真",
       val: 20,
-      color: "#8B4513",
-      type: "emperor",
+      color: "#e67e22",
+      type: "abbot",
       symbolSize: 22,
     },
     {
-      id: "清乾隆帝",
-      name: "乾隆",
-      val: 20,
-      color: "#8B4513",
-      type: "emperor",
-      symbolSize: 22,
-    },
-    {
-      id: "清雍正帝",
-      name: "雍正",
+      id: "林则徐",
+      name: "林则徐",
       val: 18,
-      color: "#8B4513",
-      type: "emperor",
+      color: "#b83232",
+      type: "literati",
       symbolSize: 20,
     },
     {
-      id: "蒯祥",
-      name: "蒯祥",
+      id: "徐志摩",
+      name: "徐志摩",
       val: 16,
-      color: "#A0522D",
-      type: "architect",
+      color: "#b83232",
+      type: "literati",
       symbolSize: 18,
-
     },
     {
-      id: "刘伯温",
-      name: "刘伯温",
+      id: "泰戈尔",
+      name: "泰戈尔",
       val: 15,
-      color: '#CD853F',
-      type: "scholar",
-      symbolSize: 17
+      color: "#b83232",
+      type: "literati",
+      symbolSize: 17,
     },
     {
-      id: "于谦",
-      name: "于谦",
+      id: "杨昌济",
+      name: "杨昌济",
       val: 14,
-      color: '#A0522D',
+      color: "#d2691e",
       type: "official",
-      symbolSize: 16
+      symbolSize: 16,
     },
     {
-      id: "张居正",
-      name: "张居正",
+      id: "李敖",
+      name: "李敖",
+      val: 14,
+      color: "#b83232",
+      type: "literati",
+      symbolSize: 16,
+    },
+    {
+      id: "宋钦宗",
+      name: "宋钦宗",
+      val: 18,
+      color: "#d2691e",
+      type: "official",
+      symbolSize: 18,
+    },
+    {
+      id: "顺治帝",
+      name: "顺治帝",
+      val: 18,
+      color: "#e6b800",
+      type: "official",
+      symbolSize: 18,
+    },
+    {
+      id: "雍正帝",
+      name: "雍正帝",
+      val: 18,
+      color: "#e6b800",
+      type: "official",
+      symbolSize: 18,
+    },
+    {
+      id: "乾隆帝",
+      name: "乾隆帝",
+      val: 18,
+      color: "#e6b800",
+      type: "official",
+      symbolSize: 18,
+    },
+    {
+      id: "谢枋得",
+      name: "谢枋得",
       val: 16,
-      color: '#A0522D',
+      color: "#b83232",
       type: "official",
-      symbolSize: 18
+      symbolSize: 16,
     },
     {
-      id: "太常寺卿",
-      name: "太常寺卿",
-      val: 13,
-      color: '#DEB887',
-      type: "ritual",
-      symbolSize: 15
+      id: "袁崇焕",
+      name: "袁崇焕",
+      val: 16,
+      color: "#d2691e",
+      type: "official",
+      symbolSize: 16,
     },
     {
-      id: "礼部尚书",
-      name: "礼部尚书",
-      val: 13,
-      color: '#DEB887',
-      type: "ritual",
-      symbolSize: 15
-    },
-    {
-      id: "钦天监正",
-      name: "钦天监正",
-      val: 12,
-      color: '#D2B48C',
-      type: "astronomer",
-      symbolSize: 14
-    },
-    {
-      id: "明万历帝",
-      name: "万历",
-      val: 17,
-      color: '#8B4513',
-      type: "emperor",
-      symbolSize: 19
-    },
-    {
-      id: "清光绪帝",
-      name: "光绪",
+      id: "齐白石",
+      name: "齐白石",
       val: 15,
-      color: '#8B4513',
-      type: "emperor",
-      symbolSize: 17
+      color: "#b83232",
+      type: "literati",
+      symbolSize: 15,
     },
     {
-      id: "袁世凯",
-      name: "袁世凯",
+      id: "纪晓岚",
+      name: "纪晓岚",
       val: 14,
-      color: '#8B7355',
-      type: "official",
-      symbolSize: 16
-    }
+      color: "#b83232",
+      type: "literati",
+      symbolSize: 14,
+    },
+    {
+      id: "龚自珍",
+      name: "龚自珍",
+      val: 14,
+      color: "#b83232",
+      type: "literati",
+      symbolSize: 14,
+    },
+    {
+      id: "谭嗣同",
+      name: "谭嗣同",
+      val: 14,
+      color: "#b83232",
+      type: "literati",
+      symbolSize: 14,
+    },
+    {
+      id: "梁启超",
+      name: "梁启超",
+      val: 14,
+      color: "#b83232",
+      type: "literati",
+      symbolSize: 14,
+    },
+    {
+      id: "无名高僧",
+      name: "无名高僧",
+      val: 13,
+      color: "#e67e22",
+      type: "abbot",
+      symbolSize: 13,
+    },
+    {
+      id: "金代考场",
+      name: "金代考场",
+      val: 12,
+      color: "#a67c52",
+      type: "event",
+      symbolSize: 12,
+    },
+    {
+      id: "丁香诗会",
+      name: "丁香诗会",
+      val: 12,
+      color: "#a67c52",
+      type: "event",
+      symbolSize: 12,
+    },
+    {
+      id: "石狮劫难",
+      name: "石狮劫难",
+      val: 12,
+      color: "#a67c52",
+      type: "event",
+      symbolSize: 12,
+    },
   ],
   links: [
     {
-      source: "明永乐帝",
-      target: "天坛",
-      relation: "营建天坛",
-      color: "#FF8C42",
+      source: "道宣",
+      target: "法源寺",
+      relation: "律宗祖庭",
+      color: "#e67e22",
       width: 5,
       curvature: 0.1,
     },
     {
-      source: "明嘉靖帝",
-      target: "天坛",
-      relation: "大规模重建",
-      color: "#FF8C42",
+      source: "鉴真",
+      target: "法源寺",
+      relation: "东渡前驻锡",
+      color: "#e67e22",
       width: 4,
       curvature: 0.1,
     },
     {
-      source: "清康熙帝",
-      target: "天坛",
-      relation: "恢复祭天礼",
-      color: "#6B9BD2",
+      source: "林则徐",
+      target: "法源寺",
+      relation: "吟咏丁香",
+      color: "#b83232",
       width: 4,
       curvature: 0.1,
     },
     {
-      source: "清乾隆帝",
-      target: "天坛",
-      relation: "完善祭祀制度",
-      color: "#6B9BD2",
-      width: 4,
-      curvature: 0.1,
-    },
-    {
-      source: "清雍正帝",
-      target: "天坛",
-      relation: "规范祭天仪式",
-      color: "#6B9BD2",
+      source: "徐志摩",
+      target: "法源寺",
+      relation: "陪同泰戈尔",
+      color: "#b83232",
       width: 3,
       curvature: 0.2,
     },
     {
-      source: "蒯祥",
-      target: "明永乐帝",
-      relation: "首席建筑师",
-      color: "#82C09A",
+      source: "泰戈尔",
+      target: "法源寺",
+      relation: "访寺赏花",
+      color: "#b83232",
       width: 3,
-      curvature: 0.3,
+      curvature: 0.2,
     },
     {
-      source: "蒯祥",
-      target: "天坛",
-      relation: "设计建造",
-      color: "#82C09A",
-      width: 4,
+      source: "杨昌济",
+      target: "法源寺",
+      relation: "停灵于寺",
+      color: "#d2691e",
+      width: 3,
       curvature: 0.1,
     },
     {
-      source: "刘伯温",
-      target: "明永乐帝",
-      relation: "风水顾问",
-      color: "#D4A76A",
+      source: "李敖",
+      target: "法源寺",
+      relation: "以寺为题",
+      color: "#b83232",
+      width: 3,
+      curvature: 0.1,
+    },
+    {
+      source: "宋钦宗",
+      target: "法源寺",
+      relation: "靖康之变囚禁",
+      color: "#d2691e",
+      width: 3,
+      curvature: 0.1,
+    },
+    {
+      source: "顺治帝",
+      target: "法源寺",
+      relation: "设戒坛",
+      color: "#e6b800",
+      width: 3,
+      curvature: 0.1,
+    },
+    {
+      source: "雍正帝",
+      target: "法源寺",
+      relation: "赐名重修",
+      color: "#e6b800",
+      width: 3,
+      curvature: 0.1,
+    },
+    {
+      source: "乾隆帝",
+      target: "法源寺",
+      relation: "题匾赋诗",
+      color: "#e6b800",
+      width: 3,
+      curvature: 0.1,
+    },
+    {
+      source: "谢枋得",
+      target: "法源寺",
+      relation: "殉国于寺",
+      color: "#b83232",
+      width: 3,
+      curvature: 0.1,
+    },
+    {
+      source: "袁崇焕",
+      target: "法源寺",
+      relation: "头颅超度",
+      color: "#d2691e",
+      width: 3,
+      curvature: 0.1,
+    },
+    {
+      source: "齐白石",
+      target: "法源寺",
+      relation: "寺内居住创作",
+      color: "#b83232",
+      width: 3,
+      curvature: 0.1,
+    },
+    {
+      source: "纪晓岚",
+      target: "丁香诗会",
+      relation: "诗会雅集",
+      color: "#b83232",
       width: 2,
-      curvature: 0.3,
+      curvature: 0.2,
     },
     {
-      source: "刘伯温",
-      target: "天坛",
-      relation: "选址规划",
-      color: "#D4A76A",
-      width: 3,
-      curvature: 0.1,
-    },
-    {
-      source: "于谦",
-      target: "天坛",
-      relation: "主持祭天仪式",
-      color: "#F4B942",
-      width: 3,
-      curvature: 0.1,
-    },
-    {
-      source: "张居正",
-      target: "明万历帝",
-      relation: "首辅",
-      color: "#B8860B",
-      width: 3,
-      curvature: 0.3,
-    },
-    {
-      source: "张居正",
-      target: "天坛",
-      relation: "改革祭祀制度",
-      color: "#B8860B",
-      width: 3,
-      curvature: 0.1,
-    },
-    {
-      source: "太常寺卿",
-      target: "天坛",
-      relation: "管理祭祀",
-      color: "#E6B800",
-      width: 4,
-      curvature: 0.1,
-    },
-    {
-      source: "礼部尚书",
-      target: "天坛",
-      relation: "制定礼仪",
-      color: "#E6B800",
-      width: 4,
-      curvature: 0.1,
-    },
-    {
-      source: "钦天监正",
-      target: "天坛",
-      relation: "择定祭天时日",
-      color: "#DAA520",
-      width: 3,
-      curvature: 0.1,
-    },
-    {
-      source: "明万历帝",
-      target: "天坛",
-      relation: "频繁祭天",
-      color: "#FF8C42",
-      width: 3,
-      curvature: 0.1,
-    },
-    {
-      source: "清光绪帝",
-      target: "天坛",
-      relation: "最后祭天",
-      color: "#9E9E9E",
-      width: 3,
-      curvature: 0.1,
-    },
-    {
-      source: "袁世凯",
-      target: "天坛",
-      relation: "称帝祭天",
-      color: "#696969",
+      source: "龚自珍",
+      target: "丁香诗会",
+      relation: "诗会雅集",
+      color: "#b83232",
       width: 2,
-      curvature: 0.1,
+      curvature: 0.2,
     },
     {
-      source: "太常寺卿",
-      target: "礼部尚书",
-      relation: "协作关系",
-      color: "#FF7043",
+      source: "丁香诗会",
+      target: "法源寺",
+      relation: "百年文化盛事",
+      color: "#a67c52",
       width: 2,
-      curvature: 0.4,
+      curvature: 0.2,
     },
     {
-      source: "钦天监正",
-      target: "太常寺卿",
-      relation: "配合祭祀",
-      color: "#7986CB",
+      source: "石狮劫难",
+      target: "法源寺",
+      relation: "文物保护争议",
+      color: "#a67c52",
       width: 2,
-      curvature: 0.4,
+      curvature: 0.2,
     },
     {
-      source: "明嘉靖帝",
-      target: "明万历帝",
-      relation: "祖孙",
-      color: "#FFC107",
+      source: "谭嗣同",
+      target: "李敖",
+      relation: "小说虚构密会",
+      color: "#b83232",
       width: 2,
-      curvature: 0.3,
+      curvature: 0.2,
     },
     {
-      source: "清康熙帝",
-      target: "清雍正帝",
-      relation: "父子",
-      color: "#26A69A",
+      source: "谭嗣同",
+      target: "梁启超",
+      relation: "戊戌变法同仁",
+      color: "#b83232",
       width: 2,
-      curvature: 0.3,
+      curvature: 0.2,
     },
     {
-      source: "清雍正帝",
-      target: "清乾隆帝",
-      relation: "父子",
-      color: "#26A69A",
+      source: "无名高僧",
+      target: "法源寺",
+      relation: "传说感化孝庄",
+      color: "#e67e22",
       width: 2,
-      curvature: 0.3,
+      curvature: 0.2,
+    },
+    {
+      source: "金代考场",
+      target: "法源寺",
+      relation: "女真进士策试",
+      color: "#a67c52",
+      width: 2,
+      curvature: 0.2,
     },
   ],
 };
@@ -450,188 +498,193 @@ const graphData = ref({
   links: originalGraphData.links,
 });
 
+// 人物简介（示例，可补充完善）
 const characterInfos = {
-  天坛: {
-    story:
-      "天坛是明清两朝皇帝祭祀昊天上帝的圣地，体现了中国古代“天人合一”的哲学思想，是世界上现存最大的古代祭祀建筑群。",
+  法源寺: {
+    story: "法源寺始建于唐贞观十九年，是北京现存最古老的佛教寺院之一，历代高僧、文人墨客、历史人物在此留下深刻印记。",
     details: [
-      "始建于明永乐十八年(1420年)",
-      "占地约273万平方米",
-      "1998年被列为世界文化遗产",
-      "祭天仪式一年三次：孟春祈谷、仲夏祈雨、冬至祭天",
-      "祈年殿、圜丘坛、皇穹宇等建筑布局严谨，寓意深远"
+      "唐代悯忠寺，后更名法源寺",
+      "中国佛学院所在地",
+      "以丁香花著称，京城春日胜地",
+      "中日佛教文化交流重要场所"
     ],
-    events: [
-      "嘉靖雷击事件",
-      "光绪帝祈雨",
-      "袁世凯称帝祭天"
-    ]
   },
-  明永乐帝: {
-    story:
-      "明朝第三位皇帝朱棣，迁都北京后营建天坛，确立了明清两代皇帝祭天的传统，体现了君权神授的政治理念。",
+  道宣: {
+    story: "唐代高僧，律宗祖师，曾驻锡法源寺，弘扬律宗，影响深远。",
     details: [
-      "原名朱棣，燕王起兵夺取皇位",
-      "迁都北京，营建紫禁城和天坛",
-      "确立祭天制度的基本框架",
-      "在位22年(1402-1424)",
-      "重视礼制，推动国家统一"
-    ]
+      "律宗初祖，著有《四分律删繁补阙行事钞》",
+      "在法源寺弘法多年",
+      "推动佛教戒律制度完善"
+    ],
   },
-  明嘉靖帝: {
-    story:
-      "明朝第十一位皇帝，对天坛进行了大规模的重建和扩建，将原来的天地坛分为天坛和地坛，完善了祭天建筑布局。",
+  鉴真: {
+    story: "唐代高僧，东渡日本传播佛法，曾在法源寺驻锡，留下中日佛教交流佳话。",
     details: [
-      "大礼议事件的主角",
-      "将天地坛分离，专门祭天",
-      "重建祈年殿，改为圆形建筑",
-      "在位45年(1521-1566)",
-      "曾遭遇天坛祈年殿雷击事件"
-    ]
+      "六次东渡，终成正果",
+      "在法源寺讲学传戒",
+      "日本佛教律宗开山祖"
+    ],
   },
-  清康熙帝: {
-    story:
-      "清朝第四位皇帝，入关后继承并发展了明朝的祭天传统，在天坛恢复了中断的祭天大典，体现了满族统治者对汉族传统文化的尊重。",
+  林则徐: {
+    story: "清代著名政治家、文学家，曾在法源寺吟咏丁香，留下诗篇。",
     details: [
-      "8岁登基，在位61年",
-      "恢复并规范祭天仪式",
-      "多次亲自到天坛祭天",
-      "开创康乾盛世",
-      "重视天文历法与祭祀结合"
-    ]
+      "鸦片战争民族英雄",
+      "法源寺丁香诗会参与者",
+      "诗作流传后世"
+    ],
   },
-  清乾隆帝: {
-    story:
-      "清朝第六位皇帝，在位期间进一步完善了天坛的祭祀制度，增建了斋宫等建筑，使天坛的功能更加完备。",
+  徐志摩: {
+    story: "现代著名诗人，1924年陪同泰戈尔游法源寺，留下文化佳话。",
     details: [
-      "在位60年，实际掌权63年",
-      "增建斋宫，完善祭祀设施",
-      "制定详细的祭天礼仪",
-      "文治武功达到顶峰",
-      "多次亲自撰写祭天文"
-    ]
+      "新月派代表诗人",
+      "陪泰戈尔访法源寺",
+      "诗文记述丁香花事"
+    ],
   },
-  清雍正帝: {
-    story:
-      "清朝第五位皇帝，以勤政著称，对祭天仪式极为重视，规范了祭天的各项礼仪制度。",
+  泰戈尔: {
+    story: "印度大诗人，1924年访华期间游法源寺，成为中印文化交流佳话。",
     details: [
-      "康熙第四子，44岁即位",
-      "在位13年，勤于政务",
-      "严格遵循祭天传统",
-      "建立密折制度",
-      "亲自校订祭祀仪注"
-    ]
+      "诺贝尔文学奖获得者",
+      "1924年赏花法源寺",
+      "与徐志摩等文人交流"
+    ],
   },
-  蒯祥: {
-    story:
-      "明代著名建筑师，被誉为“木圣”，主持设计建造了包括天坛在内的多座重要建筑，其精湛的建筑技艺为后世所敬仰。",
+  杨昌济: {
+    story: "近代著名教育家，毛泽东岳父，逝世后停灵于法源寺。",
     details: [
-      "江苏吴县人，世代木匠",
-      "主持营建紫禁城和天坛",
-      "被誉为明代第一建筑师",
-      "其家族世代为皇家建筑师",
-      "以榫卯结构闻名"
-    ]
+      "湖南著名学者",
+      "毛泽东、蔡和森等学生",
+      "逝后停灵法源寺"
+    ],
   },
-  刘伯温: {
-    story:
-      "明朝开国功臣，精通天文地理，参与了北京城和天坛的选址规划，其深厚的易学功底为天坛的建设提供了理论指导。",
+  李敖: {
+    story: "当代作家，以法源寺为背景创作历史小说《北京法源寺》，赋予古寺新的文化内涵。",
     details: [
-      "浙江青田人，博学多才",
-      "辅佐朱元璋建立明朝",
-      "精通天文、地理、兵法",
-      "参与北京城整体规划",
-      "传说中“刘伯温定都北京”"
-    ]
+      "著有《北京法源寺》",
+      "以历史人物与法源寺为题材",
+      "推动古寺文化传播"
+    ],
   },
-  于谦: {
-    story:
-      "明朝重要大臣，曾多次主持天坛的祭天仪式，在土木堡之变后力挽狂澜，保卫北京城，体现了忠君爱国的精神。",
+  宋钦宗: {
+    story: "北宋末代皇帝，靖康之变后被金兵掳至燕京，囚禁于悯忠寺（今法源寺），见证王朝兴亡。",
     details: [
-      "浙江钱塘人，明代名臣",
-      "土木堡之变后拥立景泰帝",
-      "多次主持祭天大典",
-      "以清廉和爱国著称",
-      "有“石灰吟”传世"
-    ]
+      "1127年靖康之变被俘",
+      "囚禁于悯忠寺",
+      "北宋灭亡的历史见证"
+    ],
   },
-  张居正: {
-    story:
-      "明朝著名政治家，万历初年的首辅，推行改革的同时也改革了祭祀制度，使天坛的管理更加规范化。",
+  顺治帝: {
+    story: "清朝入关后首位皇帝，在法源寺设戒坛，推动律宗发展。",
     details: [
-      "湖北江陵人，明代改革家",
-      "万历初年担任首辅十年",
-      "推行万历新政",
-      "改革祭祀和财政制度",
-      "主张“礼法并重”"
-    ]
+      "清初设戒坛于法源寺",
+      "推动佛教戒律制度",
+      "法源寺律宗祖庭地位确立"
+    ],
   },
-  太常寺卿: {
-    story:
-      "负责管理天坛祭祀事务的重要官职，历代太常寺卿都是祭天仪式的主要组织者和执行者。",
+  雍正帝: {
+    story: "清世宗，1733年重修法源寺，赐名并定为律宗祖庭，强调戒律传承。",
     details: [
-      "九卿之一，专管礼乐祭祀",
-      "负责天坛日常管理",
-      "制定祭祀流程和规范",
-      "培训祭祀人员",
-      "如明代太常寺卿李时勉等"
-    ]
+      "1733年拨帑重修寺院",
+      "赐名“法源寺”",
+      "御碑铭文强调戒律"
+    ],
   },
-  礼部尚书: {
-    story:
-      "六部之一的礼部最高长官，负责制定包括祭天在内的各种国家礼仪制度，是天坛祭祀活动的总负责人。",
+  乾隆帝: {
+    story: "清高宗，1778年题匾“法海真源”，赋诗盛赞法源寺，民间传说与寺规趣事。",
     details: [
-      "六部之一的最高长官",
-      "制定国家礼仪制度",
-      "监督祭祀活动执行",
-      "培养礼仪人才",
-      "如明代礼部尚书夏言等"
-    ]
+      "1778年题匾“法海真源”",
+      "赋诗赞“最古燕京寺”",
+      "传说违寺规被罚走后门"
+    ],
   },
-  钦天监正: {
-    story:
-      "掌管天文历法的官员，负责为祭天仪式择定吉日良辰，其天文知识对祭天活动至关重要。",
+  谢枋得: {
+    story: "南宋遗臣，抗元失败后囚于法源寺，绝食殉国，明代建祠纪念。",
     details: [
-      "掌管天文历法的最高官员",
-      "负责择定祭天日期",
-      "观测天象变化",
-      "编制历法",
-      "如清代钦天监正吴琯等"
-    ]
+      "1289年抗元失败被俘",
+      "囚于法源寺，绝食五日殉国",
+      "明代建“谢枋得祠”"
+    ],
   },
-  明万历帝: {
-    story:
-      "明朝第十三位皇帝，在位48年，前期勤于政务，经常到天坛祭天，后期怠政但祭天活动从未间断。",
+  袁崇焕: {
+    story: "明末抗清名将，冤死后头颅密送法源寺超度，象征忠魂归宿。",
     details: [
-      "10岁即位，在位48年",
-      "前期有张居正辅政",
-      "频繁举行祭天仪式",
-      "后期二十多年不上朝",
-      "祭天活动成为政治象征"
-    ]
+      "1630年冤死",
+      "部下佘义士密送头颅至寺超度",
+      "强化“悯忠”精神"
+    ],
   },
-  清光绪帝: {
-    story:
-      "清朝倒数第二位皇帝，在天坛举行了中国历史上最后一次正式的皇帝祭天大典，见证了传统祭天制度的终结。",
+  齐白石: {
+    story: "近现代著名画家，1917-1919年两度借住法源寺，画风巨变。",
     details: [
-      "4岁即位，实际被慈禧控制",
-      "戊戌变法的支持者",
-      "举行最后一次皇帝祭天",
-      "38岁去世，疑被毒死",
-      "清末新政的见证者"
-    ]
+      "1917、1919年借住寺内",
+      "开创“衰年变法”画风",
+      "与寺僧交往甚密"
+    ],
   },
-  袁世凯: {
-    story:
-      "中华民国临时大总统，1915年称帝后曾到天坛祭天，试图借此获得统治的合法性，但很快在全国反对声中取消帝制。",
+  纪晓岚: {
+    story: "清代著名学者，参与法源寺丁香诗会，留下诗作。",
     details: [
-      "北洋军阀首领",
-      "逼迫清帝退位",
-      "1915年称帝，改元洪宪",
-      "在天坛举行祭天仪式，83天后取消帝制",
-      "中国近代史重要转折人物"
-    ]
-  }
+      "清代文坛领袖",
+      "多次参加丁香诗会",
+      "诗作流传后世"
+    ],
+  },
+  龚自珍: {
+    story: "清代思想家、诗人，参与法源寺诗会，推动文化交流。",
+    details: [
+      "清代思想家",
+      "参与法源寺诗会",
+      "诗文影响深远"
+    ],
+  },
+  谭嗣同: {
+    story: "戊戌变法志士，李敖小说中虚构于法源寺密会梁启超。",
+    details: [
+      "戊戌变法六君子之一",
+      "文学作品中与梁启超密会",
+      "象征思想解放"
+    ],
+  },
+  梁启超: {
+    story: "近代著名思想家，李敖小说中与谭嗣同法源寺密会。",
+    details: [
+      "戊戌变法领袖",
+      "文学作品中与谭嗣同密会",
+      "推动近代思想变革"
+    ],
+  },
+  无名高僧: {
+    story: "清代传说人物，绝食诵经感化孝庄太后，保全法源寺。",
+    details: [
+      "康熙年间传说",
+      "绝食诵经感化孝庄",
+      "促使康熙收回废寺成命"
+    ],
+  },
+  金代考场: {
+    story: "金大定十三年（1173年）法源寺为女真进士策试考场。",
+    details: [
+      "1173年金代考场",
+      "女真进士策试",
+      "寺院多重社会功能"
+    ],
+  },
+  丁香诗会: {
+    story: "明清以来法源寺著名文化盛事，文人雅集吟咏丁香，延续百年。",
+    details: [
+      "明清盛事",
+      "纪晓岚、龚自珍等参与",
+      "2024年已延续百年"
+    ],
+  },
+  石狮劫难: {
+    story: "2025年3月，法源寺600年石狮遭游客推倒，引发文物保护争议。",
+    details: [
+      "2025年石狮损毁",
+      "引发社会关注",
+      "文物保护呼声高涨"
+    ],
+  },
 };
 
 // 获取节点相关的所有关系
@@ -929,7 +982,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.tiantan-network-container {
+.fayuan-network-container {
   font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
   max-width: 1200px;
   margin: 0 auto;
@@ -945,7 +998,7 @@ onBeforeUnmount(() => {
 }
 
 h1 {
-  color: #d4a76a;
+  color: #b85c00;
   font-size: 2.4rem;
   margin-bottom: 8px;
   font-weight: 600;
@@ -953,7 +1006,7 @@ h1 {
 }
 
 .subtitle {
-  color: #8b6914;
+  color: #a67c52;
   font-size: 1.1rem;
   margin-top: 0;
 }
@@ -967,9 +1020,9 @@ h1 {
   padding: 20px;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(212, 167, 106, 0.2);
+  box-shadow: 0 4px 16px rgba(184, 92, 0, 0.13);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(212, 167, 106, 0.3);
+  border: 1px solid rgba(184, 92, 0, 0.18);
 }
 
 .legend,
@@ -985,7 +1038,7 @@ h1 {
   align-items: center;
   gap: 8px;
   font-size: 0.9rem;
-  color: #8b6914;
+  color: #a67c52;
 }
 
 .legend-icon {
@@ -993,21 +1046,21 @@ h1 {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 2px solid #d4a76a;
-  box-shadow: 0 1px 3px rgba(212, 167, 106, 0.3);
+  border: 2px solid #b85c00;
+  box-shadow: 0 1px 3px rgba(184, 92, 0, 0.13);
 }
 
 .legend-icon.location {
-  background-color: #d4a76a;
+  background-color: #b85c00;
 }
-.legend-icon.emperor {
-  background-color: #8b4513;
+.legend-icon.abbot {
+  background-color: #e6b800;
+}
+.legend-icon.literati {
+  background-color: #b83232;
 }
 .legend-icon.official {
-  background-color: #a0522d;
-}
-.legend-icon.ritual {
-  background-color: #deb887;
+  background-color: #d2691e;
 }
 
 .relation-line {
@@ -1030,46 +1083,46 @@ h1 {
   transform: rotate(-90deg);
 }
 
-.relation-line.ritual {
-  background-color: #6B9BD2;
+.relation-line.dharma {
+  background-color: #e67e22;
 }
-.relation-line.ritual:after {
-  border-top-color: #6B9BD2;
+.relation-line.dharma:after {
+  border-top-color: #e67e22;
 }
-.relation-line.construction {
-  background-color: #FF8C42;
+.relation-line.culture {
+  background-color: #b83232;
 }
-.relation-line.construction:after {
-  border-top-color: #FF8C42;
+.relation-line.culture:after {
+  border-top-color: #b83232;
 }
-.relation-line.governance {
-  background-color: #82C09A;
+.relation-line.event {
+  background-color: #d2691e;
 }
-.relation-line.governance:after {
-  border-top-color: #82C09A;
+.relation-line.event:after {
+  border-top-color: #d2691e;
 }
 
 .graph-wrapper {
   width: 100%;
   height: 650px;
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(212, 167, 106, 0.2);
+  box-shadow: 0 8px 32px rgba(184, 92, 0, 0.13);
   background: rgba(255, 255, 255, 0.95);
   margin-bottom: 20px;
-  border: 1px solid rgba(212, 167, 106, 0.3);
+  border: 1px solid rgba(184, 92, 0, 0.18);
   overflow: hidden;
   backdrop-filter: blur(10px);
 }
 
 .hint {
   text-align: center;
-  color: #8b6914;
+  color: #a67c52;
   font-size: 0.9rem;
   margin-top: 15px;
   padding: 15px;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 8px;
-  border: 1px solid rgba(212, 167, 106, 0.2);
+  border: 1px solid rgba(184, 92, 0, 0.12);
   backdrop-filter: blur(5px);
 }
 
@@ -1092,12 +1145,12 @@ h1 {
 .modal-content {
   background: linear-gradient(135deg, #ffffff 0%, #fdfcf9 100%);
   border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(212, 167, 106, 0.3);
+  box-shadow: 0 20px 60px rgba(184, 92, 0, 0.13);
   max-width: 1200px;
   width: 98%;
   max-height: 95vh;
   overflow: hidden;
-  border: 2px solid rgba(212, 167, 106, 0.4);
+  border: 2px solid rgba(184, 92, 0, 0.18);
   animation: slideUp 0.3s ease;
 }
 
@@ -1106,7 +1159,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   padding: 25px 30px;
-  background: linear-gradient(135deg, #d4a76a 0%, #c29448 100%);
+  background: linear-gradient(135deg, #b85c00 0%, #e6b800 100%);
   color: white;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -1140,8 +1193,10 @@ h1 {
 
 .modal-body {
   padding: 30px;
-  max-height: 60vh;
-  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 .character-story {
@@ -1150,17 +1205,17 @@ h1 {
   color: #444;
   margin-bottom: 25px;
   padding-bottom: 20px;
-  border-bottom: 2px solid rgba(212, 167, 106, 0.2);
+  border-bottom: 2px solid rgba(184, 92, 0, 0.13);
 }
 
 .details-section h3,
 .relations-section h3 {
-  color: #d4a76a;
+  color: #b85c00;
   font-size: 1.4rem;
   margin-top: 0;
   margin-bottom: 15px;
   padding-bottom: 10px;
-  border-bottom: 2px solid rgba(212, 167, 106, 0.2);
+  border-bottom: 2px solid rgba(184, 92, 0, 0.13);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -1188,14 +1243,14 @@ h1 {
   margin-bottom: 12px;
   padding: 12px 16px;
   background: linear-gradient(135deg, #faf9f6 0%, #f5f3ed 100%);
-  border-left: 4px solid #d4a76a;
+  border-left: 4px solid #b85c00;
   border-radius: 6px;
   position: relative;
 }
 
 .details-section li:before {
   content: "▪";
-  color: #d4a76a;
+  color: #b85c00;
   font-weight: bold;
   margin-right: 8px;
 }
@@ -1214,12 +1269,12 @@ h1 {
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(212, 167, 106, 0.1);
+  box-shadow: 0 2px 8px rgba(184, 92, 0, 0.08);
 }
 
 .relation-item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(212, 167, 106, 0.2);
+  box-shadow: 0 6px 20px rgba(184, 92, 0, 0.13);
 }
 
 .relation-type {
@@ -1272,7 +1327,7 @@ h1 {
     font-size: 1.8rem;
   }
 
-  .tiantan-network-container {
+  .fayuan-network-container {
     padding: 15px;
   }
 
