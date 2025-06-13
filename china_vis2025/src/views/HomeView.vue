@@ -31,12 +31,14 @@
           @area-clicked="handleAreaClick"
           @landmark-clicked="handleLandmarkClickOnMap"
         />
-        <DistrictMap
-          v-if="currentView === 'map' && currentLevel === 'district'"
-          :districtName="selectedDistrict"
-          :mapData="mapData"
-          :colorScaleConfig="colorScaleConfig"
-        />
+        <div class="district-wrapper">
+          <DistrictMap
+            v-if="currentView === 'map' && currentLevel === 'district'"
+            :districtName="selectedDistrict"
+            :mapData="mapData"
+            :colorScaleConfig="colorScaleConfig"
+          />
+        </div>
 
         <button
           v-if="currentLevel === 'district' && currentView === 'map'"
@@ -46,9 +48,7 @@
           返回北京全图
         </button>
 
-        <LandmarkRelationsViz
-          v-if="currentView === 'relations'"
-        />
+        <LandmarkRelationsViz v-if="currentView === 'relations'" />
       </div>
     </div>
   </div>
@@ -227,10 +227,18 @@ export default {
   position: relative;
 }
 
+.district-wrapper{
+  margin-left: 25%;
+  margin-top: 12%;
+    width: 100%;
+  height: 100%;
+}
+
 /* 关键样式：确保所有核心组件都能填充 map-wrapper */
 .map-wrapper > :deep(.beijing-map-container), /* BeijingMap 根元素的类名 */
 .map-wrapper > :deep(.district-map-container), /* DistrictMap 根元素的类名 */
-.map-wrapper > :deep(.relations-viz-container) { /* LandmarkRelationsViz 根元素的类名 */
+.map-wrapper > :deep(.relations-viz-container) {
+  /* LandmarkRelationsViz 根元素的类名 */
   position: absolute;
   top: 0;
   left: 0;
