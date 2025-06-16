@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <div class="dashboard-header">
       <button class="back-button" @click="goBack">
-        <span class="icon">←</span> 返回故宫门户
+        <span class="icon">←</span> 返回明十三陵门户
       </button>
       <h1 class="dashboard-title">明十三陵的深远影响力</h1>
       <p class="dashboard-subtitle">探究世界文化遗产的当代价值与中华文化传承</p>

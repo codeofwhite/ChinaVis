@@ -1,6 +1,6 @@
 <template>
   <div class="legends-container">
-    <button @click="goBack" class="back-button">← 返回故宫门户</button>
+    <button @click="goBack" class="back-button">← 返回明十三陵门户</button>
     <GugongCharacterHub></GugongCharacterHub>
     <palaceSayings></palaceSayings>
   </div>
