@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <div class="dashboard-header">
       <button class="back-button" @click="goBack">
-        <span class="icon">←</span> 返回佛教圣地
+        <span class="icon">←</span> 返回法源寺门户
       </button>
       <h1 class="dashboard-title">法源寺的佛教文化地位与世界影响</h1>
       <p class="dashboard-subtitle">

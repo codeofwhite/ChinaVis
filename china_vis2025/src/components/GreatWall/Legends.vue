@@ -73,7 +73,7 @@ body {
   left: 20px;
   /* 调整按钮背景色 */
   background-color: rgba(139, 69, 19, 0.85); /* 对应 --primary-color 的透明度 */
-  color: var(--bg-lighter); /* 使用浅背景色作为文字色 */
+  color: #fff;
   /* 调整边框颜色 */
   border: 1px solid var(--primary-color);
   padding: 8px 16px;
@@ -83,7 +83,7 @@ body {
   z-index: 10;
   transition: all 0.3s ease;
   backdrop-filter: blur(4px);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 12px rgb(0, 0, 0);
 }
 
 .back-button:hover {

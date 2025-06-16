@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <div class="dashboard-header">
       <button class="back-button" @click="goBack">
-        <span class="icon">←</span> 返回北京文化门户
+        <span class="icon">←</span> 返回大栅栏门户
       </button>
       <h1 class="dashboard-title">大栅栏：京味市井的百年变迁与现代活力</h1>
       <p class="dashboard-subtitle">
