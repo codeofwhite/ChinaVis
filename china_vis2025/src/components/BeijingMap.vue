@@ -6,7 +6,6 @@
         <linearGradient id="mapGradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#f5e9d2" />
           <stop offset="100%" stop-color="#e2d4c0" />
-          
         </linearGradient>
 
         <radialGradient id="markerGradient">
