@@ -4,6 +4,8 @@
 本项目是为 ChinaVis 2025 可视化大赛赛道1-II：「怀古论今」人文可视化创意赛 创作的大作业。
 我们旨在通过创新的可视化技术，深入探索北京八处著名人文地标的历史脉络、深远影响与传奇故事，让观众沉浸式地感受这些文化瑰宝的独特魅力。
 
+<img width="2602" height="1526" alt="image" src="https://github.com/user-attachments/assets/8ec6c622-805b-4625-9f5c-038e97afa7ed" />
+
 ## 项目特色
 本项目采用三级页面设计，提供循序渐进的探索体验：
 ### 一级页面：北京地标总览
@@ -14,8 +16,16 @@
 点击一级页面的地标后，进入二级页面。此页面将作为通往三级页面深层内容的枢纽，提供以下三个主要入口：
 
 * 历史生命线： 追溯地标从古至今的发展演变，呈现其历史脉络。
+<img width="2552" height="1120" alt="image" src="https://github.com/user-attachments/assets/f6bf2dc8-d163-4775-b131-bf24acfbf423" />
+
 * 影响力： 剖析地标对文化、社会、建筑等各方面产生的深远影响。
+<img width="2838" height="1462" alt="image" src="https://github.com/user-attachments/assets/6c816d6b-c560-406f-be1c-13ed100f80cd" />
+
 * 传奇故事： 讲述与地标相关的民间传说、历史轶事和动人故事。
+
+<img width="1674" height="958" alt="image" src="https://github.com/user-attachments/assets/0475ad23-8152-41f3-a2f9-66b733dbdd3a" />
+
+<img width="2050" height="1358" alt="image" src="https://github.com/user-attachments/assets/eaaa7c1b-82f9-42ac-bfdb-800895f406c4" />
 
 ### 三级页面：多维度沉浸式体验
 进入三级页面后，用户将看到对应地标的“历史生命线”、“影响力”或“传奇故事”的详细可视化内容，深入挖掘地标的文化内涵。
